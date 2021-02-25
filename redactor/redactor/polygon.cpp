@@ -35,3 +35,8 @@ double polygon:: area() {
 	s = 0.5 * abs(s1 - s2);
 	return s;
 }
+void polygon::print(){
+	for (int i = 0; i < num_vert_; i++) {
+		cout <<"x= "<< vertex[i].get_x() << " y= " << vertex[i].get_y() << endl;
+	}
+}

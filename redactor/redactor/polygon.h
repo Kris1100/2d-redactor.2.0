@@ -16,6 +16,8 @@ public:
 	double perimetr();
 	//Вычислить площадь
 	double area();
+	//Вывести координаты точек
+	void print();
 protected:
 	int num_vert_;
 	point* vertex = new point[num_vert_];
