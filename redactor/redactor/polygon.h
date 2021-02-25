@@ -6,15 +6,17 @@ using namespace std;
 class polygon
 {
 public:
-	// Не уверенна, что так можно, к переменным точки не подобраться! Как исправить?
-	struct point_ {
-		int x_, y_;
-	};
+	//Конструктор многоугольника
 	polygon(int num_vert = 3);
+	//Установить количество углов
 	void set_num(int num_vert);
+	//Получить количество углов
 	int get_num();
+	//Вычислить периметр
 	double perimetr();
-private:
+	//Вычислить площадь
+	double area();
+protected:
 	int num_vert_;
 	point* vertex = new point[num_vert_];
 };
