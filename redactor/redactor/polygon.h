@@ -8,6 +8,10 @@ class polygon
 public:
 	//Конструктор многоугольника
 	polygon(int num_vert = 3);
+	//Ввод многоугольника 
+	friend std::istream& operator>>(std::istream& in, polygon& p);
+	//Вывод всей информации по многоугольнику
+	friend std::ostream& operator<<(std::ostream& out, polygon& p);
 	//Установить количество углов
 	void set_num(int num_vert);
 	//Получить количество углов
@@ -18,7 +22,9 @@ public:
 	double area();
 	//Вывести координаты точек
 	void print();
+	//Задать массив точек
+	void set_point_array(point *vert);
 protected:
 	int num_vert_;
-	point* vertex = new point[num_vert_];
+	point* vertex;
 };

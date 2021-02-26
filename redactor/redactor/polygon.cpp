@@ -1,12 +1,27 @@
 #include "polygon.h"
 polygon::polygon(int num_vert) {
 	set_num(num_vert);
+	point* vert = new point[num_vert];
+	set_point_array(vert);
+}
+std::istream& operator>>(istream& in, polygon& p) {
 	double x, y;
-	for (int i = 0; i < num_vert;i++) {
+	for (int i = 0; i < p.num_vert_; i++) {
 		cin >> x >> y;
-		vertex[i].set_x(x);
-		vertex[i].set_y(y);
+		p.vertex[i].set_x(x);
+		p.vertex[i].set_y(y);
 	}
+	return in;
+}
+std::ostream& operator<<(ostream& out, polygon& p) {
+	out << "Количество углов " << p.num_vert_ << endl;
+	for (int i = 0; i < p.num_vert_; i++) {
+		out << "x= " << p.vertex[i].get_x() << " y= " << p.vertex[i].get_y() << endl;
+	}
+	return out;
+}
+void polygon::set_point_array(point* vert) {
+	vertex = vert;
 }
 void polygon::set_num(int num_vert) {
 	num_vert_ = num_vert;

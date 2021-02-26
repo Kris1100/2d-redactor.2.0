@@ -1,13 +1,8 @@
 #include "circle.h"
-
-
-
 circle::circle(double, double, double) const {
 	set_center(x, y);
 	set_r(r);
 }
-
-
 friend circle::ostream& operator<<(ostream&, const rational&) {
 	out << << "Координаты центра (" << c._x << ", " << c._y << ")" << endl << "Радиус: " << c._z << endl;
 	return out;
