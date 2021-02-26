@@ -24,6 +24,8 @@ public:
 	void print();
 	//Задать массив точек
 	void set_point_array(point *vert);
+	//Деструктор
+	~polygon();
 protected:
 	int num_vert_;
 	point* vertex;

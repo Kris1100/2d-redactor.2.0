@@ -4,6 +4,10 @@ polygon::polygon(int num_vert) {
 	point* vert = new point[num_vert];
 	set_point_array(vert);
 }
+polygon::~polygon() {
+	delete[] vertex;
+	vertex = 0;
+}
 std::istream& operator>>(istream& in, polygon& p) {
 	double x, y;
 	for (int i = 0; i < p.num_vert_; i++) {
