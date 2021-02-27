@@ -27,6 +27,8 @@ public:
 	void set_point_array(point *vert);
 	//Проверка на выпуклость
 	bool is_convex();
+	//Проверка на правильность
+	bool is_regular(bool convexity);
 	//Деструктор
 	~polygon();
 protected:

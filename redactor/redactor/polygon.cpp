@@ -1,5 +1,6 @@
 #include "polygon.h"
 polygon::polygon(int num_vert) {
+	if (num_vert < 3) num_vert = 3;
 	set_num(num_vert);
 	point* vert = new point[num_vert];
 	set_point_array(vert);
@@ -63,7 +64,7 @@ bool polygon::is_convex() {
 	//Многоугольник будет выпуклым если при его обходе в каждой тройке последовательных вершин происходит поворот всегда в одну и ту же сторону. При обходе многоугольника против часовой стрелке поворот будет всегда налево, а при обходе по часовой - направо.
 	//Для поворота налево это(значение формулы в total) значение будет положительным, а для поворота направо - отрицательным
 	int sign = 0;
-	for (int i = 0; i < num_vert_ - 1; i++) {
+	for (int i = 0; i < num_vert_ - 2; i++) {
 		myvector v1 (vertex[i], vertex[i + 1]);
 		myvector v2(vertex[i + 1], vertex[i + 2]);
 		double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
@@ -79,9 +80,29 @@ bool polygon::is_convex() {
 	}
 	myvector v1(vertex[num_vert_ - 1], vertex[0]);
 	myvector v2(vertex[0], vertex[1]);
+	myvector v3(vertex[num_vert_ - 2], vertex[num_vert_ - 1]);
 	double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
+	if (total * sign < 0) return false;
+	total = v2.get_x() * v3.get_y() - v2.get_y() * v3.get_x();
 	if (total * sign < 0) return false;
 	v1.~myvector();
 	v2.~myvector();
+	v3.~myvector();
 	return true;
+}
+bool polygon:: is_regular(bool convexity) {
+	if (not convexity) return false;
+	else {
+		int side = -1;
+		for (int i = 0; i < num_vert_ - 1; i++) {
+			segment s(vertex[i], vertex[i + 1]);
+			if (side == -1) side = s.len();
+			else if (side != s.len()) return false;
+			s.~segment();
+		}
+		segment s(vertex[num_vert_ - 1], vertex[0]);
+		if (side != s.len()) return false;
+		s.~segment();
+		return true;
+	}
 }
