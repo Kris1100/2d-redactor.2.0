@@ -1,5 +1,5 @@
 #include "Triangle.h"
-
+//#include"segment.h"
 triangle::triangle()
 {
 	point* vert = new point[3];
@@ -69,4 +69,7 @@ double triangle::radius_outside()
 	double dist_ac = sqrt( (a.get_x() - c.get_x()) * (a.get_x() - c.get_x())
 		                 + (a.get_y() - c.get_y()) * (a.get_y() - c.get_y()) );
 	return dist_ab * dist_bc * dist_ac / square;
+	//≈сли хочешь рассто€ние между точками!!!
+	//segment s(vertex[0], vertex[1]);
+	//int ss = s.len();
 }
