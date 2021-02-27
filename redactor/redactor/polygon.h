@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "point.h"
+#include"vector.h"
 using namespace std;
 class polygon
 {
@@ -24,6 +25,8 @@ public:
 	void print();
 	//Задать массив точек
 	void set_point_array(point *vert);
+	//Проверка на выпуклость
+	bool is_convex();
 	//Деструктор
 	~polygon();
 protected:

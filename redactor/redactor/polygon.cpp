@@ -59,3 +59,29 @@ void polygon::print(){
 		cout <<"x= "<< vertex[i].get_x() << " y= " << vertex[i].get_y() << endl;
 	}
 }
+bool polygon::is_convex() {
+	//Многоугольник будет выпуклым если при его обходе в каждой тройке последовательных вершин происходит поворот всегда в одну и ту же сторону. При обходе многоугольника против часовой стрелке поворот будет всегда налево, а при обходе по часовой - направо.
+	//Для поворота налево это(значение формулы в total) значение будет положительным, а для поворота направо - отрицательным
+	int sign = 0;
+	for (int i = 0; i < num_vert_ - 1; i++) {
+		myvector v1 (vertex[i], vertex[i + 1]);
+		myvector v2(vertex[i + 1], vertex[i + 2]);
+		double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
+		if (sign==0) {
+			if (total < 0) sign = -1;
+			else sign = 1;
+		}
+		else {
+			if (total * sign < 0) return false;
+		}
+		v1.~myvector();
+		v2.~myvector();
+	}
+	myvector v1(vertex[num_vert_ - 1], vertex[0]);
+	myvector v2(vertex[0], vertex[1]);
+	double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
+	if (total * sign < 0) return false;
+	v1.~myvector();
+	v2.~myvector();
+	return true;
+}
