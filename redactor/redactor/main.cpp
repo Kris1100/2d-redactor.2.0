@@ -141,9 +141,10 @@ void print_menu(int num, int col) {
 
 }
 void print_point(int num) {
-	point p(0, 5);
+	point p(4, 5);
 	cout<<p.get_x()<<" ";
-	cout<<p.get_y();
+	cout<<p.get_y()<<" ";
+	p.quarter();
 }
 
 void SetColor(int text, int Fon) {
