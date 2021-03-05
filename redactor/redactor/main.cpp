@@ -1,7 +1,6 @@
 #pragma once
 #include "polygon.h"
 #include "point.h"
-#include "circle.h"
 #include "line.h"
 #include "segment.h"
 #include "Triangle.h"
@@ -13,15 +12,15 @@
 #include <conio.h>
 using namespace std;
 void SetColor(int text, int Fon);
-void print_menu(int num);
-void print_menu1(int num);
+void print_menu(int num,int col);
+/*void print_menu1(int num);
 void print_point(int num);// Меню для точки
 void print_line(int num);// Меню для прямой
 void print_polygon(int num);// Меню для многоугольника
 void print_circle(int num);// Меню для окружности
 void print_segment(int num);// Меню для отрезка
 void print_triangle(int num);// Меню для треугольника
-void print_vector(int num);// Меню для вектора
+void print_vector(int num);// Меню для вектора*/
 
 
 
@@ -38,13 +37,13 @@ int main() {
 			switch (item)
 			{
 			case 0: return 0;
-			case 1: print_point(0);  break;
+			/*case 1: print_point(0);  break;
 			case 2: print_line(0);  break;
 			case 3: print_circle(0); break;
 			case 4: print_triangle(0);  break;
 			case 5: print_polygon(0);  break;
 			case 6: print_segment(0);  break;
-			case 7: print_vector(0);  break;
+			case 7: print_vector(0);  break;*/
 
 			default:
 				break;
@@ -81,6 +80,7 @@ int main() {
 
 }
 void print_menu(int num, int col) {
+	int col2;
 	if (col == 1) col2 = 7;
 	else col2 = 1;
 	system("cls");

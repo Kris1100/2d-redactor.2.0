@@ -1,5 +1,5 @@
 #include "point.h"
-point::point(double x=0, double y=0 ) {
+point::point(double x, double y ) {
 	set_x(x);
 	set_y(y);
 }
