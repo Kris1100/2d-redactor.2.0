@@ -13,6 +13,7 @@
 using namespace std;
 void SetColor(int text, int Fon);
 void print_menu(int num,int col);
+void print_point(int num);
 /*void print_menu1(int num);
 void print_point(int num);// Меню для точки
 void print_line(int num);// Меню для прямой
@@ -37,8 +38,8 @@ int main() {
 			switch (item)
 			{
 			case 0: return 0;
-			/*case 1: print_point(0);  break;
-			case 2: print_line(0);  break;
+			case 1: print_point(0);  break;
+			/*case 2: print_line(0);  break;
 			case 3: print_circle(0); break;
 			case 4: print_triangle(0);  break;
 			case 5: print_polygon(0);  break;
@@ -138,6 +139,11 @@ void print_menu(int num, int col) {
 	}
 	else cout << "7. Треугольник\n";
 
+}
+void print_point(int num) {
+	point p(0, 5);
+	cout<<p.get_x()<<" ";
+	cout<<p.get_y();
 }
 
 void SetColor(int text, int Fon) {
