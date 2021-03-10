@@ -13,8 +13,6 @@
 using namespace std;
 void SetColor(int text, int Fon);
 void print_menu(int num,int col);
-void print_point(int num);
-/*void print_menu1(int num);
 void print_point(int num);// Меню для точки
 void print_line(int num);// Меню для прямой
 void print_polygon(int num);// Меню для многоугольника
@@ -39,12 +37,12 @@ int main() {
 			{
 			case 0: return 0;
 			case 1: print_point(0);  break;
-			/*case 2: print_line(0);  break;
+			case 2: print_line(0);  break;
 			case 3: print_circle(0); break;
 			case 4: print_triangle(0);  break;
 			case 5: print_polygon(0);  break;
 			case 6: print_segment(0);  break;
-			case 7: print_vector(0);  break;*/
+			case 7: print_vector(0);  break;
 
 			default:
 				break;
@@ -122,31 +120,55 @@ void print_menu(int num, int col) {
 	else cout << "4. Треугольник\n";
 	if (num == 5) {
 		SetColor(col, col2);
-		cout << "5. Треугольник\n";
+		cout << "5. Многоугольник\n";
 		SetColor(1, 15);
 	}
-	else cout << "5. Треугольник\n";
+	else cout << "5. Многоугольник\n";
 	if (num == 6) {
 		SetColor(col, col2);
-		cout << "6. Треугольник\n";
+		cout << "6. Отрезок\n";
 		SetColor(1, 15);
 	}
-	else cout << "6. Треугольник\n";
+	else cout << "6. Отрезок\n";
 	if (num == 7) {
 		SetColor(col, col2);
-		cout << "7. Треугольник\n";
+		cout << "7. Вектор\n";
 		SetColor(1, 15);
 	}
-	else cout << "7. Треугольник\n";
+	else cout << "7. Вектор\n";
 
 }
-void print_point(int num) {
+void print_point(int num) {//Tanya,working
 	point p(4, 5);
 	cout<<p.get_x()<<" ";
 	cout<<p.get_y()<<" ";
 	p.quarter();
 }
+void print_line(int num) {//Tanya
 
+}
+void print_polygon(int num) {
+	polygon p(4);
+	cin >> p;
+	cout << p;
+    double per=p.perimetr();
+	cout <<"Периметр "<< per<<endl;
+	double sq = p.area();
+	cout << "Площадь " << sq << endl;
+}
+void print_circle(int num) {//Kristina, this is for you
+
+}
+void print_segment(int num) {
+
+}
+void print_triangle(int num) {//Alyona, the most RESPONSIBLE PART for YOU
+
+}
+void print_vector(int num) {
+
+}
+//I AM WAITING!
 void SetColor(int text, int Fon) {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(h, (Fon << 4) + text);

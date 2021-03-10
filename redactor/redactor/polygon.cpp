@@ -37,9 +37,11 @@ int polygon:: get_num() {
 double polygon::perimetr() {
 	double p = 0;
 	for (int i = 0; i < num_vert_-1; i++) {
-		p += abs(vertex[i].dist() - vertex[i + 1].dist());
+		segment s(vertex[i], vertex[i + 1]);
+		p += s.len();
 	}
-	p+= abs(vertex[num_vert_-1].dist() - vertex[0].dist());
+	segment s(vertex[num_vert_ - 1], vertex[0]);
+	p += s.len();
 	return p;
 }
 double polygon:: area() {
