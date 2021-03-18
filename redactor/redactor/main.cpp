@@ -174,7 +174,14 @@ void print_segment(int num) {
 }
 void print_triangle(int num)
 {
-
+	triangle abc;
+	cout << "Введите координаты вершин:" << endl;
+	cin >> abc;
+	abc.define_kind();
+	//cout << "Площадь: " << abc.square() << endl;
+	//cout << "Периметр: " << abc.perimetr() << endl;
+	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
+	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
 }
 void print_vector(int num) {
 	
