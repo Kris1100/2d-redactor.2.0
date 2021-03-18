@@ -149,6 +149,7 @@ void print_line(int num) {//Tanya
 }
 void print_polygon(int num) {
 	polygon p(4);
+	cout << "Введите координаты вершин многоугольника" << endl;
 	cin >> p;
 	cout << p;
     double per=p.perimetr();
@@ -171,13 +172,13 @@ void print_segment(int num) {
 	segment s(p1, p2);
 	cout << "Длина отрезка " << s.len();
 }
-void print_triangle(int num) {//Alyona, the most RESPONSIBLE PART for YOU
+void print_triangle(int num)
+{
 
 }
 void print_vector(int num) {
 	
 }
-//I AM WAITING!
 void SetColor(int text, int Fon) {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(h, (Fon << 4) + text);

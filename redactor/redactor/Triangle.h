@@ -4,19 +4,18 @@
 #include<algorithm>
 #include"point.h"
 #include"polygon.h"
+#include"segment.h"
 using namespace std;
 
 class triangle : public polygon
 {
 public:
-	triangle();                                                                // constructor
-	void set_line_und_angles();                                                // zadat' cherez 2 ugla i pryamuyu
-	void define_kind();                                                        // opredelit' vid
+	triangle();                                                                // конструктор
+	void define_kind();                                                        // определить вид треугольника
 	//perimetr i ploschad' nasleduyutsa ot polygona, zrya pisala
-	// dlya bissectrisi, mediani, i tp nujna pramaya
-	double radius_inside();                                                    // radius vpisannoy okrugnosti
-	double radius_outside();                                                   // radius opisannoy
-	//ostalas' trigonometriya
+	bool exists();                                                             // определяет, существует ли треугольник
+	double radius_inside();                                                    // радиус вписанной окружности
+	double radius_outside();                                                   // радиус описанной окружности
 	
 private:
 	vector<point> abc_apexes;
