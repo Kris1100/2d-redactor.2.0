@@ -160,13 +160,22 @@ void print_circle(int num) {//Kristina, this is for you
 
 }
 void print_segment(int num) {
-
+	point p1, p2;
+	double x1, x2, y1, y2;
+	cout << "¬ведите координаты точки: ";
+	cin >> x1 >> y1;
+	cout << "¬ведите координаты точки: ";
+	cin >> x2 >> y2;
+	p1.set_x(x1); p1.set_y(y1);
+	p2.set_x(x2); p2.set_y(y2);
+	segment s(p1, p2);
+	cout << "ƒлина отрезка " << s.len();
 }
 void print_triangle(int num) {//Alyona, the most RESPONSIBLE PART for YOU
 
 }
 void print_vector(int num) {
-
+	
 }
 //I AM WAITING!
 void SetColor(int text, int Fon) {
