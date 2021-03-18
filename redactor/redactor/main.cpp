@@ -148,13 +148,21 @@ void print_line(int num) {//Tanya
 
 }
 void print_polygon(int num) {
-	polygon p(4);
+	int n;
+	cout << "Введите количество вершин ";
+	cin >> n;
+	polygon p(n);
 	cin >> p;
 	cout << p;
     double per=p.perimetr();
 	cout <<"Периметр "<< per<<endl;
 	double sq = p.area();
 	cout << "Площадь " << sq << endl;
+	bool f = p.is_convex();
+	if (f) cout << "Многоугольник выпуклый"<<endl;
+	else cout << "Многоугольник невыпуклый"<<endl;
+	if (p.is_regular(f)) cout << "Многоугольник правильный"<<endl;
+	else cout << "Многоугольник не является правильным"<<endl;
 }
 void print_circle(int num) {//Kristina, this is for you
 

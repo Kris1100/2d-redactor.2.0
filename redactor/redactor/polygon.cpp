@@ -11,6 +11,7 @@ polygon::~polygon() {
 }
 std::istream& operator>>(istream& in, polygon& p) {
 	double x, y;
+	cout << "¬ведите координаты " << p.num_vert_ << " вершин";
 	for (int i = 0; i < p.num_vert_; i++) {
 		cin >> x >> y;
 		p.vertex[i].set_x(x);
@@ -85,7 +86,7 @@ bool polygon::is_convex() {
 	myvector v3(vertex[num_vert_ - 2], vertex[num_vert_ - 1]);
 	double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
 	if (total * sign < 0) return false;
-	total = v2.get_x() * v3.get_y() - v2.get_y() * v3.get_x();
+	total = v3.get_x() * v1.get_y() - v3.get_y() * v1.get_x();
 	if (total * sign < 0) return false;
 	v1.~myvector();
 	v2.~myvector();
