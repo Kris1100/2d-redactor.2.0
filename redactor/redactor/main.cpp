@@ -5,7 +5,7 @@
 #include "segment.h"
 #include "Triangle.h"
 #include "vector.h"
-
+#include "point.h"
 
 #include <iostream>
 #include <Windows.h>
@@ -158,7 +158,14 @@ void print_polygon(int num) {
 	cout << "Площадь " << sq << endl;
 }
 void print_circle(int num) {//Kristina, this is for you
-
+	
+	circle c;
+	cin >> c;
+	cout << c;
+	c.quarter();
+	c.intersection();
+	c.length();
+	return 0;
 }
 void print_segment(int num) {
 	point p1, p2;
