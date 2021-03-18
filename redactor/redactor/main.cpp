@@ -148,14 +148,26 @@ void print_line(int num) {//Tanya
 
 }
 void print_polygon(int num) {
+<<<<<<< HEAD
+	int n;
+	cout << "Введите количество вершин ";
+	cin >> n;
+	polygon p(n);
+=======
 	polygon p(4);
 	cout << "Введите координаты вершин многоугольника" << endl;
+>>>>>>> 12765ef26f1626ee57bc1425a6daec5a0b2d1755
 	cin >> p;
 	cout << p;
     double per=p.perimetr();
 	cout <<"Периметр "<< per<<endl;
 	double sq = p.area();
 	cout << "Площадь " << sq << endl;
+	bool f = p.is_convex();
+	if (f) cout << "Многоугольник выпуклый"<<endl;
+	else cout << "Многоугольник невыпуклый"<<endl;
+	if (p.is_regular(f)) cout << "Многоугольник правильный"<<endl;
+	else cout << "Многоугольник не является правильным"<<endl;
 }
 void print_circle(int num) {//Kristina, this is for you
 	
@@ -191,7 +203,16 @@ void print_triangle(int num)
 	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
 }
 void print_vector(int num) {
-	
+	point p1, p2;
+	double x1, x2, y1, y2;
+	cout << "Введите координаты начальной точки: ";
+	cin >> x1 >> y1;
+	cout << "Введите координаты конечной точки: ";
+	cin >> x2 >> y2;
+	p1.set_x(x1); p1.set_y(y1);
+	p2.set_x(x2); p2.set_y(y2);
+	myvector v(p1, p2);
+	cout << "Длина вектора " << v.len();
 }
 void SetColor(int text, int Fon) {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
