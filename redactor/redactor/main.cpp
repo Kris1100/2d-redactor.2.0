@@ -5,7 +5,7 @@
 #include "segment.h"
 #include "Triangle.h"
 #include "vector.h"
-
+#include "point.h"
 
 #include <iostream>
 #include <Windows.h>
@@ -148,10 +148,15 @@ void print_line(int num) {//Tanya
 
 }
 void print_polygon(int num) {
+<<<<<<< HEAD
 	int n;
 	cout << "Введите количество вершин ";
 	cin >> n;
 	polygon p(n);
+=======
+	polygon p(4);
+	cout << "Введите координаты вершин многоугольника" << endl;
+>>>>>>> 12765ef26f1626ee57bc1425a6daec5a0b2d1755
 	cin >> p;
 	cout << p;
     double per=p.perimetr();
@@ -165,7 +170,14 @@ void print_polygon(int num) {
 	else cout << "Многоугольник не является правильным"<<endl;
 }
 void print_circle(int num) {//Kristina, this is for you
-
+	
+	circle c;
+	cin >> c;
+	cout << c;
+	c.quarter();
+	c.intersection();
+	c.length();
+	return 0;
 }
 void print_segment(int num) {
 	point p1, p2;
@@ -179,7 +191,8 @@ void print_segment(int num) {
 	segment s(p1, p2);
 	cout << "Длина отрезка " << s.len();
 }
-void print_triangle(int num) {//Alyona, the most RESPONSIBLE PART for YOU
+void print_triangle(int num)
+{
 
 }
 void print_vector(int num) {
@@ -194,7 +207,6 @@ void print_vector(int num) {
 	myvector v(p1, p2);
 	cout << "Длина вектора " << v.len();
 }
-//I AM WAITING!
 void SetColor(int text, int Fon) {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(h, (Fon << 4) + text);
