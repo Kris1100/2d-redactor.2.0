@@ -175,7 +175,16 @@ void print_triangle(int num) {//Alyona, the most RESPONSIBLE PART for YOU
 
 }
 void print_vector(int num) {
-	
+	point p1, p2;
+	double x1, x2, y1, y2;
+	cout << "¬ведите координаты начальной точки: ";
+	cin >> x1 >> y1;
+	cout << "¬ведите координаты конечной точки: ";
+	cin >> x2 >> y2;
+	p1.set_x(x1); p1.set_y(y1);
+	p2.set_x(x2); p2.set_y(y2);
+	myvector v(p1, p2);
+	cout << "ƒлина вектора " << v.len();
 }
 //I AM WAITING!
 void SetColor(int text, int Fon) {
