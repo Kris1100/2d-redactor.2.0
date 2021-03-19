@@ -211,7 +211,7 @@ void print_triangle(int num)
 	triangle abc;
 	cin >> abc;
 	abc.define_kind();
-	cout << "Площадь: " << abc.square() << endl;
+	cout << "Площадь: " << abc.area() << endl;
 	cout << "Периметр: " << abc.abc_perimetr() << endl;
 	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
 	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;

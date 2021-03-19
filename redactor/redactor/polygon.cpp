@@ -74,7 +74,7 @@ bool polygon::is_convex() {
 		if (sign==0) {
 			if (total < 0) sign = -1;
 			else sign = 1;
-		}
+		}//Проверка на некорректный ввод
 		else {
 			if (total * sign < 0) return false;
 		}
@@ -96,7 +96,7 @@ bool polygon::is_convex() {
 bool polygon:: is_regular(bool convexity) {
 	if (not convexity) return false;
 	else {
-		int side = -1;
+		int side = -1;//Добавить проверку углов
 		for (int i = 0; i < num_vert_ - 1; i++) {
 			segment s(vertex[i], vertex[i + 1]);
 			if (side == -1) side = s.len();

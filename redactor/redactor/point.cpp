@@ -19,7 +19,7 @@ void point::quarter() {
 	if (_x > 0 && _y > 0)cout << "1";
 	if (_x < 0 && _y > 0)cout << "2";
 	if (_x < 0 && _y < 0)cout << "3";
-	if (_x > 0 && _y < 0)cout << "4";
+	if (_x > 0 && _y < 0)cout << "4";//Добавить ситуацию с осью
 }
 double point::dist() {
 	double res;
