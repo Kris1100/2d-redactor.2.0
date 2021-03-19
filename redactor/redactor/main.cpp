@@ -6,6 +6,7 @@
 #include "Triangle.h"
 #include "vector.h"
 #include "point.h"
+#include "circle.h"
 
 #include <iostream>
 #include <Windows.h>
@@ -148,15 +149,10 @@ void print_line(int num) {//Tanya
 
 }
 void print_polygon(int num) {
-<<<<<<< HEAD
 	int n;
 	cout << "¬ведите количество вершин ";
 	cin >> n;
 	polygon p(n);
-=======
-	polygon p(4);
-	cout << "¬ведите координаты вершин многоугольника" << endl;
->>>>>>> 12765ef26f1626ee57bc1425a6daec5a0b2d1755
 	cin >> p;
 	cout << p;
     double per=p.perimetr();
@@ -177,7 +173,6 @@ void print_circle(int num) {//Kristina, this is for you
 	c.quarter();
 	c.intersection();
 	c.length();
-	return 0;
 }
 void print_segment(int num) {
 	point p1, p2;
