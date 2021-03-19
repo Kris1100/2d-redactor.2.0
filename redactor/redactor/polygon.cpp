@@ -96,15 +96,26 @@ bool polygon::is_convex() {
 bool polygon:: is_regular(bool convexity) {
 	if (not convexity) return false;
 	else {
-		int side = -1;//Добавить проверку углов
+		double side = -1; double ang = -1;
 		for (int i = 0; i < num_vert_ - 1; i++) {
 			segment s(vertex[i], vertex[i + 1]);
 			if (side == -1) side = s.len();
 			else if (side != s.len()) return false;
+			myvector v1(vertex[i], vertex[i + 1]);
+			myvector v2(vertex[i + 1], vertex[i + 2]);
+			if (ang == -1) ang = angel(v1, v2);
+			else {
+				if (ang != angel(v1, v2)) return false;
+			}
 			s.~segment();
+			v1.~myvector();
+			v2.~myvector();
 		}
 		segment s(vertex[num_vert_ - 1], vertex[0]);
+		myvector v1(vertex[num_vert_ - 1], vertex[0]);
+		myvector v2(vertex[0], vertex[1]);
 		if (side != s.len()) return false;
+		if (ang != angel(v1, v2)) return false;
 		s.~segment();
 		return true;
 	}
