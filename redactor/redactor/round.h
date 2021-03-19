@@ -4,6 +4,7 @@
 #include <cmath>
 #include "point.h"
 using namespace std;
+
 class my_round
 {
 public:
@@ -33,8 +34,6 @@ public:
 	double get_square_of_segment(double a = 1) const;
 
 	point get_p();
-
-
 
 private:
 	point* _p;

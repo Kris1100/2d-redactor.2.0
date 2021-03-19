@@ -2,6 +2,7 @@
 #include "point.h"
 #include <cmath>
 #include <math.h>
+
 //Класс отрезок
 class segment
 {
@@ -19,6 +20,7 @@ public:
 	point& get_end();
 	//Длина отрезка
 	double len();
+
 protected:
 	point p1_;
 	point p2_;
