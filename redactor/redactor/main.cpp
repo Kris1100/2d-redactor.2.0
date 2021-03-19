@@ -139,14 +139,34 @@ void print_menu(int num, int col) {
 	else cout << "7. Вектор\n";
 
 }
+
 void print_point(int num) {
-	point p(4, 5);
-	cout<<p.get_x()<<" ";
-	cout<<p.get_y()<<" ";
+	double x, y;
+	cout << "Введите координаты точки" << endl;
+	cin >> x >> y;
+	point p(x, y);
+	cout << "Данная точка лежит в ";
 	p.quarter();
+	cout << " четверти" << endl;
+	double a = p.dist();
+	cout << "Расстояние от данной точки до начала координат: " << a << endl;
+	p.bisector();
+	cout << endl;
 }
 void print_line(int num) {
-
+	double x1, y1, x2, y2;
+	cout << "Введите координаты двух точек для задания прямой" << endl;
+	cout << "Введите координаты первой точки" << endl;
+	cin >> x1 >> y1;
+	cout << "Введите координаты второй точки" << endl;
+	cin >> x2 >> y2;
+	point p1(x1, y1);
+	point p2(x2, y2);
+	line l(p1, p2);
+	l.print();
+	l.param();
+	l.normal();
+	l.guide();
 }
 void print_polygon(int num) {
 	int n;
