@@ -27,6 +27,6 @@ double point::dist() {
 	return sqrt(res);
 }
 void point::bisector() {
-	if (abs(_x) == abs(_y)) cout << "YES";
-	else cout << "NO";
+	if (abs(_x) == abs(_y)) cout << "Данная точка принадлежит биссектрисе координатной плоскости";
+	else cout << "Данная точка не принадлежит биссектрисе координатной плоскости";
 }
