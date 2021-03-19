@@ -9,16 +9,21 @@ using namespace std;
 class triangle : public polygon
 {
 public:
-	triangle();                                                                // конструктор
+	//Конструктор треугольника
+	triangle();
+	//Деструктор треугольника
 	~triangle();
-	friend istream& operator>>(istream& in, triangle& abc);                    // ввод
-	void define_kind();                                                        // определить вид треугольника
-	bool exists();                                                             // определяет, существует ли треугольник
-	double square();                                                           // площадь по герону
-	double abc_perimetr();                                                     // периметр
-	double radius_inside();                                                    // радиус вписанной окружности
-	double radius_outside();                                                   // радиус описанной окружности
+	//Ввод треугольника
+	friend istream& operator>>(istream& in, triangle& abc);
+	//Определить вид треугольника
+	void define_kind();
+	//Определить, существует ли треугольник
+	bool exists();
+	//Радиус вписанной окружности
+	double radius_inside();
+	//Радиус описанной окружности
+	double radius_outside();
 	
 private:
-	point* abc_apexes;
+	bool was_checked_existence = false;
 };
