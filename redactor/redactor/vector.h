@@ -1,5 +1,6 @@
 #pragma once
 #include "segment.h"
+#include <cmath>
 class myvector:public segment
 {
 public:
@@ -13,6 +14,8 @@ public:
 	double get_y();
 	//Деструктор
 	~myvector();
+	//Вычисление угла между векторами
+	friend double angel(myvector &v1,myvector &v2);
 private:
 	//Координаты вектора
 	double x_, y_;
