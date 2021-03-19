@@ -4,17 +4,27 @@
 #include <vector>
 #include "point.h"
 using namespace std;
+
 class line
 {
 public:
-	line(point& p1,point& p2);//конструктор пр€мой
-	point* get_first();//получить первую точку
-	point* get_second();//получить вторую точку
-	void print();//выводу уравнении€ пр€мой в виде ax+by+c=0
-	void param();//вывод параметрического уравнени€ пр€мой
-	void normal();//выводит вектор нормали
-	void guide();//выводит направл€ющие вектора
-	void koef(double &a,double &b);//считает коэфициенты в уравнении пр€€мой ax+by+c=0 при x и y
+	// онструктор пр€мой
+	line(point& p1,point& p2);
+	//ѕолучить первую точку
+	point* get_first();
+	//ѕолучить вторую точку
+	point* get_second();
+	//¬ывод уравнении€ пр€мой в виде ax+by+c=0
+	void print();
+	//¬ывод параметрического уравнени€ пр€мой
+	void param();
+	//¬ыводит вектор нормали
+	void normal();
+	//¬ыводит направл€ющие вектора
+	void guide();
+	//—читает коэфициенты в уравнении пр€мой ax+by+c=0 при x и y
+	void koef(double &a,double &b);
+
 protected:
 	point* _p1;
 	point* _p2;
