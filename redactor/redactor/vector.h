@@ -16,6 +16,7 @@ public:
 	~myvector();
 	//Вычисление угла между векторами
 	friend double angel(myvector &v1,myvector &v2);
+	friend double vect_prod(myvector& v1, myvector& v2);
 private:
 	//Координаты вектора
 	double x_, y_;

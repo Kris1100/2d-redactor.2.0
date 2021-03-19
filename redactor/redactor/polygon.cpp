@@ -74,7 +74,7 @@ bool polygon::is_convex() {
 		if (sign==0) {
 			if (total < 0) sign = -1;
 			else sign = 1;
-		}//Проверка на некорректный ввод
+		}
 		else {
 			if (total * sign < 0) return false;
 		}

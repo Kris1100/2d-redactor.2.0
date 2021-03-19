@@ -15,6 +15,9 @@ double myvector:: get_x() {
 double myvector::get_y() {
 	return y_;
 }
+double vect_prod(myvector& v1, myvector& v2) {
+	return v1.get_x() * v2.get_x() + v1.get_y() * v2.get_y();
+}
 double angel(myvector &v1,myvector &v2) {
-	return (v1.get_x() * v2.get_x() + v1.get_y() * v2.get_y()) / (abs(v1.len()) * abs(v2.len()));
+	return (vect_prod(v1,v2)) / (abs(v1.len()) * abs(v2.len()));
 }
