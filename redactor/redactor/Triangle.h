@@ -11,13 +11,14 @@ class triangle : public polygon
 public:
 	triangle();                                                                // конструктор
 	~triangle();
+	friend istream& operator>>(istream& in, triangle& abc);                    // ввод
 	void define_kind();                                                        // определить вид треугольника
 	bool exists();                                                             // определяет, существует ли треугольник
-	double square();
-	double perimetr();
+	double square();                                                           // площадь по герону
+	double abc_perimetr();                                                     // периметр
 	double radius_inside();                                                    // радиус вписанной окружности
 	double radius_outside();                                                   // радиус описанной окружности
 	
 private:
-	vector<point> abc_apexes;
+	point* abc_apexes;
 };

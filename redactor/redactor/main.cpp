@@ -139,13 +139,13 @@ void print_menu(int num, int col) {
 	else cout << "7. Вектор\n";
 
 }
-void print_point(int num) {//Tanya,working
+void print_point(int num) {
 	point p(4, 5);
 	cout<<p.get_x()<<" ";
 	cout<<p.get_y()<<" ";
 	p.quarter();
 }
-void print_line(int num) {//Tanya
+void print_line(int num) {
 
 }
 void print_polygon(int num) {
@@ -165,7 +165,7 @@ void print_polygon(int num) {
 	if (p.is_regular(f)) cout << "Многоугольник правильный"<<endl;
 	else cout << "Многоугольник не является правильным"<<endl;
 }
-void print_circle(int num) {//Kristina, this is for you
+void print_circle(int num) {
 	
 	circle c;
 	cin >> c;
@@ -189,13 +189,13 @@ void print_segment(int num) {
 void print_triangle(int num)
 {
 	triangle abc;
-	cout << "Введите координаты вершин:" << endl;
 	cin >> abc;
 	abc.define_kind();
-	//cout << "Площадь: " << abc.square() << endl;
-	//cout << "Периметр: " << abc.perimetr() << endl;
+	cout << "Площадь: " << abc.square() << endl;
+	cout << "Периметр: " << abc.abc_perimetr() << endl;
 	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
 	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
+	//abc.~triangle();
 }
 void print_vector(int num) {
 	point p1, p2;
