@@ -50,8 +50,7 @@ point circle::get_p()
 	return *_p;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 void circle::quarter() const {
 	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0) cout << "Окружность лежит в первой четверти" << endl;
 	else if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0) cout << "Окружность лежит во второй четверти" << endl;
@@ -66,38 +65,6 @@ void circle::intersection() const {
 	else if (_r * _r - (_p->get_y() * _p->get_y()) > 0) cout << "Точка пересечения с осью y:(" << sqrt(_r * _r - (_p->get_y() * _p->get_y())) << " ,0) " << endl;
 	else cout << "Нет пересечения с осями" << endl;
 
-=======
-void circle::quarter() const
-{
-	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0)
-		cout << "Окружность лежит в первой четверти" << endl;
-	else
-		if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0)
-			cout << "Окружность лежит во второй четверти" << endl;
-		else
-			if ((_p->get_x() + _r) < 0 && (_p->get_y() + _r) < 0)
-				cout << "Окружность лежит в третьей четверти" << endl;
-			else
-				if ((_p->get_x() - _r) > 0 && (_p->get_y() + _r) < 0)
-					cout << "Окружность лежит в четвертой четверти" << endl;
-				else
-					cout << "Окружность не лежит полностью ни в какой четверти" << endl;
-}
-
-
-void circle::intersection() const
-{
-	if (_r * _r - (_p->get_x() * _p->get_x()) > 0)
-		cout << "Точка пересечения с осью x:(0, "
-		<< sqrt(_r * _r - (_p->get_x() * _p->get_x())) << ")  " << endl;
-	else
-		if (_r * _r - (_p->get_y() * _p->get_y()) > 0)
-			cout << "Точка пересечения с осью y:("
-			<< sqrt(_r * _r - (_p->get_y() * _p->get_y())) << " ,0) " << endl;
-		else
-			cout << "Окружность не пересекает оси" << endl;
->>>>>>> 7fd4a1c70be8e07ed46fb135d0319a788675f418
-}
 
 void circle::length() const
 {
