@@ -4,6 +4,7 @@
 #include <cmath>
 #include "point.h"
 using namespace std;
+
 class circle
 {
 public:
@@ -29,11 +30,7 @@ public:
 	//Точки пересечения с осями
 	void intersection() const;
 
-
-
 	point get_p();
-
-
 
 private:
 	point* _p;

@@ -4,6 +4,7 @@
 #include "point.h"
 #include"vector.h"
 using namespace std;
+
 class polygon
 {
 public:
@@ -24,13 +25,14 @@ public:
 	//Вывести координаты точек
 	void print();
 	//Задать массив точек
-	void set_point_array(point *vert);
+	void set_point_array(point* vert);
 	//Проверка на выпуклость
 	bool is_convex();
 	//Проверка на правильность
 	bool is_regular(bool convexity);
 	//Деструктор
 	~polygon();
+
 protected:
 	int num_vert_;
 	point* vertex;

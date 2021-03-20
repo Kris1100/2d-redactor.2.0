@@ -24,6 +24,7 @@ istream& operator>>(istream& in, my_round& c)
 	return in;
 }
 
+<<<<<<< HEAD
 void circle::quarter() const {
 	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0) cout << "Круг лежит в первой четверти" << endl;
 	else if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0) cout << "Круг лежит во второй четверти" << endl;
@@ -35,10 +36,68 @@ void circle::quarter() const {
 double my_round::get_square() const
 {
 	return (2 * PI * get_r());
+=======
+void my_round::equation(double a, double b, double r)
+{
+	my_round(a, b, r);
+}
+
+double my_round::get_square() const
+{
+	return (2 * PI * get_r());
+}
+
+double my_round::get_r() const
+{
+	return _r;
+>>>>>>> 7fd4a1c70be8e07ed46fb135d0319a788675f418
 }
 
 double my_round::get_square_of_segment(double a) const
 {
 	return ((a / 2) * get_r() * get_r());
 }
+<<<<<<< HEAD
 	
+=======
+
+double my_round::get_d() const
+{
+	return _r * 2;
+}
+
+void my_round::set_r(double r)
+{
+	_r = r;
+}
+
+point my_round::get_p()
+{
+	return *_p;
+}
+
+void my_round::quarter() const
+{
+	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0)
+		cout << "1";
+	if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0)
+		cout << "2";
+	if ((_p->get_x() + _r) < 0 && (_p->get_y() + _r) < 0)
+		cout << "3";
+	if ((_p->get_x() - _r) > 0 && (_p->get_y() + _r) < 0)
+		cout << "4";
+}
+
+void my_round::intersection() const
+{
+	if (_r * _r - (_p->get_x() * _p->get_x()) > 0)
+		cout << "(0, " << sqrt(_r * _r - (_p->get_x() * _p->get_x())) << ")  ";
+	if (_r * _r - (_p->get_y() * _p->get_y()) > 0)
+		cout << "(" << sqrt(_r * _r - (_p->get_y() * _p->get_y())) << " ,0)  ";
+}
+
+double my_round::length() const
+{
+	return (get_r() * PI * 2);
+}
+>>>>>>> 7fd4a1c70be8e07ed46fb135d0319a788675f418

@@ -4,23 +4,33 @@
 triangle::triangle()
 {
 	point* vert = new point[3];
-	set_point_array(vert);
-	for (int i = 0; i < 3; i++)
-		abc_apexes.push_back(vertex[i]);
+	vertex = vert;
 }
 
 triangle::~triangle()
 {
-	abc_apexes.clear();
 	delete[]vertex;
+	vertex = nullptr;
+}
+
+std::istream& operator>>(istream& in, triangle& abc)
+{
+	double x, y;
+	cout << "Введите координаты вершин:" << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		cin >> x >> y;
+		abc.vertex[i].set_x(x);
+		abc.vertex[i].set_y(y);
+	}
+	return in;
 }
 
 bool triangle::exists()
 {
-	triangle abc;
-	point a = abc.abc_apexes[0];
-	point b = abc.abc_apexes[1];
-	point c = abc.abc_apexes[2];
+	point a = vertex[0];
+	point b = vertex[1];
+	point c = vertex[2];
 	segment ab(a,b);
 	segment bc(b,c);
 	segment ac(a,c);
@@ -32,43 +42,17 @@ bool triangle::exists()
 	return true;
 }
 
-double triangle::square()
-{
-	triangle abc;
-	point a = abc.abc_apexes[0];
-	point b = abc.abc_apexes[1];
-	point c = abc.abc_apexes[2];
-	segment ab(a, b);
-	segment bc(b, c);
-	segment ac(a, c);
-	return sqrt(abc.perimetr() * (abc.perimetr() - ab.len()) * 
-		(abc.perimetr() - ac.len()) * (abc.perimetr() - bc.len()));
-}
-
-double triangle::perimetr()
-{
-	triangle abc;
-	point a = abc.abc_apexes[0];
-	point b = abc.abc_apexes[1];
-	point c = abc.abc_apexes[2];
-	segment ab(a, b);
-	segment bc(b, c);
-	segment ac(a, c);
-	return ab.len() + bc.len() + ac.len();
-}
-
 void triangle::define_kind()
 {
-	triangle abc;
-	point a = abc.abc_apexes[0];
-	point b = abc.abc_apexes[1];
-	point c = abc.abc_apexes[2];
+	point a = vertex[0];
+	point b = vertex[1];
+	point c = vertex[2];
 	segment ab(a, b);
 	segment bc(b, c);
 	segment ac(a, c);
-	if (ab.len() + bc.len() > ac.len() && ab.len() + ac.len() > bc.len() &&
-		ac.len() + bc.len() > ab.len())
+	if (exists())
 	{
+		was_checked_existence = true;
 		if (ab.len() == bc.len() == ac.len())
 			cout << "Треугольник равносторонний" << endl;
 		else
@@ -80,40 +64,43 @@ void triangle::define_kind()
 			cout << "Треугольник прямоугольный" << endl;
 	}
 	else
-		cout << "Треугольник с такими координатами не существует" << endl;
-	// нужно добавить остро- и тупоугольность
+	{
+		if (!was_checked_existence)
+			cout << "Треугольник с такими координатами не существует" << endl;
+		was_checked_existence = true;
+	}
 }
 
 double triangle::radius_inside()
 {
-	triangle abc;
-	//if (abc.exists())
-		return 2 * abc.square() / abc.perimetr();
-	//else
-	//{
-	//	cout << "Треугольник с такими координатами не существует" << endl;
-	//	return 1;
-	//}
+	if (exists())
+		return 2 * area() / perimetr();
+	else
+	{
+		if (!was_checked_existence)
+			cout << "Треугольник с такими координатами не существует" << endl;
+		return -1;
+	}
 }
 
 double triangle::radius_outside()
 {
-	triangle abc;
-	//if (abc.exists())
-	//{
-		double square = abc.square();
-		square *= 4;
-		point a = abc.abc_apexes[0];
-		point b = abc.abc_apexes[1];
-		point c = abc.abc_apexes[2];
+	if (exists())
+	{
+		double abc_square = area();
+		abc_square *= 4;
+		point a = vertex[0];
+		point b = vertex[1];
+		point c = vertex[2];
 		segment ab(a, b);
 		segment bc(b, c);
 		segment ac(a, c);
-		return ab.len() * bc.len() * ac.len() / square;
-	//}
-	//else
-	//{
-	//	cout << "Треугольник с такими координатами не существует" << endl;
-	//	return 1;
-	//}
+		return ab.len() * bc.len() * ac.len() / abc_square;
+	}
+	else
+	{
+		if (!was_checked_existence)
+			cout << "Треугольник с такими координатами не существует" << endl;
+		return -1;
+	}
 }
