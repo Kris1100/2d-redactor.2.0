@@ -172,9 +172,8 @@ void print_point(int num)
 	cout << "Введите координаты точки" << endl;
 	cin >> x >> y;
 	point p(x, y);
-	cout << "Данная точка лежит в ";
+	cout << "Данная точка лежит ";
 	p.quarter();
-	cout << " четверти" << endl;
 	double a = p.dist();
 	cout << "Расстояние от данной точки до начала координат: " << a << endl;
 	p.bisector();
