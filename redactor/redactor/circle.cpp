@@ -13,7 +13,7 @@ istream& operator>>(istream& in, circle& c) {
 	double x, y, r;
 	cout << "Введите координаты центра и радиус: ";
 	in >> x >> y >> r;
-	c._p = new point(x, y);
+	c._	p = new point(x, y);
 	c.set_r(r);
 	return in;
 }
@@ -39,10 +39,10 @@ point circle::get_p() {
 }
 
 void circle::quarter() const {
-	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0)cout << "Окружность лежит в первой четверти" << endl;
-	else if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0)cout << "Окружность лежит во второй четверти" << endl;
-	else if ((_p->get_x() + _r) < 0 && (_p->get_y() + _r) < 0)cout << "Окружность лежит в третьей четверти" << endl;
-	else if ((_p->get_x() - _r) > 0 && (_p->get_y() + _r) < 0)cout << "Окружность лежит в четвертой четверти" << endl;
+	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0) cout << "Окружность лежит в первой четверти" << endl;
+	else if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0) cout << "Окружность лежит во второй четверти" << endl;
+	else if ((_p->get_x() + _r) < 0 && (_p->get_y() + _r) < 0) cout << "Окружность лежит в третьей четверти" << endl;
+	else if ((_p->get_x() - _r) > 0 && (_p->get_y() + _r) < 0) cout << "Окружность лежит в четвертой четверти" << endl;
 	else cout << "Окружность не лежит полностью ни в какой четверти" << endl;
 }
 
@@ -50,7 +50,7 @@ void circle::quarter() const {
 void circle::intersection() const {
 	if (_r * _r - (_p->get_x() * _p->get_x()) > 0) cout << "Точка пересечения с осью x:(0, " << sqrt(_r * _r - (_p->get_x() * _p->get_x())) << ")  " << endl;
 	else if (_r * _r - (_p->get_y() * _p->get_y()) > 0) cout << "Точка пересечения с осью y:(" << sqrt(_r * _r - (_p->get_y() * _p->get_y())) << " ,0) " << endl;
-	else cout << "Окружность не пересекает оси" << endl;
+	else cout << "Нет пересечения с осями" << endl;
 }
 
 void circle::length() const {
