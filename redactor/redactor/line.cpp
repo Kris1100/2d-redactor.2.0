@@ -20,7 +20,7 @@ point* line::get_second()
 void line::print()
 {
 	double a, b, c;
-	koef(a, b);
+	koef(a, b,c);
 	c = -(_p1->get_x()) * a - (_p1->get_y()) * b;
 	if (a != 0)
 		cout << a << 'x';
@@ -51,8 +51,8 @@ void line::print()
 
 void line::param()
 {
-	double a, b;
-	koef(a, b);
+	double a, b,c;
+	koef(a, b,c);
 	cout << "Параметрическое уравнение" << endl;
 	a = -a;
 	cout << 'x' << '=' << _p1->get_x();
@@ -69,23 +69,24 @@ void line::param()
 
 void line::normal()
 {
-	double a, b;
-	koef(a, b);
+	double a, b,c;
+	koef(a, b,c);
 	cout << "Вектор нормали" << endl;
 	cout << '(' << a << ',' << b << ')' << endl;
 }
 
 void line::guide()
 {
-	double a, b;
-	koef(a, b);
+	double a, b,c;
+	koef(a, b,c);
 	cout << "Направляющие вектора" << endl;
 	cout << '(' << b << ',' << -a << ')' << endl;
 	cout << '(' << -b << ',' << a << ')' << endl;
 }
 
-void line::koef(double& a, double& b)
+void line::koef(double& a, double& b, double& c)
 {
 	a = _p2->get_y() - _p1->get_y();
 	b = _p1->get_x() - _p2->get_x();
+	c = (_p2->get_x() * _p1->get_y())-(_p2->get_y()* _p1->get_x());
 }

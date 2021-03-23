@@ -19,7 +19,7 @@ istream& operator>>(istream& in, circle& c)
 	double x, y, r;
 	cout << "Введите координаты центра и радиус: ";
 	in >> x >> y >> r;
-	c._	p = new point(x, y);
+	c._p = new point(x, y);
 	c.set_r(r);
 	return in;
 }
@@ -64,9 +64,19 @@ void circle::intersection() const {
 	if (_r * _r - (_p->get_x() * _p->get_x()) > 0) cout << "Точка пересечения с осью x:(0, " << sqrt(_r * _r - (_p->get_x() * _p->get_x())) << ")  " << endl;
 	else if (_r * _r - (_p->get_y() * _p->get_y()) > 0) cout << "Точка пересечения с осью y:(" << sqrt(_r * _r - (_p->get_y() * _p->get_y())) << " ,0) " << endl;
 	else cout << "Нет пересечения с осями" << endl;
+}
 
 
 void circle::length() const
 {
 	cout << "Длина окружности: " << (get_r() * PI * 2) << endl;
+}
+line circle::tangent(point& p) {
+	double a = -2 * _p->get_x()+p.get_x();
+	double b = -2 * _p->get_y()+p.get_y();
+	double c = pow(_p->get_x(), 2) + pow(_p->get_y(), 2) - pow(_r, 2);
+	double x2=0,y2= ((-x2 * a) - c) / b;
+	point p2;
+	p2.set_x(x2); p2.set_y(y2);
+	return line(p, p2);
 }

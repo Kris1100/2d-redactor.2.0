@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include "point.h"
+#include "line.h"
 using namespace std;
 
 class circle
@@ -31,7 +32,8 @@ public:
 	void intersection() const;
 
 	point get_p();
-
+	//Возвращает касательную к окружности через данную точку
+	line tangent(point &p);
 private:
 	point* _p;
 	double _r;
