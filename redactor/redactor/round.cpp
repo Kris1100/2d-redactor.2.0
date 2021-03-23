@@ -19,13 +19,13 @@ istream& operator>>(istream& in, my_round& c)
 	double x, y, r;
 	cout << "¬ведите координаты центра и радиус: ";
 	in >> x >> y >> r;
-	c._	p = new point(x, y);
+	c._p = new point(x, y);
 	c.set_r(r);
 	return in;
 }
 
 
-void circle::quarter() const {
+void my_round::quarter() const {
 	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0) cout << " руг лежит в первой четверти" << endl;
 	else if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0) cout << " руг лежит во второй четверти" << endl;
 	else if ((_p->get_x() + _r) < 0 && (_p->get_y() + _r) < 0) cout << " руг лежит в третьей четверти" << endl;
@@ -37,12 +37,10 @@ double my_round::get_square() const
 {
 	return (2 * PI * get_r());
 
+}
 
 
 
-
-double my_round::get_square_of_segment(double a) const
-{
+double my_round::get_square_of_segment(double a) const {
 	return ((a / 2) * get_r() * get_r());
 }
-	
