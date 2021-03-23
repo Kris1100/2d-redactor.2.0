@@ -20,6 +20,8 @@ public:
 	point& get_end();
 	//Длина отрезка
 	double len();
+	//Координаты середины отрезка
+	point middle();
 
 protected:
 	point p1_;
