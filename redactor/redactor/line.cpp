@@ -6,7 +6,9 @@ line::line(point& p1, point& p2)
 	_p1 = new point(p1.get_x(), p1.get_y());
 	_p2 = new point(p2.get_x(), p2.get_y());
 }
-
+line::line(double a, double b, double c) {
+	set_koef(a, b, c);
+}
 point* line::get_first()
 {
 	return _p1;
@@ -16,7 +18,9 @@ point* line::get_second()
 {
 	return _p2;
 }
-
+void line::set_koef(double& a, double& b, double& c) {
+	_a = a; _b = b; _c = c;
+}
 void line::print()
 {
 	double a, b, c;

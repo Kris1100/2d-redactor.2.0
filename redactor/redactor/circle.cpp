@@ -75,8 +75,5 @@ line circle::tangent(point& p) {
 	double a = -2 * _p->get_x()+p.get_x();
 	double b = -2 * _p->get_y()+p.get_y();
 	double c = pow(_p->get_x(), 2) + pow(_p->get_y(), 2) - pow(_r, 2);
-	double x2=0,y2= ((-x2 * a) - c) / b;
-	point p2;
-	p2.set_x(x2); p2.set_y(y2);
-	return line(p, p2);
+	return line(a, b, c);
 }
