@@ -63,6 +63,7 @@ double polygon::perimetr()
 	}
 	segment s(vertex[num_vert_ - 1], vertex[0]);
 	p += s.len();
+	s.~segment();
 	return p;
 }
 
@@ -98,11 +99,15 @@ bool polygon::is_convex()
 	//стрелки поворот будет всегда налево, а при обходе по часовой - направо.
 	//ƒл€ поворота налево это(значение формулы в total) значение будет положительным, а дл€ поворота направо - отрицательным.
 	int sign = 0;
+	//ѕеребираем все тройки вершин, к которым можем циклически обратитьс€
 	for (int i = 0; i < num_vert_ - 2; i++)
 	{
+		//«ададим два вектора через три вершины (одна вершина обща€)
 		myvector v1(vertex[i], vertex[i + 1]);
 		myvector v2(vertex[i + 1], vertex[i + 2]);
+		//¬ычисл€ем векторное произведение данных векторов
 		double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
+		//ѕровер€ем, сохран€етс€ ли знак
 		if (sign == 0)
 		{
 			if (total < 0)
@@ -113,9 +118,8 @@ bool polygon::is_convex()
 		else
 			if (total * sign < 0)
 				return false;
-		v1.~myvector();
-		v2.~myvector();
 	}
+	//ќтдельно рассматриваем две последние тройки, делаем тоже самое
 	myvector v1(vertex[num_vert_ - 1], vertex[0]);
 	myvector v2(vertex[0], vertex[1]);
 	myvector v3(vertex[num_vert_ - 2], vertex[num_vert_ - 1]);
@@ -133,30 +137,35 @@ bool polygon::is_convex()
 
 bool polygon::is_regular(bool convexity)
 {
+	//ѕроверка на выпуклость. Ќевыпуклый многоугольник не €вл€етс€ правильным.
+	//ћногоугольник €вл€етс€ правильным, если все его стороны и углы равны
 	if (not convexity)
 		return false;
 	else
 	{
 		double side = -1; double ang = -1;
+		//ѕройдемс€ по всем сторонам, кроме последней
 		for (int i = 0; i < num_vert_ - 1; i++)
 		{
 			segment s(vertex[i], vertex[i + 1]);
+			//≈сли мы первый раз вычисл€ем длину стороны, то нам пока не с чем ее сранивать. «ададим сторону (шаблон)
 			if (side == -1)
 				side = s.len();
 			else
+				//≈сли очередна€ сторона не равна шаблону, то многоугольник неправильный
 				if (side != s.len())
 					return false;
+			//—оздаем два вектора, между которыми будем определ€ть угол
 			myvector v1(vertex[i], vertex[i + 1]);
 			myvector v2(vertex[i + 1], vertex[i + 2]);
+			//ƒалее логика аналогично проберке сторон
 			if (ang == -1)
 				ang = angel(v1, v2);
 			else
 				if (ang != angel(v1, v2))
 					return false;
-			s.~segment();
-			v1.~myvector();
-			v2.~myvector();
 		}
+		//ќтдельна€ проверка дл€ последней стороны, тк к ней трудно обратитьс€ с помощью цикла
 		segment s(vertex[num_vert_ - 1], vertex[0]);
 		myvector v1(vertex[num_vert_ - 1], vertex[0]);
 		myvector v2(vertex[0], vertex[1]);
@@ -164,7 +173,10 @@ bool polygon::is_regular(bool convexity)
 			return false;
 		if (ang != angel(v1, v2))
 			return false;
+		//”далим вспомогательные элементы
 		s.~segment();
-		return true;
+		v1.~myvector();
+		v2.~myvector();
+ 		return true;
 	}
 }
