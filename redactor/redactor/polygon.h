@@ -14,8 +14,6 @@ public:
 	friend std::istream& operator>>(std::istream& in, polygon& p);
 	//Вывод всей информации по многоугольнику
 	friend std::ostream& operator<<(std::ostream& out, polygon& p);
-	//Установить количество углов
-	void set_num(int num_vert);
 	//Получить количество углов
 	int get_num();
 	//Вычислить периметр
@@ -24,8 +22,6 @@ public:
 	double area();
 	//Вывести координаты точек
 	void print();
-	//Задать массив точек
-	void set_point_array(point* vert);
 	//Проверка на выпуклость
 	bool is_convex();
 	//Проверка на правильность
@@ -36,4 +32,9 @@ public:
 protected:
 	int num_vert_;
 	point* vertex;
+private:
+	//Установить количество углов
+	void set_num(int num_vert);
+	//Задать массив точек
+	void set_point_array(point* vert);
 };
