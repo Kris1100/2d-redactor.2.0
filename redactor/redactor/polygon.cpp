@@ -48,12 +48,12 @@ void polygon::set_num(int num_vert)
 	num_vert_ = num_vert;
 }
 
-int polygon::get_num()
+int polygon::get_num()const
 {
 	return num_vert_;
 }
 
-double polygon::perimetr()
+double polygon::perimetr() const
 {
 	double p = 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
@@ -67,7 +67,7 @@ double polygon::perimetr()
 	return p;
 }
 
-double polygon::area()
+double polygon::area()const
 {
 	double s1 = 0, s2 = 0, s = 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
@@ -84,7 +84,7 @@ double polygon::area()
 	return s;
 }
 
-void polygon::print()
+void polygon::print() const
 {
 	for (int i = 0; i < num_vert_; i++)
 	{
@@ -92,7 +92,7 @@ void polygon::print()
 	}
 }
 
-bool polygon::is_convex()
+bool polygon::is_convex() const
 {
 	//Многоугольник будет выпуклым если при его обходе в каждой тройке последовательных вершин 
 	//происходит поворот всегда в одну и ту же сторону. При обходе многоугольника против часовой
@@ -135,7 +135,7 @@ bool polygon::is_convex()
 	return true;
 }
 
-bool polygon::is_regular(bool convexity)
+bool polygon::is_regular(bool convexity) const
 {
 	//Проверка на выпуклость. Невыпуклый многоугольник не является правильным.
 	//Многоугольник является правильным, если все его стороны и углы равны

@@ -15,17 +15,17 @@ public:
 	//Вывод всей информации по многоугольнику
 	friend std::ostream& operator<<(std::ostream& out, polygon& p);
 	//Получить количество углов
-	int get_num();
+	int get_num() const;
 	//Вычислить периметр
-	double perimetr();
+	double perimetr() const;
 	//Вычислить площадь
-	double area();
+	double area() const;
 	//Вывести координаты точек
-	void print();
+	void print() const;
 	//Проверка на выпуклость
-	bool is_convex();
+	bool is_convex() const;
 	//Проверка на правильность
-	bool is_regular(bool convexity);
+	bool is_regular(bool convexity) const;
 	//Деструктор
 	~polygon();
 

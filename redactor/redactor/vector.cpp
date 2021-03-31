@@ -16,12 +16,12 @@ void myvector::set_coord(double x, double y)
 	y_ = y;
 }
 
-double myvector::get_x()
+double myvector::get_x() const
 {
 	return x_;
 }
 
-double myvector::get_y()
+double myvector::get_y() const
 {
 	return y_;
 }

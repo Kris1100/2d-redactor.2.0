@@ -10,9 +10,9 @@ public:
 	//Установить координаты вектора
 	void set_coord(double x, double y);
 	//Получить x координату
-	double get_x();
+	double get_x() const;
 	//Получить y координату
-	double get_y();
+	double get_y() const;
 	//Деструктор
 	~myvector();
 	//Вычисление угла между векторами
