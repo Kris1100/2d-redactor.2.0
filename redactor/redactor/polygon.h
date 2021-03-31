@@ -8,16 +8,16 @@ using namespace std;
 class polygon
 {
 public:
-	//Конструктор многоугольника
+	//Конструктор многоугольника            //полагаю, что нужно определение вырожденного случая
 	polygon(int num_vert = 3);
 	//Ввод многоугольника 
-	friend std::istream& operator>>(std::istream& in, polygon& p);
+	friend std::istream& operator>>(std::istream& in, polygon& p);      //std точно нужно?
 	//Вывод всей информации по многоугольнику
 	friend std::ostream& operator<<(std::ostream& out, polygon& p);
 	//Получить количество углов
 	int get_num() const;
 	//Вычислить периметр
-	double perimetr() const;
+	double perimetr() const; //возможно, стоит переименовать на calc_perimetr
 	//Вычислить площадь
 	double area() const;
 	//Вывести координаты точек

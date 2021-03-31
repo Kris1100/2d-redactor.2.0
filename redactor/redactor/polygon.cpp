@@ -6,13 +6,13 @@ polygon::polygon(int num_vert)
 		num_vert = 3;
 	set_num(num_vert);
 	point* vert = new point[num_vert];
-	set_point_array(vert);
+	set_point_array(vert);                  // есть конструктор, а есть инициализаци€, возможно, стоит разделить (+init)
 }
 
 polygon::~polygon()
 {
 	delete[] vertex;
-	vertex = 0;
+	vertex = 0;             // не nullptr?
 }
 
 std::istream& operator>>(istream& in, polygon& p)
@@ -38,7 +38,7 @@ std::ostream& operator<<(ostream& out, polygon& p)
 	return out;
 }
 
-void polygon::set_point_array(point* vert)
+void polygon::set_point_array(point* vert) //маленькие функции можно писать в заголовочном файле
 {
 	vertex = vert;
 }
@@ -67,9 +67,9 @@ double polygon::perimetr() const
 	return p;
 }
 
-double polygon::area()const
+double polygon::area() const
 {
-	double s1 = 0, s2 = 0, s = 0;
+	double s1 = 0, s2 = 0, s = 0;                          // можно добавить комментарий с общей идеей: € дурачок, мне непон€тно
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
 		s1 += vertex[i].get_x() * vertex[i + 1].get_y();
@@ -135,7 +135,7 @@ bool polygon::is_convex() const
 	return true;
 }
 
-bool polygon::is_regular(bool convexity) const
+bool polygon::is_regular(bool convexity) const//не нужно ли передавать переменную по ссылке? кажетс€, она не мен€етс€, нужен конст
 {
 	//ѕроверка на выпуклость. Ќевыпуклый многоугольник не €вл€етс€ правильным.
 	//ћногоугольник €вл€етс€ правильным, если все его стороны и углы равны
