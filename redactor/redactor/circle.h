@@ -9,7 +9,7 @@ using namespace std;
 class circle
 {
 public:
-	//Перезагрузка вывода
+	//Перезагрузка вывода                 //последовательность функций? разделение на смысловые блоки?
 	friend ostream& operator<<(ostream& out, const circle& c);
 	//Перезагрузка ввода
 	friend istream& operator>>(istream& in, circle& p);
@@ -23,17 +23,18 @@ public:
 	//Возвращает радиус
 	double get_r()const;
 	//Сеттер радиуса
-	void set_r(double r = 1.0);
+	void set_r(double r = 1.0); //прриватная?
 	//Четверть, если окружность полностью в ней
 	void quarter() const;
 	//Возвращает длину окружности
 	void length() const;
 	//Точки пересечения с осями
-	void intersection() const;
+	void intersection() const; // может, тогда получить на вход точки и поменять их в функции, чтобы она была полезна
 
-	point get_p();
+	point get_p(); //конст?
 	//Возвращает касательную к окружности через данную точку
 	line tangent(point &p);
+	//деструктор?
 private:
 	point* _p;
 	double _r;
