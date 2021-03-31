@@ -1,4 +1,5 @@
 #include "Menu.h"
+
 void print_menu(int num, int col)
 {
 	int col2;

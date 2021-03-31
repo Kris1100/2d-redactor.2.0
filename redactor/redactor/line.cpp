@@ -6,10 +6,13 @@ line::line(point& p1, point& p2)
 	_p1 = new point(p1.get_x(), p1.get_y());
 	_p2 = new point(p2.get_x(), p2.get_y());
 }
-line::line(double a, double b, double c) {
+
+line::line(double a, double b, double c)
+{
 	set_koef(a, b, c);
 }
-point* line::get_first()
+
+point* line::get_first() // маленькие функции можно писать в заголовочном файле
 {
 	return _p1;
 }
@@ -18,10 +21,13 @@ point* line::get_second()
 {
 	return _p2;
 }
-void line::set_koef(double& a, double& b, double& c) {
+
+void line::set_koef(double& a, double& b, double& c) 
+{
 	_a = a; _b = b; _c = c;
 }
-void line::print()
+
+void line::print() //не хватает комментари€ - общей идеи, не сразу пон€тно, что происходит
 {
 	double a, b, c;
 	koef(a, b,c);
@@ -53,7 +59,7 @@ void line::print()
 	cout << '=' << 0 << endl;
 }
 
-void line::param()
+void line::param() // пусть возвращает что-то или, лучше в данном случае, получает три переменные и записывает в них значени€
 {
 	double a, b,c;
 	koef(a, b,c);
@@ -71,7 +77,7 @@ void line::param()
 		cout << '+' << a << endl;
 }
 
-void line::normal()
+void line::normal() //непон€тное название + может, стоит вернуть вектор?
 {
 	double a, b,c;
 	koef(a, b,c);
@@ -79,7 +85,7 @@ void line::normal()
 	cout << '(' << a << ',' << b << ')' << endl;
 }
 
-void line::guide()
+void line::guide() // то же самое
 {
 	double a, b,c;
 	koef(a, b,c);

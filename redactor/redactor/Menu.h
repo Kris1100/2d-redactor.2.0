@@ -6,7 +6,7 @@
 #include "Triangle.h"
 #include "vector.h"
 #include "point.h"
-#include "circle.h"
+#include "circle.h" // нужно определить математические константы
 
 #include <iostream>
 #include <Windows.h>
