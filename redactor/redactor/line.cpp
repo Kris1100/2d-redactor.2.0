@@ -1,38 +1,60 @@
 #include "line.h"
+#include "vector.h"
 using namespace std;
 
-line::line(point& p1, point& p2)
+line::line(point const& p1, point const& p2)
 {
-	_p1 = new point(p1.get_x(), p1.get_y());
-	_p2 = new point(p2.get_x(), p2.get_y());
+	_p1 = point(p1.get_x(), p1.get_y());
+	_p2 = point(p2.get_x(), p2.get_y());
 }
 
-line::line(double a, double b, double c)
+line::line(double a=1, double b=1, double c=0)
 {
-	set_koef(a, b, c);
+	set_a(a);
+	set_b(b);
+	set_c(c);
 }
 
-point* line::get_first() // маленькие функции можно писать в заголовочном файле
+point line::get_first() const
 {
 	return _p1;
 }
 
-point* line::get_second()
+point line::get_second()const
 {
 	return _p2;
 }
 
-void line::set_koef(double& a, double& b, double& c) 
+double line::get_a()const
 {
-	_a = a; _b = b; _c = c;
+	return _a;
+}
+double line::get_b()const
+{
+	return _b;
+}
+double line::get_c()const
+{
+	return _c;
 }
 
-void line::print() //не хватает комментария - общей идеи, не сразу понятно, что происходит
+void line::set_a(double& a) 
+{
+	_a = a;
+}
+void line::set_b(double& b)
+{
+	_b = b;
+}
+void line::set_c(double& c)
+{
+	_c = c;
+}
+
+void line::print() 
 {
 	double a, b, c;
-<<<<<<< HEAD
-	koef(a, b);
-	c = -(_p1->get_x())*a - (_p1->get_y())*b;
+	koef(a, b,c);
 	if (a != 0)cout << a << 'x';
 	else if (a == 1)cout << 'x';
 	else if (a == -1)cout << '-x';
@@ -44,103 +66,44 @@ void line::print() //не хватает комментария - общей идеи, не сразу понятно, что 
 	else if (c > 0)cout << '+' << c;
 	cout << '='<< 0<< endl;
 }
-void line::param() {
-	double a, b;
-	koef(a, b);
+
+void line::print_param() 
+{
+	double a, b,c;
+	koef(a, b,c);
+	myvector v=normal_vector();
 	cout << "Параметрическое уравнение" << endl;
-	a = -a;
-	cout <<'x'<< '='<<_p1->get_x() ;
-	if (b < 0)cout << b << 't' << endl;
-	else cout << '+' << b << endl;
-	cout << 'y'<<'=' << _p1->get_y();
-	if (a < 0)cout << a << 't' << endl;
-	else cout << '+' << a << endl;
-}
-void line::normal() {
-	double a, b;
-	koef(a, b);
-	cout << "Вектор нормали" << endl;
-	cout << '(' << a << ',' << b << ')'<<endl;
-}
-void line::guide() {
-	double a, b;
-	koef(a, b);
-	cout << "Направляющие вектора" << endl;
-	cout << '(' << b << ',' << -a << ')'<<endl;
-	cout << '(' << -b << ',' << a << ')'<<endl;
-}
-void line::koef(double &a, double &b) {
-	a = _p2->get_y() - _p1->get_y();
-	b = _p1->get_x() - _p2->get_x();
-=======
-	koef(a, b,c);
-	c = -(_p1->get_x()) * a - (_p1->get_y()) * b;
-	if (a != 0)
-		cout << a << 'x';
+	cout << 'x' << '=' << _p1.get_x();
+	if (v.get_x() < 0)
+		cout << v.get_x() << 't' << endl;
 	else
-		if (a == 1)
-			cout << 'x';
-		else
-			if (a == -1)
-				cout << '-x';
-	if (b < 0 && b != -1)
-		cout << b << 'y';
+		cout << '+' << v.get_x() << endl;
+	cout << 'y' << '=' << _p1.get_y();
+	if (v.get_y() < 0)
+		cout << v.get_y() << 't' << endl;
 	else
-		if (b == -1)
-			cout << '-' << 'y';
-		else
-			if (b > 0 && b != 1)
-				cout << '+' << b << 'y';
-			else
-				if (b == 1)
-					cout << '+' << 'y';
-	if (c < 0)
-		cout << c;
-	else
-		if (c > 0)
-			cout << '+' << c;
-	cout << '=' << 0 << endl;
+		cout << '+' << v.get_y() << endl;
 }
 
-void line::param() // пусть возвращает что-то или, лучше в данном случае, получает три переменные и записывает в них значения
+myvector line::normal_vector()
 {
-	double a, b,c;
-	koef(a, b,c);
-	cout << "Параметрическое уравнение" << endl;
-	a = -a;
-	cout << 'x' << '=' << _p1->get_x();
-	if (b < 0)
-		cout << b << 't' << endl;
-	else
-		cout << '+' << b << endl;
-	cout << 'y' << '=' << _p1->get_y();
-	if (a < 0)
-		cout << a << 't' << endl;
-	else
-		cout << '+' << a << endl;
+	double a, b, c;
+	koef(a, b, c);
+	point p1(0,0), p2(a,b);
+	return myvector(p1, p2);
 }
 
-void line::normal() //непонятное название + может, стоит вернуть вектор?
+myvector line::guide_vector() 
 {
-	double a, b,c;
-	koef(a, b,c);
-	cout << "Вектор нормали" << endl;
-	cout << '(' << a << ',' << b << ')' << endl;
+	double a, b, c;
+	koef(a, b, c);
+	point p1(0,0), p2(b,-a);
+	return myvector(p1, p2);
 }
 
-void line::guide() // то же самое
+void line:: koef( double& a, double& b, double& c)
 {
-	double a, b,c;
-	koef(a, b,c);
-	cout << "Направляющие вектора" << endl;
-	cout << '(' << b << ',' << -a << ')' << endl;
-	cout << '(' << -b << ',' << a << ')' << endl;
-}
-
-void line::koef(double& a, double& b, double& c)
-{
-	a = _p2->get_y() - _p1->get_y();
-	b = _p1->get_x() - _p2->get_x();
-	c = (_p2->get_x() * _p1->get_y())-(_p2->get_y()* _p1->get_x());
->>>>>>> 87faf22882e6d0dae09aff745bb27cebe9b7299a
+	a = _p2.get_y() - _p1.get_y();
+	b = _p1.get_x() - _p2.get_x();
+	c = _p1.get_y() *( _p2.get_x()-_p1.get_x())+_p1.get_x()*(_p1.get_y()- _p2.get_y());
 }

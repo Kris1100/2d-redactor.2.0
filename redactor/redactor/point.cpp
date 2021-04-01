@@ -26,22 +26,20 @@ void point::set_y(double y)
 	_y = y;
 }
 
-void point::quarter()
+double point::quarter()
 {
-	if (_x > 0 && _y > 0)
-		cout << "в 1 четверти"<<endl;
-	if (_x < 0 && _y > 0)
-		cout << "в 2 четверти"<<endl;
-	if (_x < 0 && _y < 0)
-		cout << "в 3 четверти"<<endl;
-	if (_x > 0 && _y < 0)
-		cout << "в 4 четверти"<<endl;
-	if (_x == 0 && _y!=0)
-		cout << "на оси Oy"<<endl;
-	if (_y == 0 && _x != 0)
-		cout << "на оси Ox"<<endl;
-	if (_y == 0 && _x == 0)
-		cout << "в начале координат"<<endl;
+	int res;
+	if (_x >= 0 && _y >= 0)
+		res=1;
+	if (_x <= 0 && _y >= 0)
+		res=2;
+	if (_x <= 0 && _y <= 0)
+		res=3;
+	if (_x >= 0 && _y <= 0)
+		res=4;
+	if (_x == 0 && _y == 0)
+		res = 0;
+	return res;
 }
 
 double point::dist()
@@ -50,17 +48,13 @@ double point::dist()
 	res = _x * _x + _y * _y;
 	return sqrt(res);
 }
-<<<<<<< HEAD
-void point::bisector() {
-	if (abs(_x) == abs(_y)) cout << "Данная точка принадлежит биссектрисе координатной плоскости";
-	else cout << "Данная точка не принадлежит биссектрисе координатной плоскости";
-=======
 
-void point::bisector()
+bool point::bisector()
 {
-	if (abs(_x) == abs(_y))
-		cout << "Данная точка принадлежит биссектрисе координатной плоскости";
+	bool f;
+	if (abs(_x) == abs(_y)) 
+		f = true;
 	else
-		cout << "Данная точка не принадлежит биссектрисе координатной плоскости";
->>>>>>> 87faf22882e6d0dae09aff745bb27cebe9b7299a
+		f=false;
+	return f;
 }

@@ -87,11 +87,15 @@ void print_point(int num)
 	cout << "¬ведите координаты точки" << endl;
 	cin >> x >> y;
 	point p(x, y);
-	cout << "ƒанна€ точка лежит ";
-	p.quarter();
-	double a = p.dist();
-	cout << "–ассто€ние от данной точки до начала координат: " << a << endl;
-	p.bisector();
+	cout << "ƒанна€ точка лежит в ";
+	double a=p.quarter();
+	cout << a << "четверти" << endl;
+	double b = p.dist();
+	cout << "–ассто€ние от данной точки до начала координат: " << b << endl;
+	if (p.bisector() == true) 
+		cout << "ƒанна€ точка лежит на биссектрисе координатной плоскости";
+	else
+		cout << "ƒанна€ точка не лежит на биссектрисе координатной плоскости";
 	cout << endl;
 }
 
@@ -107,9 +111,7 @@ void print_line(int num)
 	point p2(x2, y2);
 	line l(p1, p2);
 	l.print();
-	l.param();
-	l.normal();
-	l.guide();
+	l.print_param();
 }
 
 void print_polygon(int num)
