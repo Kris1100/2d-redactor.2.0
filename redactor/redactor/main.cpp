@@ -1,38 +1,19 @@
 #pragma once
-#include "polygon.h"
-#include "point.h"
-#include "line.h"
-#include "segment.h"
-#include "Triangle.h"
-#include "vector.h"
-#include "point.h"
-
-#include <iostream>
-#include <Windows.h>
-#include <conio.h>
+#include"Menu.h"
 using namespace std;
-void SetColor(int text, int Fon);
-void print_menu(int num,int col);
-void print_point(int num);// Меню для точки
-void print_line(int num);// Меню для прямой
-void print_polygon(int num);// Меню для многоугольника
-void print_circle(int num);// Меню для окружности
-void print_segment(int num);// Меню для отрезка
-void print_triangle(int num);// Меню для треугольника
-void print_vector(int num);// Меню для вектора*/
-
-
-
-int main() {
+int main()
+{
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	SetColor(1, 15);
 
 	int item = 0;
 	print_menu(0, 1);
-	while (true) {
+	while (true)
+	{
 		int key = _getch();
-		if (key == 13) {
+		if (key == 13)
+		{
 			switch (item)
 			{
 			case 0: return 0;
@@ -48,7 +29,8 @@ int main() {
 				break;
 			}
 		}
-		else {
+		else
+		{
 
 			switch (key)
 			{
@@ -67,8 +49,10 @@ int main() {
 
 			}
 			print_menu(item, 15);
-			if (item < 0) item = 7;
-			if (item > 7) item = 0;
+			if (item < 0)
+				item = 7;
+			if (item > 7)
+				item = 0;
 
 		}
 
@@ -77,6 +61,7 @@ int main() {
 	system("pause");
 	return 0;
 
+<<<<<<< HEAD
 }
 void print_menu(int num, int col) {
 	int col2;
@@ -245,4 +230,6 @@ void print_vector(int num) {
 void SetColor(int text, int Fon) {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(h, (Fon << 4) + text);
+=======
+>>>>>>> 87faf22882e6d0dae09aff745bb27cebe9b7299a
 }

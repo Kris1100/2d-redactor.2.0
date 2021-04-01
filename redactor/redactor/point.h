@@ -2,17 +2,27 @@
 #include<iostream>
 #include <cmath>
 using namespace std;
+
 class point
 {
 public:
-	point(double x=0, double y=0);//конструктор точки
-	double get_x();
+	// онструктор точки
+	point(double x=0, double y=0);
+	//ѕолучить координату х
+	double get_x() const;
+	//«адать координату х
 	void set_x(double x);
-	double get_y();
+	//ѕолучить координату у
+	double get_y() const;
+	//«адать координату у
 	void set_y(double y);
-	void quarter();//определение в какой четверти лежит точка
-	double dist();//рассто€ние от начала координат
-	void bisector();//лежит ли точка на биссектрисе координатной плоскости
+	//ќпределить, в какой четверти лежит точка
+	void quarter();
+	//–ассто€ние от начала координат
+	double dist();
+	//Ћежит ли точка на биссектрисе координатной плоскости
+	void bisector();
+
 private:
 	double _x, _y;
 };

@@ -9,15 +9,21 @@ using namespace std;
 class triangle : public polygon
 {
 public:
-	triangle();                                                                // конструктор
+	//Конструктор треугольника               //стоит добавить неопределённость, т е вырожденный случай
+	triangle();
+	//Деструктор треугольника                // деструктор наследуется, но должен вызываться виртуально
 	~triangle();
-	void define_kind();                                                        // определить вид треугольника
-	bool exists();                                                             // определяет, существует ли треугольник
-	double square();
-	double perimetr();
-	double radius_inside();                                                    // радиус вписанной окружности
-	double radius_outside();                                                   // радиус описанной окружности
+	//Ввод треугольника
+	friend istream& operator>>(istream& in, triangle& abc);
+	//Определить вид треугольника
+	void define_kind();                              //функция должна что-то возвращать
+	//Определить, существует ли треугольник
+	bool exists();
+	//Радиус вписанной окружности
+	double radius_inside();
+	//Радиус описанной окружности
+	double radius_outside();
 	
 private:
-	vector<point> abc_apexes;
+	bool was_checked_existence = false;
 };
