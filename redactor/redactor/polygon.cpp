@@ -6,13 +6,13 @@ polygon::polygon(int num_vert)
 		num_vert = 3;
 	set_num(num_vert);
 	point* vert = new point[num_vert];
-	set_point_array(vert);                  // есть конструктор, а есть инициализаци€, возможно, стоит разделить (+init)
+	set_point_array(vert);                  
 }
 
 polygon::~polygon()
 {
 	delete[] vertex;
-	vertex = 0;             // не nullptr?
+	vertex = nullptr;
 }
 
 std::istream& operator>>(istream& in, polygon& p)
@@ -38,7 +38,7 @@ std::ostream& operator<<(ostream& out, polygon& p)
 	return out;
 }
 
-void polygon::set_point_array(point* vert) //маленькие функции можно писать в заголовочном файле
+void polygon::set_point_array(point* vert) 
 {
 	vertex = vert;
 }
@@ -135,7 +135,7 @@ bool polygon::is_convex() const
 	return true;
 }
 
-bool polygon::is_regular(bool convexity) const//не нужно ли передавать переменную по ссылке? кажетс€, она не мен€етс€, нужен конст
+bool polygon::is_regular(bool convexity) const
 {
 	//ѕроверка на выпуклость. Ќевыпуклый многоугольник не €вл€етс€ правильным.
 	//ћногоугольник €вл€етс€ правильным, если все его стороны и углы равны
@@ -160,9 +160,9 @@ bool polygon::is_regular(bool convexity) const//не нужно ли передавать переменну
 			myvector v2(vertex[i + 1], vertex[i + 2]);
 			//ƒалее логика аналогично проберке сторон
 			if (ang == -1)
-				ang = angel(v1, v2);
+				ang = angle(v1, v2);
 			else
-				if (ang != angel(v1, v2))
+				if (ang != angle(v1, v2))
 					return false;
 		}
 		//ќтдельна€ проверка дл€ последней стороны, тк к ней трудно обратитьс€ с помощью цикла
@@ -171,7 +171,7 @@ bool polygon::is_regular(bool convexity) const//не нужно ли передавать переменну
 		myvector v2(vertex[0], vertex[1]);
 		if (side != s.len())
 			return false;
-		if (ang != angel(v1, v2))
+		if (ang != angle(v1, v2))
 			return false;
 		//”далим вспомогательные элементы
 		s.~segment();

@@ -2,33 +2,31 @@
 #include "point.h"
 #include <cmath>
 #include <math.h>
+#include <cassert>
 
 // ласс отрезок
 class segment
 {
 public:
-	// онструктор отрезка                  //если точки совпадают??
-	segment(point& p1, point& p2) {
-		set_extm_points(p1, p2);
-	}
+	// онструктор отрезка
+	segment(point& p1, point& p2);
 	segment() {}
 	//ƒеструктор
 	~segment() {}
-	//«адать крайние точки
-	void set_extm_points(point& p1, point& p2);//приватна€ 
-	                                           //мне кажетс€, что уточнение про крайние лишнее в названии(хот€, может, и нет) - нужно проконсультироватьс€
 	//ѕолучить ссылку на начальную точку (начальна€ - p1_, в классе точка нет разницы, кака€ будет начальной)
-	point& get_start() {   //константные геттеры
+	point get_start() const {  
 		return p1_;
 	}
 	//—сылка на конечную точку
-	point& get_end() {
+	point get_end() const {
 		return p2_;
 	}
+	//«адать крайние точки
+	void set_extm_points(point& p1, point& p2);
 	//ƒлина отрезка
-	double len();
+	double len() const;
 	// оординаты середины отрезка
-	point middle();
+	point middle() const;
 
 protected:
 	point p1_;

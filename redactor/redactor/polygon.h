@@ -11,13 +11,13 @@ public:
 	//Конструктор многоугольника            //полагаю, что нужно определение вырожденного случая
 	polygon(int num_vert = 3);
 	//Ввод многоугольника 
-	friend std::istream& operator>>(std::istream& in, polygon& p);      //std точно нужно?
+	friend std::istream& operator>>(std::istream& in, polygon& p);    
 	//Вывод всей информации по многоугольнику
 	friend std::ostream& operator<<(std::ostream& out, polygon& p);
 	//Получить количество углов
 	int get_num() const;
 	//Вычислить периметр
-	double perimetr() const; //возможно, стоит переименовать на calc_perimetr
+	double perimetr() const;
 	//Вычислить площадь
 	double area() const;
 	//Вывести координаты точек

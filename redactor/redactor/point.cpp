@@ -6,7 +6,7 @@ point::point(double x, double y)
 	set_y(y);
 }
 
-double point::get_x()
+double point::get_x() const
 {
 	return _x;
 }
@@ -16,7 +16,7 @@ void point::set_x(double x)
 	_x = x;
 }
 
-double point::get_y()
+double point::get_y() const
 {
 	return _y;
 }
