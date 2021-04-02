@@ -1,6 +1,7 @@
 #pragma once
 #include"Menu.h"
 using namespace std;
+
 int main()
 {
 	SetConsoleCP(1251);
@@ -31,7 +32,6 @@ int main()
 		}
 		else
 		{
-
 			switch (key)
 			{
 			case 72: item--;  break;
@@ -44,192 +44,14 @@ int main()
 			case 53: item = 5;  break;
 			case 54: item = 6;  break;
 			case 55: item = 7;  break;
-
-
-
 			}
 			print_menu(item, 15);
 			if (item < 0)
 				item = 7;
 			if (item > 7)
 				item = 0;
-
 		}
-
 	}
-
 	system("pause");
 	return 0;
-
-<<<<<<< HEAD
-}
-void print_menu(int num, int col) {
-	int col2;
-	if (col == 1) col2 = 7;
-	else col2 = 1;
-	system("cls");
-	SetColor(15, 1);
-	cout << "\n";
-	SetColor(1, 15);
-	if (num < 0) num = 7;
-	if (num > 7) num = 0;
-	if (num == 0) {
-		SetColor(col, col2);
-		cout << "0. Выход\n";
-		SetColor(1, 15);
-	}
-	else cout << "0. Выход\n";
-	if (num == 1) {
-		SetColor(col, col2);
-		cout << "1. Точка\n";
-		SetColor(1, 15);
-	}
-	else cout << "1. Точка\n";
-	if (num == 2) {
-		SetColor(col, col2);
-		cout << "2. Прямая\n";
-		SetColor(1, 15);
-	}
-	else cout << "2. Прямая\n";
-	if (num == 3) {
-		SetColor(col, col2);
-		cout << "3. Окружность\n";
-		SetColor(1, 15);
-	}
-	else cout << "3. Окружность\n";
-	if (num == 4) {
-		SetColor(col, col2);
-		cout << "4. Треугольник\n";
-		SetColor(1, 15);
-	}
-	else cout << "4. Треугольник\n";
-	if (num == 5) {
-		SetColor(col, col2);
-		cout << "5. Многоугольник\n";
-		SetColor(1, 15);
-	}
-	else cout << "5. Многоугольник\n";
-	if (num == 6) {
-		SetColor(col, col2);
-		cout << "6. Отрезок\n";
-		SetColor(1, 15);
-	}
-	else cout << "6. Отрезок\n";
-	if (num == 7) {
-		SetColor(col, col2);
-		cout << "7. Вектор\n";
-		SetColor(1, 15);
-	}
-	else cout << "7. Вектор\n";
-
-}
-void print_point(int num) {
-	double x, y;
-	cout << "Введите координаты точки" << endl;
-	cin >> x >> y;
-	point p(x, y);
-	cout << "Данная точка лежит в "; 
-	p.quarter();
-	cout<< " четверти"<<endl;
-	double a = p.dist();
-	cout << "Расстояние от данной точки до начала координат: " << a<<endl;
-	p.bisector();
-	cout << endl;
-}
-void print_line(int num) {
-	double x1, y1, x2, y2;
-	cout << "Введите координаты двух точек для задания прямой" << endl;
-	cout << "Введите координаты первой точки" << endl;
-	cin>> x1 >> y1;
-	cout << "Введите координаты второй точки" << endl;
-	cin >> x2 >> y2;
-	point p1(x1, y1);
-	point p2(x2, y2);
-	line l(p1, p2);
-	l.print();
-	l.param();
-	l.normal();
-	l.guide();
-}
-void print_polygon(int num) {
-<<<<<<< HEAD
-	int n;
-	cout << "Введите количество вершин ";
-	cin >> n;
-	polygon p(n);
-=======
-	polygon p(4);
-<<<<<<< HEAD
-=======
-	cout << "Введите координаты вершин многоугольника" << endl;
->>>>>>> 12765ef26f1626ee57bc1425a6daec5a0b2d1755
->>>>>>> cd29439fd0f8192f4a9442efc3ce0b1cdf857302
-	cin >> p;
-	cout << p;
-    double per=p.perimetr();
-	cout <<"Периметр "<< per<<endl;
-	double sq = p.area();
-	cout << "Площадь " << sq << endl;
-	bool f = p.is_convex();
-	if (f) cout << "Многоугольник выпуклый"<<endl;
-	else cout << "Многоугольник невыпуклый"<<endl;
-	if (p.is_regular(f)) cout << "Многоугольник правильный"<<endl;
-	else cout << "Многоугольник не является правильным"<<endl;
-}
-void print_circle(int num) {//Kristina, this is for you
-	
-	circle c;
-	cin >> c;
-	cout << c;
-	c.quarter();
-	c.intersection();
-	c.length();
-	return 0;
-}
-void print_segment(int num) {
-	point p1, p2;
-	double x1, x2, y1, y2;
-	cout << "Введите координаты точки: ";
-	cin >> x1 >> y1;
-	cout << "Введите координаты точки: ";
-	cin >> x2 >> y2;
-	p1.set_x(x1); p1.set_y(y1);
-	p2.set_x(x2); p2.set_y(y2);
-	segment s(p1, p2);
-	cout << "Длина отрезка " << s.len();
-}
-<<<<<<< HEAD
-void print_triangle(int num) {//Alyona, the most RESPONSIBLE PART for YOU
-
-=======
-void print_triangle(int num)
-{
-	triangle abc;
-	cout << "Введите координаты вершин:" << endl;
-	cin >> abc;
-	abc.define_kind();
-	//cout << "Площадь: " << abc.square() << endl;
-	//cout << "Периметр: " << abc.perimetr() << endl;
-	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
-	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
->>>>>>> cd29439fd0f8192f4a9442efc3ce0b1cdf857302
-}
-void print_vector(int num) {
-	point p1, p2;
-	double x1, x2, y1, y2;
-	cout << "Введите координаты начальной точки: ";
-	cin >> x1 >> y1;
-	cout << "Введите координаты конечной точки: ";
-	cin >> x2 >> y2;
-	p1.set_x(x1); p1.set_y(y1);
-	p2.set_x(x2); p2.set_y(y2);
-	myvector v(p1, p2);
-	cout << "Длина вектора " << v.len();
-}
-//I AM WAITING!
-void SetColor(int text, int Fon) {
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(h, (Fon << 4) + text);
-=======
->>>>>>> 87faf22882e6d0dae09aff745bb27cebe9b7299a
 }
