@@ -13,9 +13,6 @@
 #include <Windows.h>
 #include <conio.h>
 
-#define PI = 3.141592653589793238463
-#define EPS = 0.00000001
-
 //Установить цвет
 void SetColor(int text, int Fon);
 //Печать меню

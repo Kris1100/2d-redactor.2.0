@@ -1,6 +1,5 @@
 #pragma once
-#include"Menu.h"
-using namespace std;
+#include "main.h"
 
 int main()
 {
