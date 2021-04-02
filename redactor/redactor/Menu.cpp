@@ -166,8 +166,13 @@ void print_segment(int num)
 void print_triangle(int num)
 {
 	triangle abc;
-	cin >> abc;
-	abc.define_kind();
+	abc.init();
+	if (abc.is_equilateral())
+		cout << "Треугольник равносторонний" << endl;
+	if (abc.is_isosceles())
+		cout << "Треугольник равнобедренный" << endl;
+	if (abc.is_right())
+		cout << "Треугольник прямоугольный" << endl;
 	cout << "Площадь: " << abc.area() << endl;
 	cout << "Периметр: " << abc.perimetr() << endl;
 	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;

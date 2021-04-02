@@ -1,5 +1,6 @@
 #include "Triangle.h"
-#include"segment.h"
+
+const double M_EPS = 0.00000001;
 
 triangle::triangle()
 {
@@ -7,23 +8,16 @@ triangle::triangle()
 	vertex = vert;
 }
 
-triangle::~triangle()
-{
-	delete[]vertex;
-	vertex = nullptr;
-}
+//triangle::~triangle()
+//{
+//	delete[]vertex;
+//	vertex = nullptr;
+//}
 
-std::istream& operator>>(istream& in, triangle& abc)
+void triangle::init()
 {
-	double x, y;
-	cout << "Введите координаты вершин:" << endl;
 	for (int i = 0; i < 3; i++)
-	{
-		cin >> x >> y;
-		abc.vertex[i].set_x(x);
-		abc.vertex[i].set_y(y);
-	}
-	return in;
+		cin >> vertex[i];
 }
 
 bool triangle::exists()
@@ -42,33 +36,49 @@ bool triangle::exists()
 	return true;
 }
 
-void triangle::define_kind()
+bool triangle::is_equilateral()
 {
-	point a = vertex[0];
-	point b = vertex[1];
-	point c = vertex[2];
-	segment ab(a, b);
-	segment bc(b, c);
-	segment ac(a, c);
-	if (exists())
-	{
-		was_checked_existence = true;
-		if (ab.len() == bc.len() == ac.len())
-			cout << "Треугольник равносторонний" << endl;
-		else
-			if (ab.len() == bc.len() || ab.len() == ac.len() || ac.len() == bc.len())
-				cout << "Треугольник равнобедренный" << endl;
-		if (ab.len() * ab.len() + ac.len() * ac.len() == bc.len() * bc.len() ||
-			ab.len() * ab.len() + bc.len() * bc.len() == ac.len() * ac.len() ||
-			bc.len() * bc.len() + ac.len() * ac.len() == ab.len() * ab.len())
-			cout << "Треугольник прямоугольный" << endl;
-	}
+	segment ab(vertex[0], vertex[1]);
+	segment bc(vertex[1], vertex[2]);
+	segment ac(vertex[0], vertex[2]);
+	if (ab.len() - bc.len() <= M_EPS && ab.len() - ac.len() <= M_EPS)
+		/*почему не работает объявленная в общем заголовочнике через define константа?*/
+		return true;
 	else
-	{
-		if (!was_checked_existence)
-			cout << "Треугольник с такими координатами не существует" << endl;
-		was_checked_existence = true;
-	}
+		return false;
+	//ab.~segment();
+	//bc.~segment();
+	//ac.~segment();
+}
+
+bool triangle::is_isosceles()
+{
+	segment ab(vertex[0], vertex[1]);
+	segment bc(vertex[1], vertex[2]);
+	segment ac(vertex[0], vertex[2]);
+	if (ab.len() == bc.len() || ab.len() == ac.len() || ac.len() == bc.len())
+		return true;
+	else
+		return false;
+	//ab.~segment();
+	//bc.~segment();
+	//ac.~segment();
+}
+
+bool triangle::is_right()
+{
+	segment ab(vertex[0], vertex[1]);
+	segment bc(vertex[1], vertex[2]);
+	segment ac(vertex[0], vertex[2]);
+	if (ab.len() * ab.len() + ac.len() * ac.len() - bc.len() * bc.len() <= M_EPS ||
+		ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len() <= M_EPS ||
+		bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len() <= M_EPS)
+		return true;
+	else
+		return false;
+	//ab.~segment();
+	//bc.~segment();
+	//ac.~segment();
 }
 
 double triangle::radius_inside()
@@ -77,7 +87,6 @@ double triangle::radius_inside()
 		return 2 * area() / perimetr();
 	else
 	{
-		if (!was_checked_existence)
 			cout << "Треугольник с такими координатами не существует" << endl;
 		return -1;
 	}
@@ -88,19 +97,13 @@ double triangle::radius_outside()
 	if (exists())
 	{
 		double abc_square = area();
-		abc_square *= 4;
-		point a = vertex[0];
-		point b = vertex[1];
-		point c = vertex[2];
-		segment ab(a, b);
-		segment bc(b, c);
-		segment ac(a, c);
-		return ab.len() * bc.len() * ac.len() / abc_square;
+		segment ab(vertex[0], vertex[1]);
+		segment bc(vertex[1], vertex[2]);
+		segment ac(vertex[0], vertex[2]);
+		return ab.len() * bc.len() * ac.len() / (4 * abc_square);
 	}
 	else
 	{
-		if (!was_checked_existence)
-			cout << "Треугольник с такими координатами не существует" << endl;
-		return -1;
+		cout << "Треугольник с такими координатами не существует" << endl;
 	}
 }
