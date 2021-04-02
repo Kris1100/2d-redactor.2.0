@@ -24,22 +24,6 @@ istream& operator>>(istream& in, my_round& c)
 	return in;
 }
 
-void my_round::quarter() const 
-{
-	//слишком длинно и нечитабельно. сделать переносы
-	if ((_p->get_x() - _r) > 0 && (_p->get_y() - _r) > 0) cout << "Круг лежит в первой четверти" << endl;
-	else if ((_p->get_x() + _r) < 0 && (_p->get_y() - _r) > 0) cout << "Круг лежит во второй четверти" << endl;
-	else if ((_p->get_x() + _r) < 0 && (_p->get_y() + _r) < 0) cout << "Круг лежит в третьей четверти" << endl;
-	else if ((_p->get_x() - _r) > 0 && (_p->get_y() + _r) < 0) cout << "Круг лежит в четвертой четверти" << endl;
-	else cout << "Круг не лежит полностью ни в какой четверти" << endl;
-}
-
-double my_round::get_square() const
-{
-	return (2 * PI * get_r());
-
-}
-
 double my_round::get_square_of_segment(double a) const 
 {
 	return ((a / 2) * get_r() * get_r());
