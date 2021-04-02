@@ -25,27 +25,6 @@ istream& operator>>(istream& in, circle& c)
 }
 
 
-double circle::get_r() const //можно перенести короткие функции в заголовочный файл
-{
-	return _r;
-}
-
-double circle::get_d() const
-{
-	return _r * 2;
-}
-
-void circle::set_r(double r)
-{
-	_r = r;
-}
-
-point circle::get_p()
-{
-	return *_p;
-}
-
-
 int circle::quarter() const //может, стоит переделать функцию так, чтобы она возвращала значение, а не печатала его
                              //тогда она будет полезнее
 {
@@ -66,11 +45,6 @@ void circle::intersection() const
 	else cout << "Нет пересечения с осями" << endl;
 }
 
-
-double circle::length() const 
-{
-	return (get_r() * PI * 2);
-}
 
 line circle::tangent(point& p) //входные данные меняются? если нет, то конст
 {
