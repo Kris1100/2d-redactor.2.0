@@ -1,14 +1,12 @@
 #include "line.h"
-#include "vector.h"
-using namespace std;
 
-line::line(point const& p1, point const& p2)
+line::line(const point& p1, const point& p2)
 {
 	_p1 = point(p1.get_x(), p1.get_y());
 	_p2 = point(p2.get_x(), p2.get_y());
 }
 
-line::line(double a=1, double b=1, double c=0)
+line::line(double a = 1, double b = 1, double c = 0)
 {
 	set_a(a);
 	set_b(b);
@@ -101,7 +99,7 @@ myvector line::guide_vector()
 	return myvector(p1, p2);
 }
 
-void line:: koef( double& a, double& b, double& c)
+void line::koef( double& a, double& b, double& c)
 {
 	a = _p2.get_y() - _p1.get_y();
 	b = _p1.get_x() - _p2.get_x();

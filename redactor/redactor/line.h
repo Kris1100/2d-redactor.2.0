@@ -12,7 +12,7 @@ public:
 	//Конструктор прямой по 2 точкам
 	line(point const& p1, point const& p2);
 	//Конструктор по коэф. прямой
-	line(double a=1, double b=1, double c=0);
+	line(double a = 1, double b = 1, double c = 0);
 
 	//Получить первую точку
 	point get_first()const;           
@@ -24,7 +24,6 @@ public:
 	double get_b()const;
 	//получить коэф c
 	double get_c()const;
-
 
 	//Вывод уравнениия прямой в виде ax+by+c=0
 	void print();                                                                                                   
@@ -38,11 +37,13 @@ public:
 
 	//Считает коэфициенты в уравнении прямой ax+by+c=0
 	void koef(double& a, double& b, double& c );
+
 private:
 	//Задать коэффициенты прямой
 	void set_a(double& a);
 	void set_b(double& b);
 	void set_c(double& c);
+
 protected:
 	point _p1;
 	point _p2;
