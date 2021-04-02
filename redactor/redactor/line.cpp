@@ -51,8 +51,7 @@ myvector line::normal_vector()
 {
 	double a, b, c;
 	koef(a, b, c);
-	point p1(0,0), p2(a,b);
-	return myvector(p1, p2);
+	return myvector(a,b);
 }
 
 myvector line::guide_vector() 

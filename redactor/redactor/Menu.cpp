@@ -112,6 +112,8 @@ void print_line(int num)
 	line l(p1, p2);
 	l.print();
 	l.print_param();
+	myvector v = l.normal_vector();
+	cout <<"Координаты вектора нормали: "<< v;
 }
 
 void print_polygon(int num)

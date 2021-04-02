@@ -7,6 +7,8 @@ class myvector: public segment
 public:
 	// онструктор                      
 	myvector(point& begin,point& end);
+	// онструктор по координатам вектора (вектор прикрепл€етс€ к началу декартовой системы координат (0,0))
+	myvector(double a = 1, double b = 1);
 	//ѕолучить x координату
 	double get_x() const;
 	//ѕолучить y координату
@@ -17,7 +19,7 @@ public:
 	friend double angle(myvector &v1,myvector &v2);
 	//¬ычисление скал€рного произведени€ векторов
 	friend double vect_prod(myvector& v1, myvector& v2);
-
+	friend ostream& operator<<(ostream& out, myvector& v);
 private:
 	// оординаты вектора
 	double x_, y_;
