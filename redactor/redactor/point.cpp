@@ -6,26 +6,6 @@ point::point(double x, double y)
 	set_y(y);
 }
 
-double point::get_x() const
-{
-	return _x;
-}
-
-void point::set_x(double x)
-{
-	_x = x;
-}
-
-double point::get_y() const
-{
-	return _y;
-}
-
-void point::set_y(double y)
-{
-	_y = y;
-}
-
 double point::quarter()
 {
 	int res;
@@ -57,4 +37,24 @@ bool point::bisector()
 	else
 		f=false;
 	return f;
+}
+
+bool operator==(const point& p1, const point& p2)
+{
+	if (p1._x == p2._x && p1._y == p2._y)
+		return true;
+	else
+		return false;
+}
+
+istream& operator>>(istream& in, point& p)
+{
+	cin >> p._x >> p._y;
+	return in;
+}
+
+ostream& operator<<(ostream& out, point& p)
+{
+	cout << p._x << " " << p._y;
+	return out;
 }
