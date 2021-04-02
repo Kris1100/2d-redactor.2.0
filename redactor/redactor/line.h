@@ -15,15 +15,25 @@ public:
 	line(double a = 1, double b = 1, double c = 0);
 
 	//Получить первую точку
-	point get_first()const;           
+	point get_first() const {
+		return _p1;
+	}
 	//Получить вторую точку
-	point get_second()const;
+	point get_second() const {
+		return _p2;
+	}
 	//получить коэф a
-	double get_a()const;
+	double get_a() const {
+		return _a;
+	}
 	//получить коэф b
-	double get_b()const;
+	double get_b() const {
+		return _b;
+	}
 	//получить коэф c
-	double get_c()const;
+	double get_c() const {
+		return _c;
+	}
 
 	//Вывод уравнениия прямой в виде ax+by+c=0
 	void print();                                                                                                   
@@ -40,9 +50,15 @@ public:
 
 private:
 	//Задать коэффициенты прямой
-	void set_a(double& a);
-	void set_b(double& b);
-	void set_c(double& c);
+	void set_a(double& a) {
+		_a = a;
+	}
+	void set_b(double& b) {
+		_b = b;
+	}
+	void set_c(double& c) {
+		_c = c;
+	}
 
 protected:
 	point _p1;

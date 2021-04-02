@@ -6,47 +6,11 @@ line::line(const point& p1, const point& p2)
 	_p2 = point(p2.get_x(), p2.get_y());
 }
 
-line::line(double a = 1, double b = 1, double c = 0)
+line::line(double a, double b, double c)
 {
 	set_a(a);
 	set_b(b);
 	set_c(c);
-}
-
-point line::get_first() const
-{
-	return _p1;
-}
-
-point line::get_second()const
-{
-	return _p2;
-}
-
-double line::get_a()const
-{
-	return _a;
-}
-double line::get_b()const
-{
-	return _b;
-}
-double line::get_c()const
-{
-	return _c;
-}
-
-void line::set_a(double& a) 
-{
-	_a = a;
-}
-void line::set_b(double& b)
-{
-	_b = b;
-}
-void line::set_c(double& c)
-{
-	_c = c;
 }
 
 void line::print() 
