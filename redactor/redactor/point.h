@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <cmath>
-#include "main.h"
 using namespace std;
 
 class point
