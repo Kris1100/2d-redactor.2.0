@@ -1,9 +1,10 @@
 #pragma once
-#include<iostream>
+#include <iostream>
 #include <cmath>
 #include <vector>
 #include "point.h"
 #include "vector.h"
+#include "main.h"
 using namespace std;
 
 class line
@@ -15,25 +16,15 @@ public:
 	line(double a = 1, double b = 1, double c = 0);
 
 	//Получить первую точку
-	point get_first() const {//исправить
-		return _p1;
-	}
+	point get_first() const { return _p1; }
 	//Получить вторую точку
-	point get_second() const {
-		return _p2;
-	}
+	point get_second() const { return _p2; }
 	//получить коэф a
-	double get_a() const {
-		return _a;
-	}
+	double get_a() const { return _a; }
 	//получить коэф b
-	double get_b() const {
-		return _b;
-	}
+	double get_b() const { return _b; }
 	//получить коэф c
-	double get_c() const {
-		return _c;
-	}
+	double get_c() const { return _c; }
 
 	//Возвращает вектор нормали
 	myvector normal_vector();
@@ -41,23 +32,18 @@ public:
 	myvector guide_vector();
 
 	//Считает коэфициенты в уравнении прямой ax+by+c=0
-	void koef(double& a, double& b, double& c );//повыше, указатель, транслит(переименовать)
+	void coef(double& a, double& b, double& c );
 
 	//Вывод уравнениия прямой в виде ax+by+c=0
 	void print();
 	//Вывод параметрического уравнения прямой
 	void print_param();
+
 private:
 	//Задать коэффициенты прямой
-	void set_a(double& a) {//исправить
-		_a = a;
-	}
-	void set_b(double& b) {
-		_b = b;
-	}
-	void set_c(double& c) {
-		_c = c;
-	}
+	void set_a(double& a) {	_a = a;	}
+	void set_b(double& b) {	_b = b;	}
+	void set_c(double& c) {	_c = c;	}
 
 protected:
 	point _p1;
