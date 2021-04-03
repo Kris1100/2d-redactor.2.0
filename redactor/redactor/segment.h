@@ -3,7 +3,7 @@
 #include <cmath>
 #include <math.h>
 #include <cassert>
-
+using namespace std;
 //Класс отрезок
 class segment
 {
