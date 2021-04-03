@@ -29,6 +29,7 @@ public:
 
 	//перегрузка операторов равенства, вводва, вывода
 	friend bool operator==(const point& p1, const point& p2);
+	friend bool operator!=(const point& p1, const point& p2);
 	friend istream& operator>>(istream& in, point& p);
 	friend ostream& operator<<(ostream& out, const point& p);
 
