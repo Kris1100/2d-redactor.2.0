@@ -1,6 +1,6 @@
 #include "Triangle.h"
 
-const double M_EPS = 0.00000001;
+const double M_EPS = 0.000000001;
 
 triangle::triangle()
 {
@@ -8,35 +8,25 @@ triangle::triangle()
 	vertex = vert;
 }
 
-//triangle::~triangle()
-//{
-//	delete[]vertex;
-//	vertex = nullptr;
-//}
-
-void triangle::init()//Сделать отдельно приватный сеттер, одтельно ввод
+void triangle::set_vertex(const point& a, const point& b, const point& c)
 {
-	for (int i = 0; i < 3; i++)
-		cin >> vertex[i];
+	vertex[0] = a;
+	vertex[1] = b;
+	vertex[2] = c;
 }
 
 bool triangle::exists() const
 {
-	point a = vertex[0];
-	point b = vertex[1];
-	point c = vertex[2];
-	segment ab(a,b);
-	segment bc(b,c);
-	segment ac(a,c);
+	segment ab(vertex[0], vertex[1]);
+	segment bc(vertex[1], vertex[2]);
+	segment ac(vertex[0], vertex[2]);
 	if (ab.len() + bc.len() < ac.len() || ab.len() + ac.len() < bc.len() ||
 		ac.len() + bc.len() < ab.len())
-	{
 		return false;
-	}
 	return true;
 }
 
-bool triangle::is_equilateral() const//Убрать все деструкторы
+bool triangle::is_equilateral() const
 {
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
@@ -44,11 +34,7 @@ bool triangle::is_equilateral() const//Убрать все деструкторы
 	if (ab.len() - bc.len() <= M_EPS && ab.len() - ac.len() <= M_EPS)
 		/*почему не работает объявленная в общем заголовочнике через define константа?*/
 		return true;
-	else
-		return false;
-	//ab.~segment();
-	//bc.~segment();
-	//ac.~segment();
+	return false;
 }
 
 bool triangle::is_isosceles() const
@@ -58,11 +44,7 @@ bool triangle::is_isosceles() const
 	segment ac(vertex[0], vertex[2]);
 	if (ab.len() == bc.len() || ab.len() == ac.len() || ac.len() == bc.len())
 		return true;
-	else
-		return false;
-	//ab.~segment();
-	//bc.~segment();
-	//ac.~segment();
+	return false;
 }
 
 bool triangle::is_right() const
@@ -74,11 +56,7 @@ bool triangle::is_right() const
 		ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len() <= M_EPS ||
 		bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len() <= M_EPS)
 		return true;
-	else
-		return false;
-	//ab.~segment();
-	//bc.~segment();
-	//ac.~segment();
+	return false;
 }
 
 double triangle::radius_inside() const
@@ -87,7 +65,7 @@ double triangle::radius_inside() const
 		return 2 * area() / perimetr();
 	else
 	{
-			cout << "Треугольник с такими координатами не существует" << endl;
+		cout << "Треугольник с такими координатами не существует" << endl;
 		return -1;
 	}
 }
@@ -104,6 +82,14 @@ double triangle::radius_outside() const
 	}
 	else
 	{
-		cout << "Треугольник с такими координатами не существует" << endl;//А что возвращает?
+		cout << "Треугольник с такими координатами не существует" << endl;
+		return -1;
 	}
+}
+
+ifstream& operator>>(ifstream& in, triangle& abc)
+{
+	for (int i = 0; i < 3; i++)
+		cin >> abc.vertex[i];
+	return in;
 }

@@ -2,7 +2,6 @@
 #include <iostream>
 #include "point.h"
 #include "polygon.h"
-#include "main.h"
 #include "segment.h"
 using namespace std;
 
@@ -11,8 +10,6 @@ class triangle : public polygon
 public:
 	//Конструктор треугольника
 	triangle();
-	//Инициализация, set
-	void init();
 	//Деструктор треугольника                //деструктор наследуется, но должен быть виртуальным в родительском классе
 	//~triangle();
 
@@ -28,4 +25,9 @@ public:
 	double radius_inside() const;
 	//Радиус описанной окружности
 	double radius_outside() const;
+	//перегрузка оператора ввода
+	friend ifstream& operator>>(ifstream& in, triangle& abc);
+
+private:
+	void set_vertex(const point& a, const point& b, const point& c);
 };
