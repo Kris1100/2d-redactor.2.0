@@ -87,6 +87,26 @@ double triangle::radius_outside() const
 	}
 }
 
+bool triangle::is_inside(const point& p) const
+{
+	double a, b, c;
+	int count = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		line l(vertex[i], vertex[(i + 1) % 3]);
+		l.coef(a, b, c);
+		point tmp = vertex[(i + 2) % 3];
+		if (a * p.get_x() + b * p.get_y() + c < 0 && a * tmp.get_x() + b * tmp.get_y() + c < 0 ||
+			a * p.get_x() + b * p.get_y() + c > 0 && a * tmp.get_x() + b * tmp.get_y() + c > 0)
+		{
+			count++;
+		}
+	}
+	if (count == 3)
+		return true;
+	return false;
+}
+
 ifstream& operator>>(ifstream& in, triangle& abc)
 {
 	for (int i = 0; i < 3; i++)

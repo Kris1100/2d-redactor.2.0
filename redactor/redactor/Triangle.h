@@ -3,6 +3,7 @@
 #include "point.h"
 #include "polygon.h"
 #include "segment.h"
+#include "line.h"
 using namespace std;
 
 class triangle : public polygon
@@ -25,8 +26,10 @@ public:
 	double radius_inside() const;
 	//Радиус описанной окружности
 	double radius_outside() const;
-	//перегрузка оператора ввода
-	friend ifstream& operator>>(ifstream& in, triangle& abc);
+	//Лежит ли точка внутри треугольника (строго)
+	bool is_inside(const point& p) const;
+	//Перегрузка оператора ввода
+	friend ifstream& operator>>(ifstream& in, triangle& abc);//кажется, она уже есть в родительском классе
 
 private:
 	void set_vertex(const point& a, const point& b, const point& c);
