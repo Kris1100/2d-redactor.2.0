@@ -43,8 +43,14 @@ bool operator==(const point& p1, const point& p2)
 {
 	if (p1._x == p2._x && p1._y == p2._y)
 		return true;
-	else
-		return false;
+	return false;
+}
+
+bool operator!=(const point& p1, const point& p2)
+{
+	if (p1._x != p2._x || p1._y != p2._y)
+		return true;
+	return false;
 }
 
 istream& operator>>(istream& in, point& p)
