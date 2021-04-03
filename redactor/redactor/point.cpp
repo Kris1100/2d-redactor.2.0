@@ -6,7 +6,7 @@ point::point(double x, double y)
 	set_y(y);
 }
 
-double point::quarter()
+int point::quarter()
 {
 	int res;
 	if (_x >= 0 && _y >= 0)
@@ -53,7 +53,7 @@ istream& operator>>(istream& in, point& p)
 	return in;
 }
 
-ostream& operator<<(ostream& out, point& p)
+ostream& operator<<(ostream& out, const point& p)
 {
 	cout << p._x << " " << p._y;
 	return out;

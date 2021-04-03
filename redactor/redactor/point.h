@@ -14,9 +14,8 @@ public:
 		_x = x;
 	}
 	//«адать координату у
-	void set_y(double y) {
-		_y = y;
-	}
+	void set_y(double y) { _y = y;}//исправить
+
 	//ѕолучить координату у
 	double get_y() const {
 		return _y;
@@ -27,15 +26,16 @@ public:
 	}
 
 	//¬озвращает # четверти, лежит данна€ точка,0-в случае, если точка принадлежит началу координат
-	double quarter();
+	int quarter();
 	//¬озвращает рассто€ние от начала координат
 	double dist();
 	//Ћежит ли точка на биссектрисе координатной плоскости
 	bool bisector();
 
+	//операторы равенства, вводва, вывода
 	friend bool operator==(const point& p1, const point& p2);
 	friend istream& operator>>(istream& in, point& p);
-	friend ostream& operator<<(ostream& out, point& p);
+	friend ostream& operator<<(ostream& out, const point& p);
 
 private:
 	double _x, _y;

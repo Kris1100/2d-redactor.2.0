@@ -20,10 +20,12 @@ void line::print()
 	if (a != 0)cout << a << 'x';
 	else if (a == 1)cout << 'x';
 	else if (a == -1)cout << '-x';
+
 	if (b < 0 && b != -1)cout << b << 'y';
 	else if (b == -1)cout << '-' << 'y';
 	else if (b > 0 && b != 1) cout << '+' << b << 'y';
 	else if (b == 1)cout << '+' << 'y';
+
 	if (c < 0)cout << c;
 	else if (c > 0)cout << '+' << c;
 	cout << '='<< 0<< endl;

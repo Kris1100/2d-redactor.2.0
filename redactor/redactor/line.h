@@ -15,7 +15,7 @@ public:
 	line(double a = 1, double b = 1, double c = 0);
 
 	//Получить первую точку
-	point get_first() const {
+	point get_first() const {//исправить
 		return _p1;
 	}
 	//Получить вторую точку
@@ -35,22 +35,21 @@ public:
 		return _c;
 	}
 
-	//Вывод уравнениия прямой в виде ax+by+c=0
-	void print();                                                                                                   
-    //Вывод параметрического уравнения прямой
-	void print_param();
-
 	//Возвращает вектор нормали
 	myvector normal_vector();
 	//Возвращает направляющий вектор
 	myvector guide_vector();
 
 	//Считает коэфициенты в уравнении прямой ax+by+c=0
-	void koef(double& a, double& b, double& c );
+	void koef(double& a, double& b, double& c );//повыше, указатель, транслит(переименовать)
 
+	//Вывод уравнениия прямой в виде ax+by+c=0
+	void print();
+	//Вывод параметрического уравнения прямой
+	void print_param();
 private:
 	//Задать коэффициенты прямой
-	void set_a(double& a) {
+	void set_a(double& a) {//исправить
 		_a = a;
 	}
 	void set_b(double& b) {
