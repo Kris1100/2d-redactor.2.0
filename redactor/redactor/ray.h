@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
-#include "main.h"
+#include "point.h"
+#include "line.h"
+
 class ray
 {
 public:
@@ -12,6 +14,8 @@ public:
 	//Получить точку начала луча и точку на луче
 	point get_begin() const { return _begin; }
 	point get_p() const { return _p; }
+
+	bool is_element(const point& t);
 
 private:
 	//Сеттеры начала луча и какой-то точки на луче
