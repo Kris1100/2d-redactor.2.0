@@ -32,10 +32,10 @@ double point::dist()
 bool point::bisector()
 {
 	bool f;
-	if (abs(_x) == abs(_y)) 
+	if (abs(_x) == abs(_y))
 		f = true;
 	else
-		f=false;
+		f = false;
 	return f;
 }
 
