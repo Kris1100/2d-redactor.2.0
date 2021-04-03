@@ -17,15 +17,15 @@ public:
 	//~triangle();
 
 	//Треугольник равносторонний
-	bool is_equilateral();
+	bool is_equilateral() const;
 	//Треугольник равнобедренный
-	bool is_isosceles();
+	bool is_isosceles() const;
 	//Треугольник прямоугольный
-	bool is_right();
+	bool is_right() const;
 	//Определить, существует ли треугольник
-	bool exists();
+	bool exists() const;
 	//Радиус вписанной окружности
-	double radius_inside();
+	double radius_inside() const;
 	//Радиус описанной окружности
-	double radius_outside();
+	double radius_outside() const;
 };

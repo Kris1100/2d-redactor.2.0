@@ -1,9 +1,11 @@
 #pragma once
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include "point.h"
 #include "line.h"
+#include<math.h>
 using namespace std;
 
 class circle
@@ -31,7 +33,7 @@ public:
 	int quarter() const;
 	//Возвращает длину окружности
 	double length() const {
-		return (get_r() * PI * 2);
+		return (get_r() * M_PI * 2);
 	}
 	//Точки пересечения с осями
 	void intersection() const; // может, тогда получить на вход точки и поменять их в функции, чтобы она была полезна

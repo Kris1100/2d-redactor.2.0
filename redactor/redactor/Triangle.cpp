@@ -20,7 +20,7 @@ void triangle::init()
 		cin >> vertex[i];
 }
 
-bool triangle::exists()
+bool triangle::exists() const
 {
 	point a = vertex[0];
 	point b = vertex[1];
@@ -36,7 +36,7 @@ bool triangle::exists()
 	return true;
 }
 
-bool triangle::is_equilateral()
+bool triangle::is_equilateral() const
 {
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
@@ -51,7 +51,7 @@ bool triangle::is_equilateral()
 	//ac.~segment();
 }
 
-bool triangle::is_isosceles()
+bool triangle::is_isosceles() const
 {
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
@@ -65,7 +65,7 @@ bool triangle::is_isosceles()
 	//ac.~segment();
 }
 
-bool triangle::is_right()
+bool triangle::is_right() const
 {
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
@@ -81,7 +81,7 @@ bool triangle::is_right()
 	//ac.~segment();
 }
 
-double triangle::radius_inside()
+double triangle::radius_inside() const
 {
 	if (exists())
 		return 2 * area() / perimetr();
@@ -92,7 +92,7 @@ double triangle::radius_inside()
 	}
 }
 
-double triangle::radius_outside()
+double triangle::radius_outside() const
 {
 	if (exists())
 	{
