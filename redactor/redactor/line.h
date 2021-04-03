@@ -4,7 +4,6 @@
 #include <vector>
 #include "point.h"
 #include "vector.h"
-#include "main.h"
 using namespace std;
 
 class line

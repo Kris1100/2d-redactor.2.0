@@ -14,7 +14,7 @@ triangle::triangle()
 //	vertex = nullptr;
 //}
 
-void triangle::init()
+void triangle::init()//Сделать отдельно приватный сеттер, одтельно ввод
 {
 	for (int i = 0; i < 3; i++)
 		cin >> vertex[i];
@@ -36,7 +36,7 @@ bool triangle::exists() const
 	return true;
 }
 
-bool triangle::is_equilateral() const
+bool triangle::is_equilateral() const//Убрать все деструкторы
 {
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
@@ -104,6 +104,6 @@ double triangle::radius_outside() const
 	}
 	else
 	{
-		cout << "Треугольник с такими координатами не существует" << endl;
+		cout << "Треугольник с такими координатами не существует" << endl;//А что возвращает?
 	}
 }
