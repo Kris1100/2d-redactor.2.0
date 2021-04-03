@@ -15,7 +15,7 @@ public:
 	point get_begin() const { return _begin; }
 	point get_p() const { return _p; }
 
-	bool is_element(const point& t);
+	bool is_element(const point& t) const;
 
 private:
 	//Сеттеры начала луча и какой-то точки на луче

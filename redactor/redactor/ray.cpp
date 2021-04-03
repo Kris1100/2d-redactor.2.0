@@ -9,7 +9,7 @@ ray::ray(const point& begin, const point& p)
 	}
 }
 
-bool ray::is_element(const point& t)
+bool ray::is_element(const point& t) const
 {
 	//если совпадает с объ€вленными точками луча
 	if (t == _p || t == _begin)
