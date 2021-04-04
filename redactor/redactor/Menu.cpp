@@ -122,7 +122,6 @@ void print_polygon(int num)
 	cout << "Введите количество вершин ";
 	cin >> n;
 	polygon p(n);
-	cin >> p;
 	cout << p;
 	double per = p.perimetr();
 	cout << "Периметр " << per << endl;

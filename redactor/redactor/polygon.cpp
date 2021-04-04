@@ -1,4 +1,5 @@
 #include "polygon.h"
+#include "math_const.h"
 
 polygon::polygon(int num_vert)
 {
@@ -40,7 +41,19 @@ std::ostream& operator<<(ostream& out, polygon& p)
 
 void polygon::set_point_array(point* vert) 
 {
+	//ѕо умолчанию орпедел€ем правильный n- угольник, однако он может не определ€тьс€ как правильный из-за пограшности измерений. Ётот баг € постараюсь минимизировать
 	vertex = vert;
+	//”становим единичную окружность
+	int R = 1;
+	//Ќачальный угол
+	double ang = 0;
+	for (int i = 0; i < num_vert_; i++) {
+		//ѕосчитаем коррдинаты очередной точки - координаты вектора с началом в точке (0,0), повернутого на угол ang против часовой стрелки
+		vertex[i].set_x(R * round(cos(ang*constants::pi/180)*constants::rd)/constants::rd);
+		vertex[i].set_y(R * round(sin(ang * constants::pi /180)*constants::rd)/constants::rd);
+		//ѕомен€ем угол
+		ang +=(360 / num_vert_);
+	}
 }
 
 void polygon::set_num(int num_vert)
@@ -156,9 +169,12 @@ bool polygon::is_regular(bool convexity) const
 				if (side != s.len())
 					return false;
 			//—оздаем два вектора, между которыми будем определ€ть угол
-			myvector v1(vertex[i], vertex[i + 1]);
-			myvector v2(vertex[i + 1], vertex[i + 2]);
-			//ƒалее логика аналогично проберке сторон
+			myvector v1(vertex[i+1], vertex[i]);
+			point p;
+			if (i == num_vert_ - 2) p = vertex[0];
+			else p = vertex[i + 2];
+			myvector v2 (vertex[i + 1],p);
+			//ƒалее логика аналогично проверке сторон
 			if (ang == -1)
 				ang = angle(v1, v2);
 			else
@@ -167,11 +183,11 @@ bool polygon::is_regular(bool convexity) const
 		}
 		//ќтдельна€ проверка дл€ последней стороны, тк к ней трудно обратитьс€ с помощью цикла
 		segment s(vertex[num_vert_ - 1], vertex[0]);
-		myvector v1(vertex[num_vert_ - 1], vertex[0]);
+		myvector v1(vertex[0], vertex[num_vert_-1]);
 		myvector v2(vertex[0], vertex[1]);
 		if (side != s.len())
 			return false;
-		if (ang != angle(v1, v2))
+		if (ang != angle(v1, v2)&&ang!=angle(v1,v2)+constants::eps && ang!=angle(v1,v2)-constants::eps)
 			return false;
 		//”далим вспомогательные элементы
 		s.~segment();

@@ -1,4 +1,5 @@
 #include "vector.h"
+#include "math_const.h"
 
 myvector::myvector(const point& begin, const point& end)
 {
@@ -35,7 +36,7 @@ double vect_prod(const myvector& v1,const myvector& v2)
 double angle(const myvector& v1, const myvector& v2) 
 {
 	if (abs(v1.len()) == 0 || abs(v2.len()) == 0) return 0;
-	return (vect_prod(v1, v2)) / (abs(v1.len()) * abs(v2.len())); 
+	return round((acos((vect_prod(v1, v2)) / (abs(v1.len()) * abs(v2.len())))*180/constants::pi)*constants::rd)/constants::rd; 
 }
 ostream& operator<<(ostream& out,const myvector& v)
 {

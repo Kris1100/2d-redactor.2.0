@@ -1,4 +1,5 @@
 #include "segment.h"
+#include"math_const.h"
 segment::segment(const point& p1,const point& p2) {
 	//Отлавливаем ошибку на две одинаковые точки
 	try {
@@ -22,8 +23,8 @@ void segment::set_extm_points(const point& p1,const point& p2)
 
 double segment::len() const
 {
-	return sqrt( ((p1_.get_x() - p2_.get_x()) * (p1_.get_x() - p2_.get_x()))
-			   + ((p1_.get_y() - p2_.get_y()) * (p1_.get_y() - p2_.get_y())) );
+	return round(sqrt( ((p1_.get_x() - p2_.get_x()) * (p1_.get_x() - p2_.get_x()))
+			   + ((p1_.get_y() - p2_.get_y()) * (p1_.get_y() - p2_.get_y())) )*constants::rd)/constants::rd;
 }
 
 point segment::middle() const
