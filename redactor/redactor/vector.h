@@ -6,7 +6,7 @@ class myvector: public segment
 {
 public:
 	//Конструктор                      
-	myvector(point& begin,point& end);
+	myvector( const point& begin, const point& end);
 	//Конструктор по координатам вектора (вектор прикрепляется к началу декартовой системы координат (0,0))
 	myvector(double a = 1, double b = 1);
 	//Получить x координату
@@ -16,10 +16,10 @@ public:
 	//Деструктор
 	~myvector() {}
 	//Вычисление угла между векторами
-	friend double angle(myvector &v1,myvector &v2);
+	friend double angle(const myvector &v1, const myvector &v2);
 	//Вычисление скалярного произведения векторов
-	friend double vect_prod(myvector& v1, myvector& v2);
-	friend ostream& operator<<(ostream& out, myvector& v);
+	friend double vect_prod(const myvector& v1,const myvector& v2);
+	friend ostream& operator<<(ostream& out,const myvector& v);
 private:
 	//Координаты вектора
 	double x_, y_;

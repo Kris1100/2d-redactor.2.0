@@ -9,8 +9,9 @@ class segment
 {
 public:
 	//Конструктор отрезка
-	segment(point& p1, point& p2);
-	segment() {}
+	segment(const point& p1, const point& p2);
+	//Конструктор по умолчанию необходим для класса vector
+	segment() {};
 	//Деструктор
 	~segment() {}
 	//Получить ссылку на начальную точку (начальная - p1_, в классе точка нет разницы, какая будет начальной)
@@ -22,7 +23,7 @@ public:
 		return p2_;
 	}
 	//Задать крайние точки
-	void set_extm_points(point& p1, point& p2);
+	void set_extm_points(const point& p1,const point& p2);
 	//Длина отрезка
 	double len() const;
 	//Координаты середины отрезка

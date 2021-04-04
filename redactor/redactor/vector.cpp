@@ -1,6 +1,6 @@
 #include "vector.h"
 
-myvector::myvector(point& begin, point& end)
+myvector::myvector(const point& begin, const point& end)
 {
 	set_extm_points(begin, end);
 	set_coord(end.get_x() - begin.get_x(), end.get_y() - begin.get_y());
@@ -27,17 +27,17 @@ double myvector::get_y() const
 	return y_;
 }
 
-double vect_prod(myvector& v1, myvector& v2)
+double vect_prod(const myvector& v1,const myvector& v2)
 {
 	return v1.get_x() * v2.get_x() + v1.get_y() * v2.get_y();
 }
 
-double angle(myvector& v1, myvector& v2) 
+double angle(const myvector& v1, const myvector& v2) 
 {
 	if (abs(v1.len()) == 0 || abs(v2.len()) == 0) return 0;
 	return (vect_prod(v1, v2)) / (abs(v1.len()) * abs(v2.len())); 
 }
-ostream& operator<<(ostream& out, myvector& v)
+ostream& operator<<(ostream& out,const myvector& v)
 {
 	cout << "(" << v.get_x() << " ," << v.get_y() <<")"<< endl;
 	return out;

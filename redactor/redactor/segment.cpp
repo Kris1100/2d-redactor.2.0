@@ -1,9 +1,20 @@
 #include "segment.h"
-segment::segment(point& p1, point& p2) {
-	assert(p1.get_x() != p1.get_x() || (p1.get_y() != p2.get_y()) && "Введены две одинаковые точки");
-	set_extm_points(p1, p2);
+segment::segment(const point& p1,const point& p2) {
+	//Отлавливаем ошибку на две одинаковые точки
+	try {
+		if (p1 == p2) throw "Обе точки отрезка совпадают, будет установлено значение по умолчанию (0,0) и (1,1)";
+		//Если все хорошо создаем отрезок с полученными точками
+		set_extm_points(p1, p2);
+	}
+	catch (const char* err) {
+		cout << "Ошибка: " << err<<endl;
+		//В случае ошибки задаем значение по умолчанию
+		point d1(0, 0);
+		point d2(1, 1);
+		set_extm_points(d1, d2);
+	}
 }
-void segment::set_extm_points(point& p1, point& p2)
+void segment::set_extm_points(const point& p1,const point& p2)
 {
 	p1_ = p1;
 	p2_ = p2;
