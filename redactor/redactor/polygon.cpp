@@ -19,7 +19,7 @@ polygon::~polygon()
 std::istream& operator>>(istream& in, polygon& p)
 {
 	double x, y;
-	cout << "¬ведите координаты " << p.num_vert_ << " вершин";
+	cout << "¬ведите координаты " << p.num_vert_ << " вершин:" << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
 		cin >> x >> y;

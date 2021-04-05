@@ -192,6 +192,13 @@ void print_triangle(int num)
 	middle.coef(a, b, c);
 	line middle_l(a, b, c);
 	middle_l.print_v2();
+	cout << "Input point data:" << endl;
+	point p;
+	cin >> p;
+	if (abc.is_inside(p))
+		cout << "true" << endl;
+	else
+		cout << "false" << endl;
 }
 
 void print_vector(int num)
