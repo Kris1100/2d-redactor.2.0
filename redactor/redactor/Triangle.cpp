@@ -114,8 +114,8 @@ ifstream& operator>>(ifstream& in, triangle& abc)
 	return in;
 }
 
-line triangle::middle_line(const segment& ab, const segment& bc) const
+segment triangle::middle_line(const segment& ab, const segment& bc)
 {
-	line l(ab.middle(), bc.middle());
+	segment l(ab.middle(), bc.middle());
 	return l;
 }
