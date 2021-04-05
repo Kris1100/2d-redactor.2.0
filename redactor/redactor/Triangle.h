@@ -30,6 +30,8 @@ public:
 	bool is_inside(const point& p) const;
 	//Перегрузка оператора ввода
 	friend ifstream& operator>>(ifstream& in, triangle& abc);//кажется, она уже есть в родительском классе
+	//Находит среднюю линию треугольника к заданной стороне
+	line middle_line()const;
 
 private:
 	void set_vertex(const point& a, const point& b, const point& c);

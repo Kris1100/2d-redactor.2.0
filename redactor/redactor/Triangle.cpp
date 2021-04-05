@@ -113,3 +113,29 @@ ifstream& operator>>(ifstream& in, triangle& abc)
 		cin >> abc.vertex[i];
 	return in;
 }
+
+line triangle::middle_line()const
+{
+	int side,v1,v2,v3;
+	cout << "—редн€€ лини€ дл€ стороны є(1-3):" << endl;
+	cin >> side;
+	if (side == 1) {
+		v1 = 0;
+		v2 = 1;
+		v3 = 2;
+	}
+	else if (side == 2) {
+		v1 = 1;
+		v2 = 2;
+		v3 = 0;
+	}
+	else if (side == 3) {
+		v1 = 0;
+		v2 = 2;
+		v3 = 1;
+	}
+	line l(vertex[v1], vertex[v2]);
+	segment m(vertex[v1],vertex[v3]);
+	point p = m.middle();
+	return l.parallel(p);
+}

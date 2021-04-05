@@ -27,7 +27,7 @@ public:
 	}
 	// Возвращает центр
 	point get_p() const {
-		return *_p;
+		return _p;
 	}
 	//Возвращает четверть, если окружность полностью в ней и -1 если лежит в окружности не полностью
 	int quarter() const;
@@ -41,7 +41,7 @@ public:
 	line tangent(point &p) ;
 	//деструктор?
 private:
-	point* _p;
+	point _p;
 	double _r;
 	//Сеттер радиуса
 	void set_r(double r = 1.0) {

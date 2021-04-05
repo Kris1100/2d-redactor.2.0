@@ -32,9 +32,15 @@ public:
 
 	//Считает коэфициенты в уравнении прямой ax+by+c=0
 	void coef(double& a, double& b, double& c );
+	//Возвращает уравнение прямой,проходящей через заданную точку
+	//и параллельной данной 
+	line parallel(const point& p)const;
 
-	//Вывод уравнениия прямой в виде ax+by+c=0
-	void print();
+	//Вывод уравнениия прямой в виде ax+by+c=0(заданной двумя точками)
+	void print_v1();
+	//Вывод уравнениия прямой в виде ax+by+c=0(заданной коэф.)
+	void print_v2();
+	void print_all(double& a,double& b,double& c);
 	//Вывод параметрического уравнения прямой
 	void print_param();
 

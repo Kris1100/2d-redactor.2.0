@@ -101,19 +101,24 @@ void print_point(int num)
 
 void print_line(int num)
 {
-	double x1, y1, x2, y2;
+	point p1,p2,p3;
 	cout << "Введите координаты двух точек для задания прямой" << endl;
 	cout << "Введите координаты первой точки" << endl;
-	cin >> x1 >> y1;
+	cin >> p1;
 	cout << "Введите координаты второй точки" << endl;
-	cin >> x2 >> y2;
-	point p1(x1, y1);
-	point p2(x2, y2);
-	line l(p1, p2);
-	l.print();
-	l.print_param();
-	myvector v = l.normal_vector();
-	cout <<"Координаты вектора нормали: "<< v;
+	cin >> p2;
+	line l1(p1, p2);
+	l1.print_v1();
+	l1.print_param();
+	myvector v1 = l1.normal_vector();
+	cout <<"Координаты вектора нормали: "<< v1;
+	myvector v2 = l1.guide_vector();
+	cout << "Координаты направляющего вектора: " << v2;
+	cout << "Введиите координаты точки,через которую нужно построить прямую,параллельную данной: " ;
+	cin >> p3;
+	line l2=l1.parallel(p3);
+	cout << "Уравнение прямой,параллельной данной: ";
+	l2.print_v2();
 }
 
 void print_polygon(int num)
@@ -178,6 +183,9 @@ void print_triangle(int num)
 	cout << "Периметр: " << abc.perimetr() << endl;
 	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
 	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
+	line l = abc.middle_line();
+	cout << "Уравнение средней линии:"<<endl;
+	l.print_v2();
 }
 
 void print_vector(int num)

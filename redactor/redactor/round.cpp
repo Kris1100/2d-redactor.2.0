@@ -3,14 +3,14 @@ const double PI = 3.141592653589793238463;
 
 my_round::my_round(double x, double y, double r)
 {
-	_p = new point(x, y);
+	_p = point(x, y);
 	set_r(r);
 }
 
 ostream& operator<<(ostream& out, const my_round& c)
 {
-	out << "Координаты центра (" << c._p->get_x() << ", "
-		<< c._p->get_y() << ")" << endl << "Радиус: " << c._r << endl;
+	out << "Координаты центра (" << c._p.get_x() << ", "
+		<< c._p.get_y() << ")" << endl << "Радиус: " << c._r << endl;
 	return out;
 }
 
@@ -19,7 +19,7 @@ istream& operator>>(istream& in, my_round& c)
 	double x, y, r;
 	cout << "Введите координаты центра и радиус: ";
 	in >> x >> y >> r;
-	c._p = new point(x, y);
+	c._p =  point(x, y);
 	c.set_r(r);
 	return in;
 }
