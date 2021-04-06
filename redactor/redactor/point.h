@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 #include <cmath>
+#include "line.h"
+#include "ray.h"
+#include "segment.h"
+#include "Triangle.h"
 using namespace std;
 
 class point
@@ -25,6 +29,11 @@ public:
 	double dist();
 	//Лежит ли точка на биссектрисе координатной плоскости
 	bool bisector();
+	//
+	bool is_element(line& l) const;
+	bool is_element(const segment& s) const;
+	bool is_element(const ray& r) const;
+	bool is_element(const triangle& abc) const;
 
 	//перегрузка операторов равенства, вводва, вывода
 	friend bool operator==(const point& p1, const point& p2);

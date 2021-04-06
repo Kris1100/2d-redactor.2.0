@@ -86,7 +86,7 @@ myvector line::guide_vector()
 {
 	double a, b, c;
 	coef(a, b, c);
-	point p1(0, 0), p2(b,-a);
+	point p1(0, 0), p2(b, -a);
 	return myvector(p1, p2);
 }
 
