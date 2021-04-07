@@ -24,7 +24,6 @@ istream& operator>>(istream& in, circle& c)
 	return in;
 }
 
-
 int circle::quarter() const //может, стоит переделать функцию так, чтобы она возвращала значение, а не печатала его
                              //тогда она будет полезнее
 {
@@ -44,7 +43,6 @@ void circle::intersection() const
 		cout << "“очка пересечени€ с осью y:(" << sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
 	else cout << "Ќет пересечени€ с ос€ми" << endl;
 }
-
 
 line circle::tangent(point& p)  //входные данные мен€ютс€? если нет, то конст
 {
