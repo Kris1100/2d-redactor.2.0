@@ -115,7 +115,7 @@ bool point::is_element(const triangle& abc) const
 	return false;
 }
 
-bool point::is_elment(const poligon& abz) const//check if works
+bool point::is_element(const poligon& abz) const//check if works
 {
 	int n = abz.get_num();
 	for (int i = 0; i < n; i++)
@@ -124,6 +124,16 @@ bool point::is_elment(const poligon& abz) const//check if works
 		if (is_element(ab))
 			return true;
 	}
+	return false;
+}
+
+bool is_element(const circle& w) const
+{
+	point cntr = w.get_p();
+	double r = w.get_r();
+	if ((_x - cntr.get_x()) * (_x - cntr.get_x()) + 
+		(_y - cntr.get_y()) * (_y - cntr.get_y()) - r * r == 0)
+		return true;
 	return false;
 }
 

@@ -6,6 +6,7 @@
 #include "segment.h"
 #include "Triangle.h"
 #include "polygon.h"
+#include "circle.h"
 using namespace std;
 
 class point
@@ -36,6 +37,7 @@ public:
 	bool is_element(const ray& r) const;
 	bool is_element(const triangle& abc) const;
 	bool is_element(const polygon& abz) const;
+	bool is_element(const circle& w) const;
 
 	//перегрузка операторов равенства, вводва, вывода
 	friend bool operator==(const point& p1, const point& p2);
