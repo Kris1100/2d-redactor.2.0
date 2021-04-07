@@ -29,12 +29,14 @@ double my_round::get_square_of_segment(double a) const
 	return ((a / 2) * get_r() * get_r());
 }
 
-bool round::is_inside(const point& p) const // new func - check if works
-{
+// new func - check if works
+bool round::is_inside(const point& p) const{ 
 	double x_cntr = _p.get_x();
 	double y_cntr = _p.get_y();
 	double x = p.get_x();
 	double y = p.get_y();
+	
+	//
 	circle w(x_cntr, y_cntr, _r);
 	if (p.is_element(w))
 		return false;

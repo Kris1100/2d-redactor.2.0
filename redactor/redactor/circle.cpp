@@ -24,13 +24,16 @@ istream& operator>>(istream& in, circle& c)
 	return in;
 }
 
-int circle::quarter() const //может, стоит переделать функцию так, чтобы она возвращала значение, а не печатала его
-                             //тогда она будет полезнее
+int circle::quarter() const 
 {
-	if ((_p.get_x() - _r) > 0 && (_p.get_y() - _r) > 0) return 1;
-	else if ((_p.get_x() + _r) < 0 && (_p.get_y() - _r) > 0) return 2;
-	else if ((_p.get_x() + _r) < 0 && (_p.get_y() + _r) < 0) return 3;
-	else if ((_p.get_x() - _r) > 0 && (_p.get_y() + _r) < 0) return 4;
+	if ((_p.get_x() - _r) > 0 && (_p.get_y() - _r) > 0) 
+		return 1;
+	else if ((_p.get_x() + _r) < 0 && (_p.get_y() - _r) > 0)
+		return 2;
+	else if ((_p.get_x() + _r) < 0 && (_p.get_y() + _r) < 0)
+		return 3;
+	else if ((_p.get_x() - _r) > 0 && (_p.get_y() + _r) < 0) 
+		return 4;
 	else return -1;
 }
 
