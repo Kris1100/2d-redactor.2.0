@@ -110,9 +110,20 @@ bool point::is_element(const triangle& abc) const
 	segment ab = abc.get_ab();
 	segment bc = abc.get_bc();
 	segment ac = abc.get_ac();
-	point p(_x, _y);
-	if (p.is_element(ab) || p.is_element(bc) || p.is_element(ac))
+	if (is_element(ab) || is_element(bc) || is_element(ac))
 		return true;
+	return false;
+}
+
+bool point::is_elment(const poligon& abz) const//check if works
+{
+	int n = abz.get_num();
+	for (int i = 0; i < n; i++)
+	{
+		segment ab(abz.vertex[i % n], abz.vertex[(i + 1) % n]);
+		if (is_element(ab))
+			return true;
+	}
 	return false;
 }
 
