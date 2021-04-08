@@ -28,7 +28,7 @@ public:
 	//Координаты середины отрезка
 	point middle() const;
 	//принадлежит ли отрезок прямой, лучу
-	bool is_elememt(const line& l) const;
+	bool is_elememt(line& l) const;
 	bool is_elememt(const ray& r) const;
 
 protected:

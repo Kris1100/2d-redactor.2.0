@@ -1,5 +1,4 @@
 #include "point.h"
-
 point::point(double x, double y)
 {
 	set_x(x);
@@ -39,7 +38,7 @@ bool point::bisector()
 	return f;
 }
 
-bool point::is_element(line& l) const
+bool point::is_elem_line(line& l) const
 {
 	double a, b, c;
 	l.coef(a, b, c);
@@ -48,11 +47,11 @@ bool point::is_element(line& l) const
 	return false;
 }
 
-bool point::is_element(const segment& s) const
+bool point::is_elem_segment(const segment& s) const
 {
 	line l(s.get_start(), s.get_end());
 	//если не принадлежит прямой, на которой лежит отрезок, то выходим
-	if (!is_element(l))
+	if (!is_elem_line(l))
 		return false;
 	double p1 = s.get_start().get_x();
 	double p2 = s.get_end().get_x();
@@ -69,7 +68,7 @@ bool point::is_element(const segment& s) const
 	return false;
 }
 
-bool point::is_element(const ray& r) const
+bool point::is_elem_ray(const ray& r) const
 {
 	point t(_x, _y);
 	//если совпадает с объявленными точками луча
@@ -77,7 +76,7 @@ bool point::is_element(const ray& r) const
 		return true;
 	//пернадлежит ли прямой, на которой лежит луч
 	line l(r.get_begin(), r.get_p());
-	if (!is_element(l))
+	if (!is_elem_line(l))
 		return false;
 	//чтобы избежать копипаста, добавлены переменные, характеризующие координаты точек
 	double tmp_b = r.get_begin().get_x();
@@ -105,29 +104,29 @@ bool point::is_element(const ray& r) const
 		return false;
 }
 
-bool point::is_element(const triangle& abc) const
+bool point::is_elem_triangle(const triangle& abc) const
 {
 	segment ab = abc.get_ab();
 	segment bc = abc.get_bc();
 	segment ac = abc.get_ac();
-	if (is_element(ab) || is_element(bc) || is_element(ac))
+	if (is_elem_segment(ab) || is_elem_segment(bc) || is_elem_segment(ac))
 		return true;
 	return false;
 }
 
-bool point::is_element(const poligon& abz) const//check if works
+bool point::is_elem_polygon(const polygon& abz) const//check if works
 {
 	int n = abz.get_num();
 	for (int i = 0; i < n; i++)
 	{
 		segment ab(abz.vertex[i % n], abz.vertex[(i + 1) % n]);
-		if (is_element(ab))
+		if (is_elem_segment(ab))
 			return true;
 	}
 	return false;
 }
 
-bool is_element(const circle& w) const
+bool point::is_elem_circle(const circle& w) const
 {
 	point cntr = w.get_p();
 	double r = w.get_r();

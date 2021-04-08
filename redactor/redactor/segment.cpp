@@ -36,16 +36,16 @@ point segment::middle() const
 	return point(x, y);
 }
 
-bool segment::is_elememt(const line& l) const
+bool segment::is_elememt(line& l) const
 {
-	if (p1_.is_element(l) && p2_.is_element(l))
+	if (p1_.is_elem_line(l) && p2_.is_elem_line(l))
 		return true;
 	return false;
 }
 
 bool segment::is_elememt(const ray& r) const
 {
-	if (p1_.is_element(r) && p2_.is_element(r))
+	if (p1_.is_elem_ray(r) && p2_.is_elem_ray(r))
 		return true;
 	return false;
 }

@@ -32,12 +32,12 @@ public:
 	//Лежит ли точка на биссектрисе координатной плоскости
 	bool bisector();
 	//принадлежит ли точка прямой, отрезку, лучу, треугольнику, многоугольнику
-	bool is_element(line& l) const;
-	bool is_element(const segment& s) const;
-	bool is_element(const ray& r) const;
-	bool is_element(const triangle& abc) const;
-	bool is_element(const polygon& abz) const;
-	bool is_element(const circle& w) const;
+	bool is_elem_line(line& l) const;
+	bool is_elem_segment(const segment& s) const;
+	bool is_elem_ray(const ray& r) const;
+	bool is_elem_triangle(const triangle& abc) const;
+	bool is_elem_polygon(const polygon& abz) const;
+	bool is_elem_circle(const circle& w) const;
 
 	//перегрузка операторов равенства, вводва, вывода
 	friend bool operator==(const point& p1, const point& p2);
