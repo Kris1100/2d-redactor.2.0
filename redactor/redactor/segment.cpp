@@ -1,10 +1,8 @@
 #include "segment.h"
-
-segment::segment(const point& p1,const point& p2) 
-{
+#include"math_const.h"
+segment::segment(const point& p1,const point& p2) {
 	//ќтлавливаем ошибку на две одинаковые точки
-	try 
-	{
+	try {
 		if (p1 == p2) throw "ќбе точки отрезка совпадают, будет установлено значение по умолчанию (0,0) и (1,1)";
 		//≈сли все хорошо создаем отрезок с полученными точками
 		set_extm_points(p1, p2);
@@ -26,7 +24,7 @@ void segment::set_extm_points(const point& p1,const point& p2)
 double segment::len() const
 {
 	return round(sqrt( ((p1_.get_x() - p2_.get_x()) * (p1_.get_x() - p2_.get_x()))
-			    + ((p1_.get_y() - p2_.get_y()) * (p1_.get_y() - p2_.get_y())) )*constants::rd)/constants::rd;
+			   + ((p1_.get_y() - p2_.get_y()) * (p1_.get_y() - p2_.get_y())) )*constants::rd)/constants::rd;
 }
 
 point segment::middle() const
@@ -34,18 +32,4 @@ point segment::middle() const
 	double x = (p1_.get_x() + p2_.get_x()) / 2;
 	double y = (p1_.get_y() + p2_.get_y()) / 2;
 	return point(x, y);
-}
-
-bool segment::is_elememt(line& l) const
-{
-	if (p1_.is_elem_line(l) && p2_.is_elem_line(l))
-		return true;
-	return false;
-}
-
-bool segment::is_elememt(const ray& r) const
-{
-	if (p1_.is_elem_ray(r) && p2_.is_elem_ray(r))
-		return true;
-	return false;
 }

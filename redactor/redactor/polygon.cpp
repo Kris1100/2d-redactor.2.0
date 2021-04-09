@@ -19,7 +19,7 @@ polygon::~polygon()
 std::istream& operator>>(istream& in, polygon& p)
 {
 	double x, y;
-	cout << "¬ведите координаты " << p.num_vert_ << " вершин:" << endl;
+	cout << "¬ведите координаты " << p.num_vert_ << " вершин";
 	for (int i = 0; i < p.num_vert_; i++)
 	{
 		cin >> x >> y;
@@ -195,24 +195,4 @@ bool polygon::is_regular(bool convexity) const
 		v2.~myvector();
  		return true;
 	}
-}
-
-bool polygon::is_inside(const point& p) const//check if works
-{
-	int count_r = 0, count_l = 0;
-	double a, b, c;
-	if (p.is_element(this))
-		return false;
-	for (int i = 0; i < num_vert_; i++)
-	{
-		line l(vertex[i % num_vert_], vertex[(i + 1) % num_vert_]);
-		l.coef(a, b, c);
-		if (a * p.get_x() + b * p.get_y() + c < 0)
-			count_r++;
-		if (a * p.get_x() + b * p.get_y() + c > 0)
-			count_l++;
-	}
-	if (count_r = num_vert_ || count_l == num_vert_)
-		return true;
-	return false;
 }

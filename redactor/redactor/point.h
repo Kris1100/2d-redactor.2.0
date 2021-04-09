@@ -1,12 +1,6 @@
 #pragma once
 #include <iostream>
 #include <cmath>
-#include "line.h"
-#include "ray.h"
-#include "segment.h"
-#include "Triangle.h"
-#include "polygon.h"
-#include "circle.h"
 using namespace std;
 
 class point
@@ -31,13 +25,6 @@ public:
 	double dist();
 	//Лежит ли точка на биссектрисе координатной плоскости
 	bool bisector();
-	//принадлежит ли точка прямой, отрезку, лучу, треугольнику, многоугольнику
-	bool is_elem_line(line& l) const;
-	bool is_elem_segment(const segment& s) const;
-	bool is_elem_ray(const ray& r) const;
-	bool is_elem_triangle(const triangle& abc) const;
-	bool is_elem_polygon(const polygon& abz) const;
-	bool is_elem_circle(const circle& w) const;
 
 	//перегрузка операторов равенства, вводва, вывода
 	friend bool operator==(const point& p1, const point& p2);

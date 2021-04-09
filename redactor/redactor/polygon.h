@@ -10,8 +10,6 @@ class polygon
 public:
 	//Конструктор многоугольника            //полагаю, что нужно определение вырожденного случая
 	polygon(int num_vert = 3);
-	//Деструктор
-	~polygon();
 	//Ввод многоугольника 
 	friend std::istream& operator>>(std::istream& in, polygon& p);    
 	//Вывод всей информации по многоугольнику
@@ -28,8 +26,8 @@ public:
 	bool is_convex() const;
 	//Проверка на правильность
 	bool is_regular(bool convexity) const;
-	//
-	bool is_inside(const point& p) const;
+	//Деструктор
+	~polygon();
 
 protected:
 	int num_vert_;
