@@ -1,5 +1,5 @@
 #include "point.h"
-
+//Откатились, девочки!!!!
 point::point(double x, double y)
 {
 	set_x(x);
