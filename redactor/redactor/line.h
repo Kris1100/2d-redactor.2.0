@@ -31,24 +31,24 @@ public:
 	myvector guide_vector();
 
 	//Считает коэфициенты в уравнении прямой ax+by+c=0
-	void coef(double& a, double& b, double& c );
+	void coef(double& a, double& b, double& c);
 	//Возвращает уравнение прямой,проходящей через заданную точку
 	//и параллельной данной 
-	line parallel(const point& p)const;
+	line parallel(const point& p) const;
 
 	//Вывод уравнениия прямой в виде ax+by+c=0(заданной двумя точками)
 	void print_v1();
 	//Вывод уравнениия прямой в виде ax+by+c=0(заданной коэф.)
 	void print_v2();
-	void print_all(double& a,double& b,double& c);
+	void print_all(double& a, double& b, double& c);//нужно разобраться с функциями вывода (написать универсальную или сократить)
 	//Вывод параметрического уравнения прямой
 	void print_param();
 
 private:
 	//Задать коэффициенты прямой
-	void set_a(double& a) {	_a = a;	}
-	void set_b(double& b) {	_b = b;	}
-	void set_c(double& c) {	_c = c;	}
+	void set_a(double& a) { _a = a; }
+	void set_b(double& b) { _b = b; }
+	void set_c(double& c) { _c = c; }
 
 protected:
 	point _p1;

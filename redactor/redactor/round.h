@@ -20,11 +20,12 @@ public:
 	//Возвращает площадь сегмента, аргумент - угол в радианах
 	double get_square_of_segment(double a = 1) const;
 	
+	//
+	bool is_inside(const point& p) const;
+	
 private:
-	point _p;
+	point _centr;
 	double _r;
 	//Сеттер радиуса
-	void set_r(double r = 1.0) {
-		_r = r;
-	}
+	void set_r(double r = 1.0) { _r = r; }
 };

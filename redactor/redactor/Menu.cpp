@@ -88,11 +88,11 @@ void print_point(int num)
 	cin >> x >> y;
 	point p(x, y);
 	cout << "ƒанна€ точка лежит в ";
-	double a=p.quarter();
+	double a = p.quarter();
 	cout << a << "четверти" << endl;
 	double b = p.dist();
 	cout << "–ассто€ние от данной точки до начала координат: " << b << endl;
-	if (p.bisector() == true) 
+	if (p.bisector() == true)
 		cout << "ƒанна€ точка лежит на биссектрисе координатной плоскости";
 	else
 		cout << "ƒанна€ точка не лежит на биссектрисе координатной плоскости";
@@ -101,7 +101,7 @@ void print_point(int num)
 
 void print_line(int num)
 {
-	point p1,p2,p3;
+	point p1, p2, p3;
 	cout << "¬ведите координаты двух точек дл€ задани€ пр€мой" << endl;
 	cout << "¬ведите координаты первой точки" << endl;
 	cin >> p1;
@@ -111,12 +111,12 @@ void print_line(int num)
 	l1.print_v1();
 	l1.print_param();
 	myvector v1 = l1.normal_vector();
-	cout <<" оординаты вектора нормали: "<< v1;
+	cout << " оординаты вектора нормали: " << v1;
 	myvector v2 = l1.guide_vector();
 	cout << " оординаты направл€ющего вектора: " << v2;
-	cout << "¬ведиите координаты точки,через которую нужно построить пр€мую,параллельную данной: " ;
+	cout << "¬ведиите координаты точки,через которую нужно построить пр€мую,параллельную данной: ";
 	cin >> p3;
-	line l2=l1.parallel(p3);
+	line l2 = l1.parallel(p3);
 	cout << "”равнение пр€мой,параллельной данной: ";
 	l2.print_v2();
 }
@@ -183,9 +183,22 @@ void print_triangle(int num)
 	cout << "ѕериметр: " << abc.perimetr() << endl;
 	cout << "–адиус вписанной окружности: " << abc.radius_inside() << endl;
 	cout << "–адиус описанной окружности: " << abc.radius_outside() << endl;
-	line l = abc.middle_line();
-	cout << "”равнение средней линии:"<<endl;
-	l.print_v2();
+	//do it properly
+	segment l = abc.middle_line(abc.get_ab(), abc.get_bc());
+	cout << l.get_start() << " " << l.get_end() << endl;
+	cout << "”равнение средней линии:" << endl;
+	line middle(l.get_start(), l.get_end());
+	double a, b, c;
+	middle.coef(a, b, c);
+	line middle_l(a, b, c);
+	middle_l.print_v2();
+	cout << "Input point data:" << endl;
+	point p;
+	cin >> p;
+	if (abc.is_inside(p))
+		cout << "true" << endl;
+	else
+		cout << "false" << endl;
 }
 
 void print_vector(int num)

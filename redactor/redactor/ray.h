@@ -15,12 +15,13 @@ public:
 	point get_begin() const { return _begin; }
 	point get_p() const { return _p; }
 
-	bool is_element(const point& t) const;
+	//принадлежит ли луч прямой
+	bool is_element(const line& l) const;
 
 private:
 	//Сеттеры начала луча и какой-то точки на луче
 	void set_begin(const point& begin) { _begin = begin; }
-	void set_p(const point& p) { _p = p; }
+	void set_p(const point& p) { if (p != _begin) _p = p; }
 
 	point _begin;
 	point _p;
