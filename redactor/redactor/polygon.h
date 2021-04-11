@@ -8,7 +8,7 @@ using namespace std;
 class polygon
 {
 public:
-	//Конструктор многоугольника           
+	//Конструктор многоугольника. По умолчанию задачется правильный n-угольник          
 	polygon(int num_vert = 3);
 	//Деструктор
 	~polygon();
@@ -39,6 +39,6 @@ protected:
 private:
 	//Установить количество углов
 	void set_num(int num_vert);
-	//Задать массив точек
+	//Задать массив точек(по умолчанию задает точки правильного num_vert-угольника)
 	void set_point_array(point* vert);
 };

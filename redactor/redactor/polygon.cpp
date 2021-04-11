@@ -22,7 +22,7 @@ polygon::~polygon()
 
 void polygon::set_point_array(point* vert) 
 {
-	//ѕо умолчанию орпедел€ем правильный n- угольник, однако он может не определ€тьс€ как правильный из-за пограшности измерений. Ётот баг € постараюсь минимизировать
+	//ѕо умолчанию орпедел€ем правильный n- угольник, однако он может не определ€тьс€ как правильный из-за пограшности измерений (при больших значени€х num_vert_). Ётот баг € постараюсь минимизировать
 	vertex = vert;
 	//”становим единичную окружность
 	int R = 1;
@@ -153,10 +153,12 @@ bool polygon::is_regular(bool convexity) const
 			//≈сли мы первый раз вычисл€ем длину стороны, то нам пока не с чем ее сранивать. «ададим сторону (шаблон)
 			if (side == -1)
 				side = s.len();
-			else
+			else {
 				//≈сли очередна€ сторона не равна шаблону, то многоугольник неправильный
-				if (side != s.len())
+				double d = abs(s.len() - side);
+				if (d > constants::eps)
 					return false;
+			}
 			//—оздаем два вектора, между которыми будем определ€ть угол
 			myvector v1(vertex[i+1], vertex[i]);
 			point p;
@@ -166,17 +168,22 @@ bool polygon::is_regular(bool convexity) const
 			//ƒалее логика аналогично проверке сторон
 			if (ang == -1)
 				ang = angle(v1, v2);
-			else
-				if (ang != angle(v1, v2))
+			else {
+				double d = abs(ang - angle(v1, v2));
+				if (d>constants::eps)
 					return false;
+			}
 		}
 		//ќтдельна€ проверка дл€ последней стороны, тк к ней трудно обратитьс€ с помощью цикла
 		segment s(vertex[num_vert_ - 1], vertex[0]);
 		myvector v1(vertex[0], vertex[num_vert_-1]);
 		myvector v2(vertex[0], vertex[1]);
-		if (side != s.len())
+
+		double d = abs(s.len() - side);
+		if (d > constants::eps)
 			return false;
-		if (ang != angle(v1, v2)&&ang!=angle(v1,v2)+constants::eps && ang!=angle(v1,v2)-constants::eps)
+		d = abs(ang - angle(v1, v2));
+		if (d>constants::eps)
 			return false;
 		//”далим вспомогательные элементы
 		s.~segment();
