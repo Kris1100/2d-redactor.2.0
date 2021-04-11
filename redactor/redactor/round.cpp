@@ -1,5 +1,5 @@
 #include "round.h"
-const double PI = 3.141592653589793238463;
+#include "math_const.h"
 
 my_round::my_round(double x, double y, double r)
 {

@@ -1,5 +1,5 @@
 #include "circle.h"
-const double PI = 3.141592653589793238463; //в общем взаголовочнике нужно определить
+#include "math_const.h"
 
 circle::circle(double x, double y, double r) 
 {
