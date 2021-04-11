@@ -8,14 +8,16 @@ using namespace std;
 class polygon
 {
 public:
-	//Конструктор многоугольника            //полагаю, что нужно определение вырожденного случая
+	//Конструктор многоугольника           
 	polygon(int num_vert = 3);
-	//Ввод многоугольника 
-	friend std::istream& operator>>(std::istream& in, polygon& p);    
-	//Вывод всей информации по многоугольнику
-	friend std::ostream& operator<<(std::ostream& out, polygon& p);
+	//Деструктор
+	~polygon();
+
 	//Получить количество углов
 	int get_num() const;
+	//Получить указатель на массив точек многоугольника
+	point* get_vertexes() const;
+
 	//Вычислить периметр
 	double perimetr() const;
 	//Вычислить площадь
@@ -26,9 +28,11 @@ public:
 	bool is_convex() const;
 	//Проверка на правильность
 	bool is_regular(bool convexity) const;
-	//Деструктор
-	~polygon();
-
+	
+	//Ввод многоугольника 
+	friend std::istream& operator>>(std::istream& in, polygon& p);
+	//Вывод всей информации по многоугольнику
+	friend std::ostream& operator<<(std::ostream& out, polygon& p);
 protected:
 	int num_vert_;
 	point* vertex;

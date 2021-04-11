@@ -1,6 +1,8 @@
 #include "polygon.h"
 #include "math_const.h"
 
+//Конструкторы и деструкторы
+
 polygon::polygon(int num_vert)
 {
 	if (num_vert < 3)
@@ -16,28 +18,7 @@ polygon::~polygon()
 	vertex = nullptr;
 }
 
-std::istream& operator>>(istream& in, polygon& p)
-{
-	double x, y;
-	cout << "Введите координаты " << p.num_vert_ << " вершин";
-	for (int i = 0; i < p.num_vert_; i++)
-	{
-		cin >> x >> y;
-		p.vertex[i].set_x(x);
-		p.vertex[i].set_y(y);
-	}
-	return in;
-}
-
-std::ostream& operator<<(ostream& out, polygon& p)
-{
-	out << "Количество углов " << p.num_vert_ << endl;
-	for (int i = 0; i < p.num_vert_; i++)
-	{
-		out << "x= " << p.vertex[i].get_x() << " y= " << p.vertex[i].get_y() << endl;
-	}
-	return out;
-}
+//Сеттеры
 
 void polygon::set_point_array(point* vert) 
 {
@@ -61,10 +42,17 @@ void polygon::set_num(int num_vert)
 	num_vert_ = num_vert;
 }
 
+//Геттеры
+
 int polygon::get_num()const
 {
 	return num_vert_;
 }
+point* polygon::get_vertexes() const {
+	return vertex;
+}
+
+//Основные функции класса
 
 double polygon::perimetr() const
 {
@@ -82,7 +70,8 @@ double polygon::perimetr() const
 
 double polygon::area() const
 {
-	double s1 = 0, s2 = 0, s = 0;                          // можно добавить комментарий с общей идеей: я дурачок, мне непонятно
+	//Используем формулу площади Гаусса https://cpp.mazurok.com/tag/%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0/#:~:text=%D0%94%D0%BB%D1%8F%20%D1%82%D0%BE%D0%B3%D0%BE%2C%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C%20%D0%B5%D0%B3%D0%BE,%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B4%D0%B5%D1%81%D1%8C.
+	double s1 = 0, s2 = 0, s = 0;                         
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
 		s1 += vertex[i].get_x() * vertex[i + 1].get_y();
@@ -195,4 +184,29 @@ bool polygon::is_regular(bool convexity) const
 		v2.~myvector();
  		return true;
 	}
+}
+
+//Friend функции
+
+std::istream& operator>>(istream& in, polygon& p)
+{
+	double x, y;
+	cout << "Введите координаты " << p.num_vert_ << " вершин";
+	for (int i = 0; i < p.num_vert_; i++)
+	{
+		cin >> x >> y;
+		p.vertex[i].set_x(x);
+		p.vertex[i].set_y(y);
+	}
+	return in;
+}
+
+std::ostream& operator<<(ostream& out, polygon& p)
+{
+	out << "Количество углов " << p.num_vert_ << endl;
+	for (int i = 0; i < p.num_vert_; i++)
+	{
+		out << "x= " << p.vertex[i].get_x() << " y= " << p.vertex[i].get_y() << endl;
+	}
+	return out;
 }
