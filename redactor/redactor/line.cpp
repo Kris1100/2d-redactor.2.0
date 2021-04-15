@@ -48,7 +48,8 @@ void line::print_v1()
 }
 void line::print_v2()
 {
-	print_all(_a, _b, _c);
+	double a = _a, b = _b, c = _c;
+	print_all(a, b, c);
 }
 void line::print_param()
 {

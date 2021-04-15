@@ -183,9 +183,6 @@ void print_triangle(int num)
 	cout << "Периметр: " << abc.perimetr() << endl;
 	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
 	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
-	line l = abc.middle_line();
-	cout << "Уравнение средней линии:"<<endl;
-	l.print_v2();
 }
 
 void print_vector(int num)

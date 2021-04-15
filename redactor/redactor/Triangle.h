@@ -31,7 +31,9 @@ public:
 	//Перегрузка оператора ввода
 	friend ifstream& operator>>(ifstream& in, triangle& abc);//кажется, она уже есть в родительском классе
 	//Находит среднюю линию треугольника к заданной стороне
-	line middle_line()const;
+	segment middle_line(const segment& ab, segment& bc)const;
+	//Находит медиану треугольника
+	segment median(const point& a, segment& bc)const;
 
 private:
 	void set_vertex(const point& a, const point& b, const point& c);
