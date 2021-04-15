@@ -28,16 +28,10 @@ public:
 	double radius_outside() const;
 	//Лежит ли точка внутри треугольника (строго)
 	bool is_inside(const point& p) const;
-	//Находит среднюю линию треугольника к заданным сторонам
-	segment middle_line(const segment& ab, const segment& bc);
-
 	//Перегрузка оператора ввода
 	friend ifstream& operator>>(ifstream& in, triangle& abc);//кажется, она уже есть в родительском классе
-
-	//Получить отрезки-стороны треугольника
-	segment get_ab() const { return segment(vertex[0], vertex[1]); }
-	segment get_bc() const { return segment(vertex[1], vertex[2]); }
-	segment get_ac() const { return segment(vertex[0], vertex[2]); }
+	//Находит среднюю линию треугольника к заданной стороне
+	line middle_line()const;
 
 private:
 	void set_vertex(const point& a, const point& b, const point& c);

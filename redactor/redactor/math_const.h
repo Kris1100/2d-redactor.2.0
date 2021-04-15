@@ -3,10 +3,10 @@
 #define MATH_CONST_H
 namespace constants {
 	//Число пи
-	const double pi = 3.141592653589793238462643383279;
+	const double pi = 3.141592653589793;
 	//Погрешность
-	const double eps = 0.00000001;
+	const double eps = 0.0001;
 	//Общепринятое число округления. Округляем до rd-ых
-	const double rd = 10000;
+	const double rd = 10000000;
 }
 #endif // !CONSTANTS_H

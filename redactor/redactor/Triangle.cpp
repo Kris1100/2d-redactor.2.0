@@ -1,6 +1,5 @@
 #include "Triangle.h"
-
-const double M_EPS = 0.000000001;
+#include "math_const.h"
 
 triangle::triangle()
 {
@@ -31,8 +30,7 @@ bool triangle::is_equilateral() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (ab.len() - bc.len() <= M_EPS && ab.len() - ac.len() <= M_EPS)
-		/*почему не работает объ€вленна€ в общем заголовочнике через define константа?*/
+	if (ab.len() - bc.len() <= constants::eps && ab.len() - ac.len() <= constants::eps)
 		return true;
 	return false;
 }
@@ -52,9 +50,9 @@ bool triangle::is_right() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (ab.len() * ab.len() + ac.len() * ac.len() - bc.len() * bc.len() <= M_EPS ||
-		ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len() <= M_EPS ||
-		bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len() <= M_EPS)
+	if (ab.len() * ab.len() + ac.len() * ac.len() - bc.len() * bc.len() <= constants::eps ||
+		ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len() <= constants::eps ||
+		bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len() <= constants::eps)
 		return true;
 	return false;
 }
@@ -114,8 +112,28 @@ ifstream& operator>>(ifstream& in, triangle& abc)
 	return in;
 }
 
-segment triangle::middle_line(const segment& ab, const segment& bc)
+line triangle::middle_line()const
 {
-	segment l(ab.middle(), bc.middle());
-	return l;
+	int side,v1,v2,v3;
+	cout << "—редн€€ лини€ дл€ стороны є(1-3):" << endl;
+	cin >> side;
+	if (side == 1) {
+		v1 = 0;
+		v2 = 1;
+		v3 = 2;
+	}
+	else if (side == 2) {
+		v1 = 1;
+		v2 = 2;
+		v3 = 0;
+	}
+	else if (side == 3) {
+		v1 = 0;
+		v2 = 2;
+		v3 = 1;
+	}
+	line l(vertex[v1], vertex[v2]);
+	segment m(vertex[v1],vertex[v3]);
+	point p = m.middle();
+	return l.parallel(p);
 }

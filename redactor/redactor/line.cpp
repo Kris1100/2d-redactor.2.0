@@ -12,8 +12,7 @@ line::line(double a, double b, double c)
 	set_b(b);
 	set_c(c);
 }
-
-void line::print_all(double& a, double& b, double& c)
+void line::print_all(double& a,double& b,double& c)
 {
 	if (a != 0 && a != 1 && a != -1)
 		cout << a << 'x';
@@ -41,20 +40,16 @@ void line::print_all(double& a, double& b, double& c)
 		cout << '+' << c;
 	cout << '=' << 0 << endl;
 }
-
 void line::print_v1()
 {
 	double a, b, c;
 	coef(a, b, c);
 	print_all(a, b, c);
 }
-
 void line::print_v2()
 {
-	double a = _a, b = _b, c = _c;
-	print_all(a, b, c);
+	print_all(_a, _b, _c);
 }
-
 void line::print_param()
 {
 	double a, b, c;
@@ -86,7 +81,7 @@ myvector line::guide_vector()
 {
 	double a, b, c;
 	coef(a, b, c);
-	point p1(0, 0), p2(b, -a);
+	point p1(0, 0), p2(b,-a);
 	return myvector(p1, p2);
 }
 
