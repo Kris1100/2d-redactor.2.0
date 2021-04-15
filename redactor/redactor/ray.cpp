@@ -9,9 +9,9 @@ ray::ray(const point& begin, const point& p)
 	}
 }
 
-bool ray::is_element(const line& l) const
+bool ray::is_elem_line(line& l) const
 {
-	if (_begin.is_element(l) && _p.is_element(l))
+	if (_begin.is_elem_line(l) && _p.is_elem_line(l))
 		return true;
 	return false;
 }

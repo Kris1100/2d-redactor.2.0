@@ -16,7 +16,7 @@ public:
 	point get_p() const { return _p; }
 
 	//принадлежит ли луч прямой
-	bool is_element(const line& l) const;
+	bool is_elem_line(line& l) const;
 
 private:
 	//Сеттеры начала луча и какой-то точки на луче
