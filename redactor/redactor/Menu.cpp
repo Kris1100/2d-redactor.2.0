@@ -1,5 +1,4 @@
 #include "Menu.h"
-
 void print_menu(int num, int col)
 {
 	int col2;
@@ -167,6 +166,7 @@ void print_segment(int num)
 	p2.set_y(y2);
 	segment s(p1, p2);
 	cout << "Длина отрезка " << s.len();
+	s.draw();
 }
 
 void print_triangle(int num)

@@ -1,12 +1,13 @@
 #pragma once
-#include "main.h"
-
-int main()
+#include "Menu.h"
+#include "our_glut.h"
+int main(int argc, char* argv[])
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	SetColor(1, 15);
 
+	main_pr(argc,argv);
 	int item = 0;
 	print_menu(0, 1);
 	while (true)

@@ -1,5 +1,6 @@
 #include "segment.h"
 #include"math_const.h"
+#include "glut-3.7.6-bin/glut.h"
 segment::segment(const point& p1,const point& p2) {
 	//Отлавливаем ошибку на две одинаковые точки
 	try {
@@ -32,4 +33,12 @@ point segment::middle() const
 	double x = (p1_.get_x() + p2_.get_x()) / 2;
 	double y = (p1_.get_y() + p2_.get_y()) / 2;
 	return point(x, y);
+}
+
+void segment::draw()  {
+	glBegin(GL_LINES);
+	   glVertex2f(p1_.get_x(),p1_.get_y());
+	   glVertex2f(p2_.get_x(), p2_.get_y());
+	glEnd;
+	glFinish;
 }

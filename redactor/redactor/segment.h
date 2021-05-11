@@ -29,6 +29,9 @@ public:
 	//Координаты середины отрезка
 	point middle() const;
 
+	//Нарисовать отрезок
+	void draw();
+
 protected:
 	point p1_;
 	point p2_;
