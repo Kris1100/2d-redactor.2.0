@@ -1,24 +1,17 @@
 #pragma once
 #include "Menu.h"
-#include "our_glut.h"
 int main(int argc, char* argv[])
 {
-	glutInitDisplayMode(GLUT_RGB);
-	glutInitWindowSize(512, 512);
-	glutCreateWindow("Work example");
-	glutDisplayFunc(Display);
-	glutReshapeFunc(Reshape);
-	glutMainLoop();
-	/*SetConsoleCP(1251);
+	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	SetColor(1, 15);
 
-	main_pr(argc,argv);
 	int item = 0;
 	print_menu(0, 1);
 	while (true)
 	{
 		int key = _getch();
+
 		if (key == 13)
 		{
 			switch (item)
@@ -59,5 +52,5 @@ int main(int argc, char* argv[])
 		}
 	}
 	system("pause");
-	return 0;*/
+	return 0;
 }
