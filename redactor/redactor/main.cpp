@@ -7,6 +7,8 @@ int main(int argc, char* argv[])
 	glutInitWindowSize(512, 512);
 	glutCreateWindow("Work example");
 	glutDisplayFunc(Display);
+	glutReshapeFunc(Reshape);
+	glutMainLoop();
 	/*SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	SetColor(1, 15);
