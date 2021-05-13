@@ -8,5 +8,8 @@ namespace constants {
 	const double eps = 0.0001;
 	//Общепринятое число округления. Округляем до rd-ых
 	const double rd = 10000000;
+	//Параметры окна с изображением
+	const size_t width = 1024;
+	const size_t height = 700;
 }
 #endif // !CONSTANTS_H
