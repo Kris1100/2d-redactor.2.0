@@ -1,4 +1,5 @@
 #include "Menu.h"
+figure* q;
 void print_menu(int num, int col)
 {
 	int col2;
@@ -166,7 +167,10 @@ void print_segment(int num)
 	p2.set_y(y2);
 	segment s(p1, p2);
 	cout << "ƒлина отрезка " << s.len();
-	s.draw();
+	//Ќарисуем отрезок, поместим на него указатель
+	q = &s;
+	//запустим рисование
+	main_pr();
 }
 
 void print_triangle(int num)
@@ -205,4 +209,20 @@ void SetColor(int text, int Fon)
 {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(h, (Fon << 4) + text);
+}
+void main_pr() {
+	glutCreateWindow("Work example");
+	glutDisplayFunc(Display);
+	glutReshapeFunc(Reshape);
+	glutMainLoop();
+}
+void Display(void) {
+	if (q != NULL) q->draw();
+}
+void Reshape(GLint w, GLint h)
+{
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, w, 0, h, -1.0, 1.0);
 }

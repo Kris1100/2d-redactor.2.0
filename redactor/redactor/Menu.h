@@ -8,11 +8,16 @@
 #include "point.h"
 #include "circle.h"
 #include "round.h"
+#include "Figure.h"
 
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
 
+#include <stdlib.h>
+#include "glut-3.7.6-bin/glut.h"
+//Указатель на переменную на отрисовку
+extern figure* q;
 //Установить цвет
 void SetColor(int text, int Fon);
 //Печать меню
@@ -31,3 +36,9 @@ void print_segment(int num);
 void print_triangle(int num);
 //Меню для вектора
 void print_vector(int num);
+//Фкнкция, соединяющая рисование
+void main_pr();
+//Вызывает метод draw конкретного класса,управляет выводом на экран
+void Display(void);
+//Вызывается при изменении размера окна
+void Reshape(GLint w, GLint h);

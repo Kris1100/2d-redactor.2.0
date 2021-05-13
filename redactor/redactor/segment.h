@@ -3,9 +3,10 @@
 #include <cmath>
 #include <math.h>
 #include <cassert>
+#include "Figure.h"
 using namespace std;
 //Класс отрезок
-class segment
+class segment : public figure
 {
 public:
 	//Конструктор отрезка

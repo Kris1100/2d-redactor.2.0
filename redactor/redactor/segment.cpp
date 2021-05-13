@@ -36,9 +36,14 @@ point segment::middle() const
 }
 
 void segment::draw()  {
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glLineWidth(5);
 	glBegin(GL_LINES);
-	   glVertex2f(p1_.get_x(),p1_.get_y());
-	   glVertex2f(p2_.get_x(), p2_.get_y());
-	glEnd;
-	glFinish;
+	      glColor3ub(255, 0, 0);
+	      glVertex2f(p1_.get_x(), p1_.get_y());
+	      glVertex2f(p2_.get_x(), p2_.get_y());
+	glEnd();
+
+	glFinish();
 }
