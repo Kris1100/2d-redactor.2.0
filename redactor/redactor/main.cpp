@@ -3,7 +3,11 @@
 #include "our_glut.h"
 int main(int argc, char* argv[])
 {
-	SetConsoleCP(1251);
+	glutInitDisplayMode(GLUT_RGB);
+	glutInitWindowSize(512, 512);
+	glutCreateWindow("Work example");
+	glutDisplayFunc(Display);
+	/*SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	SetColor(1, 15);
 
@@ -53,5 +57,5 @@ int main(int argc, char* argv[])
 		}
 	}
 	system("pause");
-	return 0;
+	return 0;*/
 }
