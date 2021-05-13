@@ -7,6 +7,15 @@ triangle::triangle()
 	vertex = vert;
 }
 
+triangle::triangle(const point* vert)
+{
+	point* tmp_vert = new point[3];
+	vertex = tmp_vert;
+	vertex[0] = vert[0];
+	vertex[1] = vert[1];
+	vertex[2] = vert[2];
+}
+
 void triangle::set_vertex(const point& a, const point& b, const point& c)
 {
 	vertex[0] = a;
@@ -62,10 +71,7 @@ double triangle::radius_inside() const
 	if (exists())
 		return 2 * area() / perimetr();
 	else
-	{
-		cout << "Треугольник с такими координатами не существует" << endl;
-		return -1;
-	}
+		throw "Вырожденный случай";
 }
 
 double triangle::radius_outside() const
@@ -79,10 +85,7 @@ double triangle::radius_outside() const
 		return ab.len() * bc.len() * ac.len() / (4 * abc_square);
 	}
 	else
-	{
-		cout << "Треугольник с такими координатами не существует" << endl;
-		return -1;
-	}
+		throw "Вырожденный случай";
 }
 
 bool triangle::is_inside(const point& p) const
@@ -105,18 +108,12 @@ bool triangle::is_inside(const point& p) const
 	return false;
 }
 
-ifstream& operator>>(ifstream& in, triangle& abc)
-{
-	for (int i = 0; i < 3; i++)
-		cin >> abc.vertex[i];
-	return in;
-}
-
 segment triangle::middle_line(const segment& ab,segment& bc)const
 {
 	segment l(ab.middle(), bc.middle());
 	return l;
 }
+
 segment triangle::median(const point& a, segment& bc)const
 {
 	segment l(a,bc.middle());

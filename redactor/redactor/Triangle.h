@@ -11,6 +11,8 @@ class triangle : public polygon
 public:
 	//Конструктор треугольника
 	triangle();
+	//Конструктор по массиву точек
+	triangle(const point* vert);
 	//Деструктор треугольника                //деструктор наследуется, но должен быть виртуальным в родительском классе
 	//~triangle();
 
@@ -28,8 +30,6 @@ public:
 	double radius_outside() const;
 	//Лежит ли точка внутри треугольника (строго)
 	bool is_inside(const point& p) const;
-	//Перегрузка оператора ввода
-	friend ifstream& operator>>(ifstream& in, triangle& abc);//кажется, она уже есть в родительском классе
 	//Находит среднюю линию треугольника к заданной стороне
 	segment middle_line(const segment& ab, segment& bc)const;
 	//Находит медиану треугольника
