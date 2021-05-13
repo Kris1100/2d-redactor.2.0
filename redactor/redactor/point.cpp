@@ -38,6 +38,7 @@ bool point::bisector()
 		f = false;
 	return f;
 }
+
 bool operator==(const point& p1, const point& p2)
 {
 	if (p1._x == p2._x && p1._y == p2._y)
