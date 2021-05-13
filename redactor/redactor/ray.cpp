@@ -7,52 +7,24 @@ ray::ray(const point& begin, const point& p)
 		_begin = begin;
 		_p = p;
 	}
+	else
+		throw "Ќедостаточно информации о луче";
 }
 
-<<<<<<< HEAD
-bool ray::is_elem_line(line& l) const
+ifstream& operator>>(ifstream& in, ray& r)
 {
-	if (_begin.is_elem_line(l) && _p.is_elem_line(l))
-=======
-bool ray::is_element(const point& t) const
+	cout << "¬ведите координаты начала луча:" << endl;
+	cin >> r._begin;
+	cout << "¬ведите произвольную точку на луче:" << endl;
+	cin >> r._p;
+	if (r._begin == r._p)
+		throw "Ќедостаточно информации о луче";
+	return in;
+}
+
+ostream& operator<<(ostream& out, const ray& r)
 {
-	//если совпадает с объ€вленными точками луча
-	if (t == _p || t == _begin)
->>>>>>> 6e2314bef907c45c389be0c4b4753a8f3afd65e7
-		return true;
-	//пернадлежит ли пр€мой, на которой лежит луч
-	line l(_begin, _p);
-	double a, b, c;
-	l.coef(a, b, c);
-	if (a * t.get_x() + b * t.get_y() + c != 0)
-		return false;
-	//чтобы избежать копипаста, добавлены переменные, характеризующие координаты точек
-	double tmp_b, tmp_p, tmp_t;
-	//случай с вертикальным лучом
-	if (_begin.get_x() == _p.get_x())
-	{
-		tmp_b = _begin.get_y();
-		tmp_p = _p.get_y();
-		tmp_t = t.get_y();
-	}
-	//остальные случаи
-	else
-	{
-		tmp_b = _begin.get_x();
-		tmp_p = _p.get_x();
-		tmp_t = t.get_x();
-	}
-	//отличи€ в блоках - только в знаках больше/меньше
-	//поэтому использую новую переменную, чтобы избежать копипаста
-	int sign = 1;
-	//если вверх или вправо
-	if (tmp_b < tmp_p)
-		sign = 1;
-	//если вниз или влево
-	else if (tmp_b < tmp_p)
-		sign = -1;
-	if (tmp_t > tmp_b * sign || tmp_t > tmp_p * sign)
-		return true;
-	else
-		return false;
+	cout << "“очка начала луча: " << r._begin << endl;
+	cout << "ѕроизвольна€ точка на луче: " << r._p << endl;
+	return out;
 }
