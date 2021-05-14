@@ -187,6 +187,9 @@ void print_triangle(int num)
 	cout << "Периметр: " << abc.perimetr() << endl;
 	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
 	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
+	//Нарисовать треугольник
+	q = &abc;
+	main_pr();
 }
 
 void print_vector(int num)

@@ -1,5 +1,6 @@
 #include "Triangle.h"
 #include "math_const.h"
+#include "glut-3.7.6-bin/glut.h"
 
 triangle::triangle()
 {
@@ -118,4 +119,18 @@ segment triangle::median(const point& a, segment& bc)const
 {
 	segment l(a,bc.middle());
 	return l;
+}
+
+void triangle::draw() {
+	glBegin(GL_TRIANGLES);
+	     point* vert = vertex;
+	     glColor3ub(255, 0, 0);
+	     glVertex2f(vert[0].get_x(), vert[0].get_y());
+	     glColor3ub(0, 255, 0);
+	     glVertex2f(vert[1].get_x(), vert[1].get_y());
+	     glColor3ub(0, 0, 255);
+	     glVertex2f(vert[2].get_x(), vert[2].get_y());
+	glEnd();
+
+	glFinish();
 }

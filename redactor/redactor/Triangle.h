@@ -35,6 +35,9 @@ public:
 	//Находит медиану треугольника
 	segment median(const point& a, segment& bc)const;
 
+	//Рисование треугольника
+	void draw();
+
 private:
 	void set_vertex(const point& a, const point& b, const point& c);
 };

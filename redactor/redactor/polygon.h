@@ -5,7 +5,7 @@
 #include"vector.h"
 using namespace std;
 
-class polygon
+class polygon : public figure
 {
 public:
 	//Конструктор многоугольника. По умолчанию задачется правильный n-угольник          
