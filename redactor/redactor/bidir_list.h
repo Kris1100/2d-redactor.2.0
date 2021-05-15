@@ -1,102 +1,165 @@
 #pragma once
 #include <iostream>
 using namespace std;
-template <typename T>
-struct Node {
-	T info;
-	Node <T>* next = NULL;
+
+template <class T>
+struct Node
+{
+	T info = 0;
+	Node<T>* next = NULL;
 	Node<T>* prev = NULL;
+	//Node()//need to test
+	//{
+	//	return new Node<T>;
+	//}
 };
-template <typename T>class bidir_list
+
+template <class T>
+class bidir_list
 {
 public:
-	//указатели на начало и конец списка
-	Node<T>* g = NULL;
-	Node<T>* hv = NULL;
-	//длина списка
-	long long int ln = 0;
-	bidir_list() {};
+	////
+	//bidir_list() { }
+	////
+	//bidir_list(size_t size_);
+	////Деструктор
+	//~bidir_list();
+	////Добавить элемент в конец списка
+	//void add_last(const T x);
+	////Добавить элемент в начало списка
+	//void add_first(const T x);
+	////Извлечь первый элемент
+	//Node<T>* get_first(); //const?
+	////Получить последний элемент аналогично получению первого
+	//Node<T>* get_last(); //const?
+	//Конструктор
+	bidir_list() { }
+	//Конструктор по количеству элементов
+	bidir_list(size_t size_)
+	{
+		if (size_ == 0)
+			return;
+		for (int i = 0; i < size_; i++)
+		{
+			add_last(0);
+		}
+		size = size_;
+	}
 	//Деструктор
-	~bidir_list() {
-		Node<T>* cur;
-		while (ln > 0) {
+	~bidir_list()
+	{
+		Node<T>* cur = NULL;
+		while (size > 0)
+		{
 			cur = get_first();
 			delete cur;
 		}
-	};
+	}
 	//Добавить элемент в конец списка
-	void add_last(T x) {
+	void add_last(const T x)
+	{
 		//Создаем объект добавления
 		Node<T>* elem = new Node<T>;//Добавить конструктор струкруты
 		elem->info = x;
 		elem->next = NULL;
-		elem->prev = hv;
-		//Если список не пустой,то прикриепляем новый элемент к хвосту
-		if (ln > 0) {
-			hv->next = elem;
-			hv = elem;
+		elem->prev = tail;
+		//Если список не пустой, то прикриепляем новый элемент к хвосту
+		if (size > 0)
+		{
+			tail->next = elem;
+			tail = elem;
 		}
 		//Иначе устанавливаем все указатели на элемент
-		else {
-			g = elem;
-			hv = elem;
+		else
+		{
+			head = elem;
+			tail = elem;
 		}
-		ln++;
+		size++;
 	}
 	//Добавить элемент в начало списка
-	void add_first(long long int x) {
+	void add_first(const T x)
+	{
 		Node<T>* elem = new Node;
-		//Создадим объект, прикрепим его к голове
+		//Создадим объект
 		elem->info = x;
-		elem->next = g;
+		elem->next = head;
 		elem->prev = NULL;
-		if (ln > 0) {
-			g->prev = elem;
-			g = elem;
+		//Если список не пустой, то прикриепляем новый элемент к голове
+		if (size > 0)
+		{
+			head->prev = elem;
+			head = elem;
 		}
-		else {
-			g = elem;
-			hv = g;
+		//Иначе устанавливаем все указатели на элемент
+		else
+		{
+			head = elem;
+			tail = head;
 		}
-		ln++;
+		size++;
 	}
 	//Извлечь первый элемент
-	Node<T>* get_first() {
+	Node<T>* get_first()
+	{
 		//Если список пуст вернем NULL
-		if (ln == 0) return NULL;
-		else {
+		if (size == 0)
+			return NULL;
+		else
+		{
 			//Создадим объект, скопируем в него данные удаляемого элемента
 			Node<T>* elem = new Node<T>;
-			elem->info = g->info;
-			elem->next = NULL; elem->prev = NULL;
-			Node<T>* p;
+			elem->info = head->info;
+			elem->next = NULL;
+			elem->prev = NULL;
 			//Установим указатель на голову, а голову сместим вправо
-			p = g;
-			g = g->next;
-			ln--;
+			Node<T>* p = head;
+			head = head->next;
+			size--;
 			//Если список без удаляемого элемента стал пустым то хвост и голова NULL
-			if (ln == 0) hv = g = NULL;
+			if (size == 0)
+				tail = head = NULL;
 			//Иначе предыдущий элемент у первого узла NULL
-			else g->prev = NULL;
+			else
+				head->prev = NULL;
 			delete p;
 			return elem;
 		}
 	}
 	//Получить последний элемент аналогично получению первого
-	Node<T>* get_last() {
-		if (ln == 0) return NULL;
-		else {
+	Node<T>* get_last()
+	{
+		if (size == 0)
+			return NULL;
+		else
+		{
 			Node<T>* elem = new Node<T>;
-			elem->info = hv->info;
-			elem->next = NULL; elem->prev = NULL;
-			Node<T>* p = hv;
-			hv = p->prev;
-			ln--;
-			if (ln == 0) g = hv = NULL;
-			else hv->next = NULL;
+			elem->info = tail->info;
+			elem->next = NULL;
+			elem->prev = NULL;
+			Node<T>* p = tail;
+			tail = p->prev;
+			size--;
+			if (size == 0)
+				head = tail = NULL;
+			else
+				tail->next = NULL;
 			delete p;
 			return elem;
 		}
 	}
+	//Получить размер списка
+	size_t get_size() const { return size; }
+	//Получить указатель на первый элемент
+	Node<T>* get_head() const { return head; }
+	//Получить указатель на последний жлемент
+	Node<T>* get_tail() const { return tail; }
+	
+private:
+	//указатели на начало и конец списка
+	Node<T>* head = NULL;
+	Node<T>* tail = NULL;
+	//длина списка
+	size_t size = 0;
 };
 
