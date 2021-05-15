@@ -16,11 +16,13 @@
 #include <Windows.h>
 #include <conio.h>
 #include <list>
+#include <fstream>
+#include <string>
 
 #include <stdlib.h>
 #include "glut-3.7.6-bin/glut.h"
 //Указатель на переменную на отрисовку
-extern bidir_list<figure*> q;
+extern bidir_list<figure*> queue;
 //Установить цвет
 void SetColor(int text, int Fon);
 //Печать меню
