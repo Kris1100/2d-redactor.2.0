@@ -17,13 +17,15 @@ int main(int argc, char* argv[])
 			switch (item)
 			{
 			case 0: return 0;
-			case 1: print_point(0);  break;
-			case 2: print_line(0);  break;
-			case 3: print_circle(0); break;
-			case 4: print_triangle(0);  break;
-			case 5: print_polygon(0);  break;
-			case 6: print_segment(0);  break;
-			case 7: print_vector(0);  break;
+			case 1: main_pr(); break;
+			case 2: print_point(0);  break;
+			case 3: print_line(0);  break;
+			case 4: print_circle(0); break;
+			case 5: print_triangle(0);  break;
+			case 6: print_polygon(0);  break;
+			case 7: print_segment(0);  break;
+			case 8: print_vector(0);  break;
+			case 9: print_ray(0); break;
 
 			default:
 				break;
@@ -43,11 +45,13 @@ int main(int argc, char* argv[])
 			case 53: item = 5;  break;
 			case 54: item = 6;  break;
 			case 55: item = 7;  break;
+			case 56: item = 8; break;
+			case 57: item = 9; break;
 			}
 			print_menu(item, 15);
 			if (item < 0)
-				item = 7;
-			if (item > 7)
+				item = 9;
+			if (item > 9)
 				item = 0;
 		}
 	}

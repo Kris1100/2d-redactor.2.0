@@ -16,6 +16,10 @@ segment::segment(const point& p1,const point& p2) {
 		set_extm_points(d1, d2);
 	}
 }
+segment::segment(const segment& s) {
+	p1_ = s.get_start();
+	p2_ = s.get_end();
+}
 void segment::set_extm_points(const point& p1,const point& p2)
 {
 	p1_ = p1;
@@ -36,9 +40,7 @@ point segment::middle() const
 }
 
 void segment::draw()  {
-	glClearColor(0, 0, 0, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glLineWidth(5);
+	glLineWidth(3);
 	glBegin(GL_LINES);
 	      glColor3ub(255, 0, 0);
 	      glVertex2f(p1_.get_x(), p1_.get_y());

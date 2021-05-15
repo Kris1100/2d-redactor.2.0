@@ -10,6 +10,8 @@ class polygon : public figure
 public:
 	//Конструктор многоугольника. По умолчанию задачется правильный n-угольник          
 	polygon(int num_vert = 3);
+	//Конструктор копирования
+	polygon(const polygon& t);
 	//Деструктор
 	~polygon();
 

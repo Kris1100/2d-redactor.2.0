@@ -34,7 +34,6 @@ public:
 	segment middle_line(const segment& ab, segment& bc)const;
 	//Находит медиану треугольника
 	segment median(const point& a, segment& bc)const;
-
 	//Рисование треугольника
 	void draw();
 

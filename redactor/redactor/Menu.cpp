@@ -1,5 +1,5 @@
 #include "Menu.h"
-figure* q;
+bidir_list<figure*>q;
 void print_menu(int num, int col)
 {
 	int col2;
@@ -12,8 +12,8 @@ void print_menu(int num, int col)
 	cout << "\n";
 	SetColor(1, 15);
 	if (num < 0)
-		num = 7;
-	if (num > 7)
+		num = 9;
+	if (num > 9)
 		num = 0;
 	if (num == 0)
 	{
@@ -26,59 +26,75 @@ void print_menu(int num, int col)
 	if (num == 1)
 	{
 		SetColor(col, col2);
-		cout << "1. Точка\n";
+		cout << "1. Нарисовать заданные элементы и выйти\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "1. Точка\n";
+		cout << "1. Нарисовать заданные элементы и выйти\n";
 	if (num == 2)
 	{
 		SetColor(col, col2);
-		cout << "2. Прямая\n";
+		cout << "2. Точка\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "2. Прямая\n";
+		cout << "2. Точка\n";
 	if (num == 3)
 	{
 		SetColor(col, col2);
-		cout << "3. Окружность\n";
+		cout << "3. Прямая\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "3. Окружность\n";
+		cout << "3. Прямая\n";
 	if (num == 4)
 	{
 		SetColor(col, col2);
-		cout << "4. Треугольник\n";
+		cout << "4. Окружность\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "4. Треугольник\n";
+		cout << "4. Окружность\n";
 	if (num == 5)
 	{
 		SetColor(col, col2);
-		cout << "5. Многоугольник\n";
+		cout << "5. Треугольник\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "5. Многоугольник\n";
+		cout << "5. Треугольник\n";
 	if (num == 6)
 	{
 		SetColor(col, col2);
-		cout << "6. Отрезок\n";
+		cout << "6. Многоугольник\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "6. Отрезок\n";
-	if (num == 7)
+		cout << "6. Многоугольник\n";
+	if (num ==7 )
 	{
 		SetColor(col, col2);
-		cout << "7. Вектор\n";
+		cout << "7. Отрезок\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "7. Вектор\n";
+		cout << "7. Отрезок\n";
+	if (num == 8)
+	{
+		SetColor(col, col2);
+		cout << "8. Вектор\n";
+		SetColor(1, 15);
+	}
+	else
+		cout << "8. Вектор\n";
+	if (num == 9)
+	{
+		SetColor(col, col2);
+		cout << "9. Луч\n";
+		SetColor(1, 15);
+	}
+	else
+		cout << "9. Луч\n";
 }
 
 void print_point(int num)
@@ -155,7 +171,8 @@ void print_circle(int num)
 
 void print_segment(int num)
 {
-	point p1, p2;
+	point p1;
+	point p2;
 	double x1, x2, y1, y2;
 	cout << "Введите координаты точки: ";
 	cin >> x1 >> y1;
@@ -167,10 +184,8 @@ void print_segment(int num)
 	p2.set_y(y2);
 	segment s(p1, p2);
 	cout << "Длина отрезка " << s.len();
-	//Нарисуем отрезок, поместим на него указатель
-	q = &s;
-	//запустим рисование
-	main_pr();
+	//Добавим в очередь на отрисовку
+	q.add_last(new segment(s));
 }
 
 void print_triangle(int num)
@@ -188,8 +203,7 @@ void print_triangle(int num)
 	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
 	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
 	//Нарисовать треугольник
-	q = &abc;
-	main_pr();
+	q.add_last(new triangle(abc));
 }
 
 void print_vector(int num)
@@ -208,19 +222,42 @@ void print_vector(int num)
 	cout << "Длина вектора " << v.len();
 }
 
+void print_ray(int num) {
+	double x, y;
+	cout << "Введите координаты начала луча" << endl;
+	cin >> x >> y;
+	point beg(x, y);
+	cout << "Введите координаты произвольной точки" << endl;
+	cin >> x >> y;
+	point p(x, y);
+	ray r(beg, p);
+	//Рисование луча
+	q.add_last(new ray(r));
+}
+
 void SetColor(int text, int Fon)
 {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(h, (Fon << 4) + text);
 }
 void main_pr() {
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glutInitWindowSize(constants::width, constants::height);
 	glutCreateWindow("Work example");
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Reshape);
 	glutMainLoop();
 }
 void Display(void) {
-	if (q != NULL) q->draw();
+	//Пройдемся по списку на отрисовку 
+	Node<figure*>* cur;
+	cur = q.g;
+	while (cur != NULL) {
+		//Вызовем метод draw соответствующего объекта
+		cur->info->draw();
+		cur = cur->next;
+	}
 }
 void Reshape(GLint w, GLint h)
 {

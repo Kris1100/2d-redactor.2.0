@@ -1,12 +1,17 @@
 #pragma once
 #include <iostream>
 #include "point.h"
+#include "Figure.h"
+#include "glut-3.7.6-bin/glut.h"
+#include "math_const.h"
 
-class ray
+class ray : public figure
 {
 public:
 	//Конструктор
 	ray(const point& begin, const point& p);
+	//Конструктор копирования
+	ray(const ray& r);
 	//Деструктор
 	~ray() { }
 
@@ -16,6 +21,9 @@ public:
 	//Перегрузка операторов ввода и вывода
 	friend ifstream& operator>>(ifstream& in, ray& r);
 	friend ostream& operator<<(ostream& out, const ray& r);
+
+	//Рисование 
+	void draw();
 
 private:
 	//Сеттеры начала луча и произвольной точки на луче

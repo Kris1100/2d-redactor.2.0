@@ -63,3 +63,9 @@ ostream& operator<<(ostream& out, const point& p)
 	cout << p._x << " " << p._y;
 	return out;
 }
+point& point::operator=(const point& p) {
+	if (this == &p) return *this;
+	_x = p.get_x();
+	_y = p.get_y();
+	return *this;
+}

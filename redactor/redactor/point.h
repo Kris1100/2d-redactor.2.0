@@ -26,12 +26,12 @@ public:
 	//Лежит ли точка на биссектрисе координатной плоскости
 	bool bisector();
 
-	//перегрузка операторов равенства, вводва, вывода
+	//перегрузка операторов равенства, вводва, вывода,присваивания
 	friend bool operator==(const point& p1, const point& p2);
 	friend bool operator!=(const point& p1, const point& p2);
 	friend istream& operator>>(istream& in, point& p);
 	friend ostream& operator<<(ostream& out, const point& p);
-
+	point& operator=(const point& p);
 private:
 	double _x, _y;
 };

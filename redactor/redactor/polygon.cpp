@@ -11,6 +11,13 @@ polygon::polygon(int num_vert)
 	point* vert = new point[num_vert];
 	set_point_array(vert);                  
 }
+polygon::polygon(const polygon& t) {
+	num_vert_ = t.num_vert_;
+	vertex = new point[num_vert_];
+	for (int i = 0; i < num_vert_; i++) {
+		vertex[i] = t.vertex[i];
+	}
+}
 
 polygon::~polygon()
 {

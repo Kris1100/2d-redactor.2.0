@@ -9,7 +9,7 @@ namespace constants {
 	//Общепринятое число округления. Округляем до rd-ых
 	const double rd = 10000000;
 	//Параметры окна с изображением
-	const size_t width = 1024;
-	const size_t height = 700;
+	const size_t width = 1920;
+	const size_t height = 1080;
 }
 #endif // !CONSTANTS_H

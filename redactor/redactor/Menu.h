@@ -9,15 +9,18 @@
 #include "circle.h"
 #include "round.h"
 #include "Figure.h"
+#include "ray.h"
+#include "bidir_list.h"
 
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include <list>
 
 #include <stdlib.h>
 #include "glut-3.7.6-bin/glut.h"
 //Указатель на переменную на отрисовку
-extern figure* q;
+extern bidir_list<figure*> q;
 //Установить цвет
 void SetColor(int text, int Fon);
 //Печать меню
@@ -36,6 +39,8 @@ void print_segment(int num);
 void print_triangle(int num);
 //Меню для вектора
 void print_vector(int num);
+//Меню для луча
+void print_ray(int num);
 //Фкнкция, соединяющая рисование
 void main_pr();
 //Вызывает метод draw конкретного класса,управляет выводом на экран

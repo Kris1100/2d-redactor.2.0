@@ -7,7 +7,6 @@ triangle::triangle()
 	point* vert = new point[3];
 	vertex = vert;
 }
-
 triangle::triangle(const point* vert)
 {
 	point* tmp_vert = new point[3];
@@ -120,7 +119,6 @@ segment triangle::median(const point& a, segment& bc)const
 	segment l(a,bc.middle());
 	return l;
 }
-
 void triangle::draw() {
 	glBegin(GL_TRIANGLES);
 	     point* vert = vertex;
