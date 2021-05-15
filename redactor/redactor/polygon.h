@@ -2,23 +2,24 @@
 #include <iostream>
 #include <vector>
 #include "point.h"
-#include"vector.h"
+#include "vector.h"
+#include "math_const.h"
 using namespace std;
 
 class polygon : public figure
 {
 public:
 	//Конструктор многоугольника. По умолчанию задачется правильный n-угольник          
-	polygon(int num_vert = 3);
+	polygon(size_t num_vert = 3);
 	//Конструктор копирования
 	polygon(const polygon& t);
 	//Деструктор
 	~polygon();
 
 	//Получить количество углов
-	int get_num() const;
+	size_t get_num() const { return num_vert_; }
 	//Получить указатель на массив точек многоугольника
-	point* get_vertexes() const;
+	point* get_vertexes() const { return vertex; }
 
 	//Вычислить периметр
 	double perimetr() const;
@@ -35,12 +36,14 @@ public:
 	friend std::istream& operator>>(std::istream& in, polygon& p);
 	//Вывод всей информации по многоугольнику
 	friend std::ostream& operator<<(std::ostream& out, polygon& p);
+
 protected:
-	int num_vert_;
+	size_t num_vert_;
 	point* vertex;
+
 private:
 	//Установить количество углов
-	void set_num(int num_vert);
+	void set_num(size_t num_vert);
 	//Задать массив точек(по умолчанию задает точки правильного num_vert-угольника)
 	void set_point_array(point* vert);
 };

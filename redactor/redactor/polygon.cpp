@@ -1,9 +1,7 @@
 #include "polygon.h"
-#include "math_const.h"
 
 //Конструкторы и деструкторы
-
-polygon::polygon(int num_vert)
+polygon::polygon(size_t num_vert)
 {
 	if (num_vert < 3)
 		num_vert = 3;
@@ -11,10 +9,13 @@ polygon::polygon(int num_vert)
 	point* vert = new point[num_vert];
 	set_point_array(vert);                  
 }
-polygon::polygon(const polygon& t) {
+
+polygon::polygon(const polygon& t) 
+{
 	num_vert_ = t.num_vert_;
 	vertex = new point[num_vert_];
-	for (int i = 0; i < num_vert_; i++) {
+	for (int i = 0; i < num_vert_; i++) 
+	{
 		vertex[i] = t.vertex[i];
 	}
 }
@@ -26,41 +27,33 @@ polygon::~polygon()
 }
 
 //Сеттеры
-
-void polygon::set_point_array(point* vert) 
+void polygon::set_point_array(point* vert)
 {
-	//По умолчанию орпеделяем правильный n- угольник, однако он может не определяться как правильный из-за пограшности измерений (при больших значениях num_vert_). Этот баг я постараюсь минимизировать
+	//По умолчанию орпеделяем правильный n- угольник, однако он может не определяться как 
+	//правильный из-за пограшности измерений (при больших значениях num_vert_). 
+	//Этот баг я постараюсь минимизировать
 	vertex = vert;
 	//Установим единичную окружность
 	int R = 1;
 	//Начальный угол
 	double ang = 0;
-	for (int i = 0; i < num_vert_; i++) {
-		//Посчитаем коррдинаты очередной точки - координаты вектора с началом в точке (0,0), повернутого на угол ang против часовой стрелки
-		vertex[i].set_x(R * round(cos(ang*constants::pi/180)*constants::rd)/constants::rd);
-		vertex[i].set_y(R * round(sin(ang * constants::pi /180)*constants::rd)/constants::rd);
+	for (int i = 0; i < num_vert_; i++)
+	{
+		//Посчитаем коррдинаты очередной точки - координаты вектора с началом в точке (0,0), 
+		//повернутого на угол ang против часовой стрелки
+		vertex[i].set_x(R * round(cos(ang * constants::pi / 180) * constants::rd) / constants::rd);
+		vertex[i].set_y(R * round(sin(ang * constants::pi / 180) * constants::rd) / constants::rd);
 		//Поменяем угол
-		ang +=(360 / num_vert_);
+		ang += (360 / num_vert_);
 	}
 }
 
-void polygon::set_num(int num_vert)
+void polygon::set_num(size_t num_vert)
 {
 	num_vert_ = num_vert;
 }
 
-//Геттеры
-
-int polygon::get_num()const
-{
-	return num_vert_;
-}
-point* polygon::get_vertexes() const {
-	return vertex;
-}
-
 //Основные функции класса
-
 double polygon::perimetr() const
 {
 	double p = 0;
@@ -78,7 +71,7 @@ double polygon::perimetr() const
 double polygon::area() const
 {
 	//Используем формулу площади Гаусса https://cpp.mazurok.com/tag/%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0/#:~:text=%D0%94%D0%BB%D1%8F%20%D1%82%D0%BE%D0%B3%D0%BE%2C%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C%20%D0%B5%D0%B3%D0%BE,%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B4%D0%B5%D1%81%D1%8C.
-	double s1 = 0, s2 = 0, s = 0;                         
+	double s1 = 0, s2 = 0, s = 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
 		s1 += vertex[i].get_x() * vertex[i + 1].get_y();
@@ -97,7 +90,7 @@ void polygon::print() const
 {
 	for (int i = 0; i < num_vert_; i++)
 	{
-		cout << "x= " << vertex[i].get_x() << " y= " << vertex[i].get_y() << endl;
+		cout << "x = " << vertex[i].get_x() << ", y = " << vertex[i].get_y() << endl;
 	}
 }
 
@@ -106,7 +99,8 @@ bool polygon::is_convex() const
 	//Многоугольник будет выпуклым если при его обходе в каждой тройке последовательных вершин 
 	//происходит поворот всегда в одну и ту же сторону. При обходе многоугольника против часовой
 	//стрелки поворот будет всегда налево, а при обходе по часовой - направо.
-	//Для поворота налево это(значение формулы в total) значение будет положительным, а для поворота направо - отрицательным.
+	//Для поворота налево это(значение формулы в total) значение будет положительным,
+	//а для поворота направо - отрицательным.
 	int sign = 0;
 	//Перебираем все тройки вершин, к которым можем циклически обратиться
 	for (int i = 0; i < num_vert_ - 2; i++)
@@ -138,9 +132,6 @@ bool polygon::is_convex() const
 	total = v3.get_x() * v1.get_y() - v3.get_y() * v1.get_x();
 	if (total * sign < 0)
 		return false;
-	v1.~myvector();
-	v2.~myvector();
-	v3.~myvector();
 	return true;
 }
 
@@ -160,52 +151,51 @@ bool polygon::is_regular(bool convexity) const
 			//Если мы первый раз вычисляем длину стороны, то нам пока не с чем ее сранивать. Зададим сторону (шаблон)
 			if (side == -1)
 				side = s.len();
-			else {
+			else
+			{
 				//Если очередная сторона не равна шаблону, то многоугольник неправильный
 				double d = abs(s.len() - side);
 				if (d > constants::eps)
 					return false;
 			}
 			//Создаем два вектора, между которыми будем определять угол
-			myvector v1(vertex[i+1], vertex[i]);
+			myvector v1(vertex[i + 1], vertex[i]);
 			point p;
-			if (i == num_vert_ - 2) p = vertex[0];
-			else p = vertex[i + 2];
-			myvector v2 (vertex[i + 1],p);
+			if (i == num_vert_ - 2)
+				p = vertex[0];
+			else
+				p = vertex[i + 2];
+			myvector v2(vertex[i + 1], p);
 			//Далее логика аналогично проверке сторон
 			if (ang == -1)
 				ang = angle(v1, v2);
-			else {
+			else
+			{
 				double d = abs(ang - angle(v1, v2));
-				if (d>constants::eps)
+				if (d > constants::eps)
 					return false;
 			}
 		}
 		//Отдельная проверка для последней стороны, тк к ней трудно обратиться с помощью цикла
 		segment s(vertex[num_vert_ - 1], vertex[0]);
-		myvector v1(vertex[0], vertex[num_vert_-1]);
+		myvector v1(vertex[0], vertex[num_vert_ - 1]);
 		myvector v2(vertex[0], vertex[1]);
 
 		double d = abs(s.len() - side);
 		if (d > constants::eps)
 			return false;
 		d = abs(ang - angle(v1, v2));
-		if (d>constants::eps)
+		if (d > constants::eps)
 			return false;
-		//Удалим вспомогательные элементы
-		s.~segment();
-		v1.~myvector();
-		v2.~myvector();
- 		return true;
+		return true;
 	}
 }
 
 //Friend функции
-
 std::istream& operator>>(istream& in, polygon& p)
 {
 	double x, y;
-	cout << "Введите координаты " << p.num_vert_ << " вершин";
+	cout << "Введите координаты " << p.num_vert_ << " вершин:" << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
 		cin >> x >> y;
@@ -217,10 +207,10 @@ std::istream& operator>>(istream& in, polygon& p)
 
 std::ostream& operator<<(ostream& out, polygon& p)
 {
-	out << "Количество углов " << p.num_vert_ << endl;
+	out << "Количество углов: " << p.num_vert_ << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
-		out << "x= " << p.vertex[i].get_x() << " y= " << p.vertex[i].get_y() << endl;
+		out << "x = " << p.vertex[i].get_x() << ", y = " << p.vertex[i].get_y() << endl;
 	}
 	return out;
 }
