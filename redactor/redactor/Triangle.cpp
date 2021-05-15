@@ -7,6 +7,7 @@ triangle::triangle()
 	point* vert = new point[3];
 	vertex = vert;
 }
+
 triangle::triangle(const point* vert)
 {
 	point* tmp_vert = new point[3];
@@ -39,7 +40,8 @@ bool triangle::is_equilateral() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (ab.len() - bc.len() <= constants::eps && ab.len() - ac.len() <= constants::eps)
+	if (abs(ab.len() - bc.len()) <= constants::eps && 
+		abs(ab.len() - ac.len()) <= constants::eps)
 		return true;
 	return false;
 }
@@ -49,7 +51,9 @@ bool triangle::is_isosceles() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (ab.len() == bc.len() || ab.len() == ac.len() || ac.len() == bc.len())
+	if (abs(ab.len() - bc.len()) <= constants::eps ||
+		abs(ab.len() - ac.len()) <= constants::eps ||
+		abs(ac.len() - bc.len()) <= constants::eps)
 		return true;
 	return false;
 }
@@ -59,9 +63,9 @@ bool triangle::is_right() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (ab.len() * ab.len() + ac.len() * ac.len() - bc.len() * bc.len() <= constants::eps ||
-		ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len() <= constants::eps ||
-		bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len() <= constants::eps)
+	if (abs(ab.len() * ab.len() + ac.len() * ac.len() - bc.len() * bc.len()) <= constants::eps ||
+		abs(ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len()) <= constants::eps ||
+		abs(bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len()) <= constants::eps)
 		return true;
 	return false;
 }
@@ -108,18 +112,29 @@ bool triangle::is_inside(const point& p) const
 	return false;
 }
 
-segment triangle::middle_line(const segment& ab,segment& bc)const
+segment triangle::middle_line(const segment& ab, const segment& bc) const
 {
 	segment l(ab.middle(), bc.middle());
 	return l;
 }
 
-segment triangle::median(const point& a, segment& bc)const
+segment triangle::median(const point& a, const segment& bc) const
 {
-	segment l(a,bc.middle());
+	segment l(a, bc.middle());
 	return l;
 }
-void triangle::draw() {
+
+point* triangle::get_vertex() const
+{
+	point* vert = new point[3];
+	vert[0] = vertex[0];
+	vert[1] = vertex[1];
+	vert[2] = vertex[2];
+	return vert;
+}
+
+void triangle::draw() 
+{
 	glBegin(GL_TRIANGLES);
 	     point* vert = vertex;
 	     glColor3ub(255, 0, 0);
@@ -129,6 +144,5 @@ void triangle::draw() {
 	     glColor3ub(0, 0, 255);
 	     glVertex2f(vert[2].get_x(), vert[2].get_y());
 	glEnd();
-
 	glFinish();
 }

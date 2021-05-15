@@ -31,9 +31,11 @@ public:
 	//Лежит ли точка внутри треугольника (строго)
 	bool is_inside(const point& p) const;
 	//Находит среднюю линию треугольника к заданной стороне
-	segment middle_line(const segment& ab, segment& bc)const;
+	segment middle_line(const segment& ab, const segment& bc) const;
 	//Находит медиану треугольника
-	segment median(const point& a, segment& bc)const;
+	segment median(const point& a, const segment& bc) const;
+	//Возвращает новый динамический массив точек
+	point* get_vertex() const;
 	//Рисование треугольника
 	void draw();
 
