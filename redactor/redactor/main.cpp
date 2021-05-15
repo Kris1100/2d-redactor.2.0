@@ -1,5 +1,6 @@
 #pragma once
 #include "Menu.h"
+
 int main(int argc, char* argv[])
 {
 	SetConsoleCP(1251);
@@ -16,7 +17,7 @@ int main(int argc, char* argv[])
 		{
 			switch (item)
 			{
-			case 0: return 0;
+			case 0: { queue.~bidir_list(); return 0; }
 			case 1: main_pr(); break;
 			case 2: print_point(0);  break;
 			case 3: print_line(0);  break;
