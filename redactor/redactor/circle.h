@@ -5,14 +5,17 @@
 #include <cmath>
 #include "point.h"
 #include "line.h"
+#include "glut-3.7.6-bin/glut.h"
 #include<math.h>
 using namespace std;
 
-class circle
+class circle : public figure
 {
-public:	
+public:
 	//Конструктор окружности
 	circle(double x = 0.0, double y = 0.0, double r = 1.0);
+	//Конструктор копирования
+	circle(const circle& c);
 	//Перезагрузка вывода                
 	friend ostream& operator<<(ostream& out, const circle& c);
 	//Перезагрузка ввода
@@ -38,8 +41,10 @@ public:
 	//Точки пересечения с осями
 	void intersection() const; // может, тогда получить на вход точки и поменять их в функции, чтобы она была полезна
 	//Возвращает касательную к окружности через данную точку
-	line tangent(point &p) ;
+	line tangent(point &p);
 	//деструктор?
+
+	void draw();
 private:
 	point _p;
 	double _r;
