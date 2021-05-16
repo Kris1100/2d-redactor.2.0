@@ -144,4 +144,22 @@ void triangle::draw()
 	     glColor3ub(0, 0, 255);
 	     glVertex2f(vert[2].get_x(), vert[2].get_y());
 	glEnd();
+
+	glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(vert[0].get_x(), vert[0].get_y());
+		glVertex2f(vert[1].get_x(), vert[1].get_y());
+	glEnd();
+
+	glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(vert[1].get_x(), vert[1].get_y());
+		glVertex2f(vert[2].get_x(), vert[2].get_y());
+	glEnd();
+
+	glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(vert[2].get_x(), vert[2].get_y());
+		glVertex2f(vert[0].get_x(), vert[0].get_y());
+	glEnd();
 }
