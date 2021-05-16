@@ -19,83 +19,83 @@ void print_menu(int num, int col)
 	if (num == 0)
 	{
 		SetColor(col, col2);
-		cout << "0. �����\n";
+		cout << "0. Выход\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "0. �����\n";
+		cout << "0. Выход\n";
 	if (num == 1)
 	{
 		SetColor(col, col2);
-		cout << "1. ���������� �������� �������� � �����\n";
+		cout << "1. Нарисовать заданные элементы и выйти\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "1. ���������� �������� �������� � �����\n";
+		cout << "1. Нарисовать заданные элементы и выйти\n";
 	if (num == 2)
 	{
 		SetColor(col, col2);
-		cout << "2. �����\n";
+		cout << "2. Точка\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "2. �����\n";
+		cout << "2. Точка\n";
 	if (num == 3)
 	{
 		SetColor(col, col2);
-		cout << "3. ������\n";
+		cout << "3. Прямая\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "3. ������\n";
+		cout << "3. Прямая\n";
 	if (num == 4)
 	{
 		SetColor(col, col2);
-		cout << "4. ����������\n";
+		cout << "4. Окружность\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "4. ����������\n";
+		cout << "4. Окружность\n";
 	if (num == 5)
 	{
 		SetColor(col, col2);
-		cout << "5. �����������\n";
+		cout << "5. Треугольник\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "5. �����������\n";
+		cout << "5. Треугольник\n";
 	if (num == 6)
 	{
 		SetColor(col, col2);
-		cout << "6. �������������\n";
+		cout << "6. Многоугольник\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "6. �������������\n";
+		cout << "6. Многоугольник\n";
 	if (num == 7)
 	{
 		SetColor(col, col2);
-		cout << "7. �������\n";
+		cout << "7. Отрезок\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "7. �������\n";
+		cout << "7. Отрезок\n";
 	if (num == 8)
 	{
 		SetColor(col, col2);
-		cout << "8. ������\n";
+		cout << "8. Вектор\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "8. ������\n";
+		cout << "8. Вектор\n";
 	if (num == 9)
 	{
 		SetColor(col, col2);
-		cout << "9. ���\n";
+		cout << "9. Луч\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "9. ���\n";
+		cout << "9. Луч\n";
 }
 
 void print_inmenu(int num, int col, vector<string>& commands)
@@ -118,11 +118,11 @@ void print_inmenu(int num, int col, vector<string>& commands)
 	if (num == 0)
 	{
 		SetColor(col, col2);
-		cout << "    0) �����\n";
+		cout << "    0) Выход\n";
 		SetColor(1, 15);
 	}
 	else
-		cout << "    0) �����\n";
+		cout << "    0) Выход\n";
 	for (int i = 0; i < commands.size(); i++)
 	{
 		if (num == i + 1)
@@ -152,7 +152,7 @@ void print_point(int num)
 	int item = 0;
 	print_inmenu(0, 1, commands);
 	double x, y;
-	cout << "������� ���������� �����:" << endl;
+	cout << "Введите координаты точки:" << endl;
 	cin >> x >> y;
 	point p(x, y);
 
@@ -167,29 +167,29 @@ void print_point(int num)
 			case 0:
 			{
 				in.close();
-				cout << "������ ���������, ��������� � ������� ����" << endl;
+				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
 			case 1: cin >> p; break;
 			case 2:
 			{
-				cout << "������ ����� ����� � ";
+				cout << "Данная точка лежит в ";
 				double a = p.quarter();
-				cout << a << "��������" << endl;
+				cout << a << "четверти" << endl;
 			}
 			break;
 			case 3:
 			{
 				double b = p.dist();
-				cout << "���������� �� ������ ����� �� ������ ���������: " << b << endl;
+				cout << "Расстояние от данной точки до начала координат: " << b << endl;
 			}
 			break;
 			case 4:
 			{
 				if (p.bisector() == true)
-					cout << "������ ����� ����� �� ����������� ������������ ���������";
+					cout << "Данная точка лежит на биссектрисе координатной плоскости";
 				else
-					cout << "������ ����� �� ����� �� ����������� ������������ ���������";
+					cout << "Данная точка не лежит на биссектрисе координатной плоскости";
 				cout << endl;
 			}
 			break;
@@ -235,9 +235,9 @@ void print_line(int num)
 	int item = 0;
 	print_inmenu(0, 1, commands);
 	point p1, p2, p3;
-	cout << "������� ���������� ������ ����� ��� ������� ������:" << endl;
+	cout << "Введите координаты первой точки для задания прямой:" << endl;
 	cin >> p1;
-	cout << "������� ���������� ������ �����:" << endl;
+	cout << "Введите координаты второй точки:" << endl;
 	cin >> p2;
 	line l1(p1, p2);
 
@@ -253,7 +253,7 @@ void print_line(int num)
 			{
 				in.close();
 				queue.add_last(new line(l1));
-				cout << "������ ���������, ��������� � ������� ����" << endl;
+				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
 			case 1: cin >>l1; break;
@@ -270,22 +270,22 @@ void print_line(int num)
 			case 4:
 			{
 				myvector v1 = l1.normal_vector();
-				cout << "���������� ������� �������: " << v1;
+				cout << "Координаты вектора нормали: " << v1;
 			}
 			break;
 			case 5:
 			{
 				myvector v2 = l1.guide_vector();
-				cout << "���������� ������������� �������: " << v2;
+				cout << "Координаты направляющего вектора: " << v2;
 			}
 			break;
 			case 6:
 			{
-				cout << "�������� ���������� �����, ����� ������� ����� ��������� ������, ������������ ������:" << endl;
+				cout << "Введиите координаты точки, через которую нужно построить прямую, параллельную данной:" << endl;
 				cin >> p3;
 				line l2 = l1.parallel(p3);
-				cout << "��������� ������, ������������ ������: ";
-				l2.print_v2();//�� ��������, ��� ����
+				cout << "Уравнение прямой, параллельной данной: ";
+				l2.print_v2();//не работает, как надо
 			}
 			break;
 
@@ -333,7 +333,7 @@ void print_polygon(int num)
 	print_inmenu(0, 1, commands);
 
 	int n;
-	cout << "������� ���������� ������:" << endl;
+	cout << "Введите количество вершин:" << endl;
 	cin >> n;
 	polygon p(n);
 	cout << p;
@@ -350,37 +350,37 @@ void print_polygon(int num)
 			{
 				in.close();
 				queue.add_last(new polygon(p));
-				cout << "������ ���������, ��������� � ������� ����" << endl;
+				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
 			case 1: cin >> p; break;
 			case 2:
 			{
 				double per = p.perimetr();
-				cout << "��������: " << per << endl;
+				cout << "Периметр: " << per << endl;
 			}
 			break;
 			case 3:
 			{
 				double sq = p.area();
-				cout << "�������: " << sq << endl;
+				cout << "Площадь: " << sq << endl;
 			}
 			break;
 			case 4:
 			{
 				bool f = p.is_convex();
 				if (f)
-					cout << "������������� ��������" << endl;
+					cout << "Многоугольник выпуклый" << endl;
 				else
-					cout << "������������� ����������" << endl;;
+					cout << "Многоугольник невыпуклый" << endl;;
 			}
 			break;
 			case 5:
 			{
 				if (p.is_regular(p.is_convex()))
-					cout << "������������� ����������" << endl;
+					cout << "Многоугольник правильный" << endl;
 				else
-					cout << "������������� �� �������� ����������" << endl;
+					cout << "Многоугольник не является правильным" << endl;
 			}
 			break;
 
@@ -424,7 +424,7 @@ void print_circle(int num)
 
 void print_segment(int num)
 {
-	ifstream in("polygon.txt");
+	ifstream in("segment.txt");
 	vector<string> commands;
 	while (in)
 	{
@@ -439,16 +439,58 @@ void print_segment(int num)
 	print_inmenu(0, 1, commands);
 
 	double x1, x2, y1, y2;
-	cout << "������� ���������� ������ �����:" << endl;
+	cout << "Введите координаты первой точки:" << endl;
 	cin >> x1 >> y1;
-	cout << "������� ���������� ������ �����:" << endl;
+	cout << "Введите координаты второй точки:" << endl;
 	cin >> x2 >> y2;
 	point p1(x1, y1);
 	point p2(x2, y2);
 	segment s(p1, p2);
-	cout << "����� �������: " << s.len() << endl;
-	//������� � ������� �� ���������
-	queue.add_last(new segment(s));
+
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				//Добавим в очередь на отрисовку
+				queue.add_last(new segment(s));
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: cin >> s; break;
+			case 2:
+			{
+				cout << "Длина отрезка: " << s.len() << endl;
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }
 
 void print_triangle(int num)
@@ -481,51 +523,51 @@ void print_triangle(int num)
 			case 0: 
 			{
 				in.close();
-				//���������� �����������
+				//Нарисовать треугольник
 				queue.add_last(new triangle(abc));
-				cout << "������ ���������, ��������� � ������� ����" << endl;
+				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
 			case 1: cin >> abc; break;
 			case 2:
 			{
 				if (abc.is_equilateral())
-					cout << "����������� ��������������" << endl;
+					cout << "Треугольник равносторонний" << endl;
 				else
-					cout << "����������� �� �������� ��������������" << endl;
+					cout << "Треугольник не является расносторонним" << endl;
 			}
 			break;
 			case 3:
 			{
 				if (abc.is_isosceles())
-					cout << "����������� ��������������" << endl;
+					cout << "Треугольник равнобедренный" << endl;
 				else
-					cout << "����������� �� �������� ��������������" << endl;
+					cout << "Треугольник не является равнобедренным" << endl;
 			}
 			break;
 			case 4:
 			{
 				if (abc.is_right())
-					cout << "����������� �������������" << endl;
+					cout << "Треугольник прямоугольный" << endl;
 				else
-					cout << "����������� �� �������� �������������" << endl;
+					cout << "Треугольник не является прямоугольным" << endl;
 			}
 			break;
 			case 5:
 			{
-				cout << "�������: " << abc.area() << endl;
+				cout << "Площадь: " << abc.area() << endl;
 			}
 			break;
 			case 6:
 			{
-				cout << "��������: " << abc.perimetr() << endl;
+				cout << "Периметр: " << abc.perimetr() << endl;
 			}
 			break;
 			case 7:
 			{
 				try
 				{
-					cout << "������ ��������� ����������: " << abc.radius_inside() << endl;
+					cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
 				}
 				catch (const string& e)
 				{
@@ -537,7 +579,7 @@ void print_triangle(int num)
 			{
 				try
 				{
-					cout << "������ ��������� ����������: " << abc.radius_outside() << endl;
+					cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
 				}
 				catch (const string& e)
 				{
@@ -591,9 +633,9 @@ void print_vector(int num)
 	int item = 0;
 	print_inmenu(0, 1, commands);
 	double x1, x2, y1, y2;
-	cout << "������� ���������� ��������� �����:" << endl;
+	cout << "Введите координаты начальной точки:" << endl;
 	cin >> x1 >> y1;
-	cout << "������� ���������� �������� �����:" << endl;
+	cout << "Введите координаты конечной точки:" << endl;
 	cin >> x2 >> y2;
 	point p1(x1, y1);
 	point p2(x2, y2);
@@ -609,11 +651,11 @@ void print_vector(int num)
 			case 0:
 			{
 				in.close();
-				cout << "������ ���������, ��������� � ������� ����" << endl;
+				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
 			case 1: cin >> v; break;
-			case 2:	cout << "����� �������: " << v.len() << endl; break;
+			case 2:	cout << "Длина вектора: " << v.len() << endl; break;
 
 			default:
 				break;
@@ -656,15 +698,15 @@ void print_ray(int num)
 	//print_inmenu(0, 1, commands);
 
 	double x, y;
-	cout << "������� ���������� ������ ����:" << endl;
+	cout << "Введите координаты начала луча:" << endl;
 	cin >> x >> y;
 	point beg(x, y);
-	cout << "������� ���������� ������������ ����� ����:" << endl;
+	cout << "Введите координаты произвольной точки луча:" << endl;
 	cin >> x >> y;
 	point p(x, y);
 	ray r(beg, p);
 
-	//��������� ����
+	//Рисование луча
 	queue.add_last(new ray(r));
 }
 
@@ -687,12 +729,12 @@ void main_pr()
 
 void Display(void)
 {
-	//��������� �� ������ �� ��������� 
+	//Пройдемся по списку на отрисовку 
 	Node<figure*>* cur = NULL;
 	cur = queue.get_head();
 	while (cur != NULL)
 	{
-		//������� ����� draw ���������������� �������
+		//Вызовем метод draw соответствующего объекта
 		cur->info->draw();
 		cur = cur->next;
 	}
@@ -703,7 +745,7 @@ void Reshape(GLint w, GLint h)
 {
 	glViewport(0, 0, w, h);
 
-	/* ��������������� �������� */
+	/* ортографическая проекция */
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, w, 0, h, -1.0, 1.0);
