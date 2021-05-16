@@ -173,6 +173,7 @@ void print_line(int num)
 	line l2 = l1.parallel(p3);
 	cout << "Уравнение прямой, параллельной данной: ";
 	l2.print_v2();
+	queue.add_last(new line(l1));
 }
 
 void print_polygon(int num)
@@ -195,6 +196,7 @@ void print_polygon(int num)
 		cout << "Многоугольник правильный" << endl;
 	else
 		cout << "Многоугольник не является правильным" << endl;
+	queue.add_last(new polygon(p));
 }
 
 void print_circle(int num)
@@ -325,7 +327,6 @@ void print_triangle(int num)
 			case 54: item = 6;  break;
 			case 55: item = 7;  break;
 			case 56: item = 8; break;
-			//case 57: item = 9; break;
 			}
 			print_inmenu(item, 15, commands);
 			if (item < 0)
@@ -426,12 +427,18 @@ void Display(void)
 		cur->info->draw();
 		cur = cur->next;
 	}
+	glFinish();
 }
 
 void Reshape(GLint w, GLint h)
 {
 	glViewport(0, 0, w, h);
+
+	/* ортографическая проекция */
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, w, 0, h, -1.0, 1.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }

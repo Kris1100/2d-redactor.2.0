@@ -40,6 +40,4 @@ void ray::draw() {
 	    glColor3ub(238, 130, 238);
 	    glVertex2f(constants::width + _p.get_x(), constants::height + _p.get_y());
 	glEnd();
-
-	glFinish();
 }

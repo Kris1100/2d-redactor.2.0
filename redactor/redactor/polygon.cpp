@@ -191,6 +191,15 @@ bool polygon::is_regular(bool convexity) const
 	}
 }
 
+void polygon::draw() {
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < num_vert_; i++) {
+		glColor3f(255, 0, 0);
+		glVertex2f(vertex[i].get_x(), vertex[i].get_y());
+	}
+	glEnd;
+}
+
 //Friend функции
 std::istream& operator>>(istream& in, polygon& p)
 {

@@ -4,15 +4,19 @@
 #include <vector>
 #include "point.h"
 #include "vector.h"
+#include "glut-3.7.6-bin/glut.h"
+#include "math_const.h"
 using namespace std;
 
-class line
+class line : public figure
 {
 public:
 	//Конструктор прямой по 2 точкам
 	line(point const& p1, point const& p2);
 	//Конструктор по коэф. прямой
 	line(double a = 1, double b = 1, double c = 0);
+	//Конструктор копирования прямой
+	line(const line& l);
 
 	//Получить первую точку
 	point get_first() const { return _p1; }
@@ -35,6 +39,8 @@ public:
 	//Возвращает уравнение прямой,проходящей через заданную точку
 	//и параллельной данной 
 	line parallel(const point& p)const;
+	//Проверка возрастания прямой. 1-возрастает, 0-убывает, 2- x постоянна, 3-y постоянна
+	size_t is_increasing() const;
 
 	//Вывод уравнениия прямой в виде ax+by+c=0(заданной двумя точками)
 	void print_v1();
@@ -43,6 +49,9 @@ public:
 	void print_all(double& a,double& b,double& c);
 	//Вывод параметрического уравнения прямой
 	void print_param();
+
+	//Рисование прямой
+	void draw();
 
 private:
 	//Задать коэффициенты прямой

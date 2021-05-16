@@ -4,6 +4,7 @@
 #include "point.h"
 #include "vector.h"
 #include "math_const.h"
+#include "glut-3.7.6-bin/glut.h"
 using namespace std;
 
 class polygon : public figure
@@ -31,6 +32,9 @@ public:
 	bool is_convex() const;
 	//Проверка на правильность
 	bool is_regular(bool convexity) const;
+
+	//Рисование многоугольника
+	void draw();
 	
 	//Ввод многоугольника 
 	friend std::istream& operator>>(std::istream& in, polygon& p);

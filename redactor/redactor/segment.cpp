@@ -46,6 +46,4 @@ void segment::draw()  {
 	      glVertex2f(p1_.get_x(), p1_.get_y());
 	      glVertex2f(p2_.get_x(), p2_.get_y());
 	glEnd();
-
-	glFinish();
 }

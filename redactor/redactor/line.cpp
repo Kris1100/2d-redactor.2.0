@@ -12,6 +12,10 @@ line::line(double a, double b, double c)
 	set_b(b);
 	set_c(c);
 }
+line::line(const line& l) {
+	_p1 = l.get_first();
+	_p2 = l.get_second();
+}
 void line::print_all(double& a,double& b,double& c)
 {
 	if (a != 0 && a != 1 && a != -1)
@@ -100,4 +104,29 @@ line line::parallel(const point& p)const
 	b = _b;
 	c = -(_a * p.get_x() + _b * p.get_y());
 	return line(a, b, c);
+}
+
+size_t line::is_increasing() const {
+	long long int res = (_p1.get_x() - _p2.get_x()) * (_p1.get_y() - _p2.get_y());
+	//Если x и y изменяются обратнопропорционально, то убывает
+	if (res < 0) return 0;
+	//Если прямопропорционально, то возрастает
+	if (res > 0) return 1;
+	//Если x или y не меняется
+	if (_p1.get_x()==_p2.get_x()) return 2;
+	if (_p1.get_y() == _p2.get_y()) return 3;
+}
+
+void line::draw() {
+	glColor3ub(255, 255, 255);
+	glBegin(GL_LINES);
+	long long int a, b;
+	a = constants::width;
+	b = constants::height;
+	if (this->is_increasing()==0)b *= -1;
+	if (this->is_increasing() == 2) a = 0;
+	if (this->is_increasing() == 3) b = 0;
+	glVertex2i(_p1.get_x()-2*a, _p1.get_y()-2*b);
+	glVertex2i(_p2.get_x()+2*a, _p2.get_y()+2*b);
+	glEnd();
 }

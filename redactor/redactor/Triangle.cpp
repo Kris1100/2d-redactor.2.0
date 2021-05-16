@@ -144,5 +144,4 @@ void triangle::draw()
 	     glColor3ub(0, 0, 255);
 	     glVertex2f(vert[2].get_x(), vert[2].get_y());
 	glEnd();
-	glFinish();
 }
