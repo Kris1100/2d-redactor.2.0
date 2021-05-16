@@ -72,7 +72,7 @@ void print_menu(int num, int col)
 	}
 	else
 		cout << "6. Многоугольник\n";
-	if (num ==7 )
+	if (num == 7)
 	{
 		SetColor(col, col2);
 		cout << "7. Отрезок\n";
@@ -128,7 +128,7 @@ void print_inmenu(int num, int col, vector<string>& commands)
 		if (num == i)
 		{
 			SetColor(col, col2);
-			cout << "    "<< i << ") " << commands[i - 1] << endl;
+			cout << "    " << i << ") " << commands[i - 1] << endl;
 			SetColor(1, 15);
 		}
 		else
@@ -207,6 +207,8 @@ void print_circle(int num)
 	c.quarter();
 	c.intersection();
 	c.length();
+	queue.add_last(new circle(c));
+
 }
 
 void print_segment(int num)
@@ -249,7 +251,7 @@ void print_triangle(int num)
 			{
 			case 0: goto skip;
 			case 1: cin >> abc; break;
-			case 2: 
+			case 2:
 			{
 				if (abc.is_equilateral())
 					cout << "Треугольник равносторонний" << endl;
@@ -257,7 +259,7 @@ void print_triangle(int num)
 					cout << "Треугольник не является расносторонним" << endl;
 			}
 			break;
-			case 3: 
+			case 3:
 			{
 				if (abc.is_isosceles())
 					cout << "Треугольник равнобедренный" << endl;
@@ -265,7 +267,7 @@ void print_triangle(int num)
 					cout << "Треугольник не является равнобедренным" << endl;
 			}
 			break;
-			case 4: 
+			case 4:
 			{
 				if (abc.is_right())
 					cout << "Треугольник прямоугольный" << endl;
@@ -278,12 +280,12 @@ void print_triangle(int num)
 				cout << "Площадь: " << abc.area() << endl;
 			}
 			break;
-			case 6: 
+			case 6:
 			{
 				cout << "Периметр: " << abc.perimetr() << endl;
 			}
 			break;
-			case 7: 
+			case 7:
 			{
 				try
 				{
@@ -295,7 +297,7 @@ void print_triangle(int num)
 				}
 			}
 			break;
-			case 8: 
+			case 8:
 			{
 				try
 				{
@@ -335,7 +337,7 @@ void print_triangle(int num)
 				item = 0;
 		}
 	}
-	skip:
+skip:
 	//cin >> abc;
 	//if (abc.is_equilateral())
 	//	cout << "Треугольник равносторонний" << endl;
@@ -385,7 +387,7 @@ void print_vector(int num)
 	cout << "Длина вектора: " << v.len() << endl;
 }
 
-void print_ray(int num) 
+void print_ray(int num)
 {
 	double x, y;
 	cout << "Введите координаты начала луча:" << endl;
@@ -405,7 +407,7 @@ void SetColor(int text, int Fon)
 	SetConsoleTextAttribute(h, (Fon << 4) + text);
 }
 
-void main_pr() 
+void main_pr()
 {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -416,12 +418,12 @@ void main_pr()
 	glutMainLoop();
 }
 
-void Display(void) 
+void Display(void)
 {
 	//Пройдемся по списку на отрисовку 
 	Node<figure*>* cur = NULL;
 	cur = queue.get_head();
-	while (cur != NULL) 
+	while (cur != NULL)
 	{
 		//Вызовем метод draw соответствующего объекта
 		cur->info->draw();
