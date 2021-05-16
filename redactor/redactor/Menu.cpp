@@ -123,87 +123,298 @@ void print_inmenu(int num, int col, vector<string>& commands)
 	}
 	else
 		cout << "    0) Выход\n";
-	for (int i = 1; i < commands.size(); i++)
+	for (int i = 0; i < commands.size(); i++)
 	{
-		if (num == i)
+		if (num == i + 1)
 		{
 			SetColor(col, col2);
-			cout << "    "<< i << ") " << commands[i - 1] << endl;
+			cout << "    " << i + 1 << ") " << commands[i] << endl;
 			SetColor(1, 15);
 		}
 		else
-			cout << "    " << i << ") " << commands[i - 1] << endl;
+			cout << "    " << i + 1 << ") " << commands[i] << endl;
 	}
 }
 
 void print_point(int num)
 {
+	ifstream in("point.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
 	double x, y;
 	cout << "Введите координаты точки:" << endl;
 	cin >> x >> y;
 	point p(x, y);
-	cout << "Данная точка лежит в ";
-	double a = p.quarter();
-	cout << a << "четверти" << endl;
-	double b = p.dist();
-	cout << "Расстояние от данной точки до начала координат: " << b << endl;
-	if (p.bisector() == true)
-		cout << "Данная точка лежит на биссектрисе координатной плоскости";
-	else
-		cout << "Данная точка не лежит на биссектрисе координатной плоскости";
-	cout << endl;
+
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: cin >> p; break;
+			case 2:
+			{
+				cout << "Данная точка лежит в ";
+				double a = p.quarter();
+				cout << a << "четверти" << endl;
+			}
+			break;
+			case 3:
+			{
+				double b = p.dist();
+				cout << "Расстояние от данной точки до начала координат: " << b << endl;
+			}
+			break;
+			case 4:
+			{
+				if (p.bisector() == true)
+					cout << "Данная точка лежит на биссектрисе координатной плоскости";
+				else
+					cout << "Данная точка не лежит на биссектрисе координатной плоскости";
+				cout << endl;
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }
 
 void print_line(int num)
 {
+	ifstream in("line.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
 	point p1, p2, p3;
 	cout << "Введите координаты первой точки для задания прямой:" << endl;
 	cin >> p1;
 	cout << "Введите координаты второй точки:" << endl;
 	cin >> p2;
 	line l1(p1, p2);
-	l1.print_v1();
-	l1.print_param();
-	myvector v1 = l1.normal_vector();
-	cout << "Координаты вектора нормали: " << v1;
-	myvector v2 = l1.guide_vector();
-	cout << "Координаты направляющего вектора: " << v2;
-	cout << "Введиите координаты точки, через которую нужно построить прямую, параллельную данной:" << endl;
-	cin >> p3;
-	line l2 = l1.parallel(p3);
-	cout << "Уравнение прямой, параллельной данной: ";
-	l2.print_v2();
-	queue.add_last(new line(l1));
+
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				queue.add_last(new line(l1));
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: cin >>l1; break;
+			case 2:
+			{
+				l1.print_v1();
+			}
+			break;
+			case 3:
+			{
+				l1.print_param();
+			}
+			break;
+			case 4:
+			{
+				myvector v1 = l1.normal_vector();
+				cout << "Координаты вектора нормали: " << v1;
+			}
+			break;
+			case 5:
+			{
+				myvector v2 = l1.guide_vector();
+				cout << "Координаты направляющего вектора: " << v2;
+			}
+			break;
+			case 6:
+			{
+				cout << "Введиите координаты точки, через которую нужно построить прямую, параллельную данной:" << endl;
+				cin >> p3;
+				line l2 = l1.parallel(p3);
+				cout << "Уравнение прямой, параллельной данной: ";
+				l2.print_v2();//не работает, как надо
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			case 54: item = 6;  break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }
 
 void print_polygon(int num)
 {
+	ifstream in("polygon.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+
 	int n;
 	cout << "Введите количество вершин:" << endl;
 	cin >> n;
 	polygon p(n);
 	cout << p;
-	double per = p.perimetr();
-	cout << "Периметр: " << per << endl;
-	double sq = p.area();
-	cout << "Площадь: " << sq << endl;
-	bool f = p.is_convex();
-	if (f)
-		cout << "Многоугольник выпуклый" << endl;
-	else
-		cout << "Многоугольник невыпуклый" << endl;
-	if (p.is_regular(f))
-		cout << "Многоугольник правильный" << endl;
-	else
-		cout << "Многоугольник не является правильным" << endl;
-	queue.add_last(new polygon(p));
+
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				queue.add_last(new polygon(p));
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: cin >> p; break;
+			case 2:
+			{
+				double per = p.perimetr();
+				cout << "Периметр: " << per << endl;
+			}
+			break;
+			case 3:
+			{
+				double sq = p.area();
+				cout << "Площадь: " << sq << endl;
+			}
+			break;
+			case 4:
+			{
+				bool f = p.is_convex();
+				if (f)
+					cout << "Многоугольник выпуклый" << endl;
+				else
+					cout << "Многоугольник невыпуклый" << endl;;
+			}
+			break;
+			case 5:
+			{
+				if (p.is_regular(p.is_convex()))
+					cout << "Многоугольник правильный" << endl;
+				else
+					cout << "Многоугольник не является правильным" << endl;
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }
 
 void print_circle(int num)
 {
 	circle c;
 	cin >> c;
-	cout << c;// improve it!
+	cout << c;// improve it! URGENT!!!!!!!!!
 	c.quarter();
 	c.intersection();
 	c.length();
@@ -211,6 +422,20 @@ void print_circle(int num)
 
 void print_segment(int num)
 {
+	ifstream in("polygon.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+
 	double x1, x2, y1, y2;
 	cout << "Введите координаты первой точки:" << endl;
 	cin >> x1 >> y1;
@@ -234,11 +459,15 @@ void print_triangle(int num)
 		getline(in, s, '\n');
 		commands.push_back(s);
 	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
+
 	triangle abc;
 	cin >> abc;
+
 	while (true)
 	{
 		int key = _getch();
@@ -247,7 +476,14 @@ void print_triangle(int num)
 		{
 			switch (item)
 			{
-			case 0: goto skip;
+			case 0: 
+			{
+				in.close();
+				//Нарисовать треугольник
+				queue.add_last(new triangle(abc));
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
 			case 1: cin >> abc; break;
 			case 2: 
 			{
@@ -335,45 +571,23 @@ void print_triangle(int num)
 				item = 0;
 		}
 	}
-	skip:
-	//cin >> abc;
-	//if (abc.is_equilateral())
-	//	cout << "Треугольник равносторонний" << endl;
-	//else
-	//	cout << "Треугольник не является расносторонним" << endl;
-	//if (abc.is_isosceles())
-	//	cout << "Треугольник равнобедренный" << endl;
-	//else
-	//	cout << "Треугольник не является равнобедренным" << endl;
-	//if (abc.is_right())
-	//	cout << "Треугольник прямоугольный" << endl;
-	//else
-	//	cout << "Треугольник не является прямоугольным" << endl;
-	//cout << "Площадь: " << abc.area() << endl;
-	//cout << "Периметр: " << abc.perimetr() << endl;
-	//try
-	//{
-	//	cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
-	//}
-	//catch (const string& e)
-	//{
-	//	cout << e << endl;
-	//}
-	//try
-	//{
-	//	cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
-	//}
-	//catch (const string& e)
-	//{
-	//	cout << e << endl;
-	//}
-	in.close();
-	//Нарисовать треугольник
-	queue.add_last(new triangle(abc));
 }
 
 void print_vector(int num)
 {
+	ifstream in("myvector.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
 	double x1, x2, y1, y2;
 	cout << "Введите координаты начальной точки:" << endl;
 	cin >> x1 >> y1;
@@ -382,11 +596,63 @@ void print_vector(int num)
 	point p1(x1, y1);
 	point p2(x2, y2);
 	myvector v(p1, p2);
-	cout << "Длина вектора: " << v.len() << endl;
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: cin >> v; break;
+			case 2:	cout << "Длина вектора: " << v.len() << endl; break;
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
+	in.close();
 }
 
 void print_ray(int num) 
 {
+	//ifstream in("triangle.txt");
+	//vector<string> commands;
+	//while (in)
+	//{
+	//	string s = "";
+	//	getline(in, s, '\n');
+	//	commands.push_back(s);
+	//}
+	//if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+	//	commands.pop_back();
+	//SetColor(1, 15);
+	//int item = 0;
+	//print_inmenu(0, 1, commands);
+
 	double x, y;
 	cout << "Введите координаты начала луча:" << endl;
 	cin >> x >> y;
@@ -395,6 +661,7 @@ void print_ray(int num)
 	cin >> x >> y;
 	point p(x, y);
 	ray r(beg, p);
+
 	//Рисование луча
 	queue.add_last(new ray(r));
 }
