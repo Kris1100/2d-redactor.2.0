@@ -1,4 +1,4 @@
-#include "line.h"
+п»ї#include "line.h"
 
 line::line(const point& p1, const point& p2)
 {
@@ -17,6 +17,12 @@ line::line(const line& l)
 {
 	_p1 = l.get_first();
 	_p2 = l.get_second();
+	is_drawn = l.is_drawn;
+}
+line::~line() {
+	_p1.~point();
+	_p2.~point();
+	is_drawn = false;
 }
 
 void line::print_all(double& a,double& b,double& c)
@@ -67,7 +73,7 @@ void line::print_param()
 	double a, b, c;
 	coef(a, b, c);
 	myvector v = guide_vector();
-	cout << "Параметрическое уравнение" << endl;
+	cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 
 	cout << 'x' << '=' << _p1.get_x();
 	if (v.get_x() < 0)
@@ -117,18 +123,33 @@ line line::parallel(const point& p)
 size_t line::is_increasing() const
 {
 	long long int res = (_p1.get_x() - _p2.get_x()) * (_p1.get_y() - _p2.get_y());
-	//Если x и y изменяются обратнопропорционально, то убывает
+	//пїЅпїЅпїЅпїЅ x пїЅ y пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (res < 0) 
 		return 0;
-	//Если прямопропорционально, то возрастает
+	//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (res > 0) 
 		return 1;
-	//Если x или y не меняется
+	//пїЅпїЅпїЅпїЅ x пїЅпїЅпїЅ y пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (_p1.get_x() == _p2.get_x()) 
 		return 2;
 	if (_p1.get_y() == _p2.get_y()) 
 		return 3;
 }
+
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+istream& operator>>(istream& in, line& l) {
+	cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:" << endl;
+	cin >> l._p1;
+	cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:" << endl;
+	cin >> l._p2;
+	return in;
+}
+figure& line:: operator=(line& l) {
+	_p1 = l._p1;
+	_p2 = l._p2;
+	return *this;
+}
+
 
 void line::draw()
 {

@@ -11,7 +11,8 @@ class point: public figure
 public:
 	//Конструктор точки
 	point(double x = 0, double y = 0);
-
+	//Деструктор
+	~point() {};
 	//Задать координату х
 	void set_x(double x) { _x = x; }
 	//Задать координату у

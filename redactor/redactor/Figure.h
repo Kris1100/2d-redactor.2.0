@@ -7,7 +7,7 @@ class figure
 public:
 	virtual void draw() {}
 
-	friend std::istream& operator>>(std::istream& in, figure& p) { return in; }
-	virtual figure& operator=(figure& f) { return *this; }
+	friend istream& operator>>(istream& in, figure& f) { return in; }
+	template<typename T> figure& operator=(T& f) { return *this; }
 };
 
