@@ -21,8 +21,14 @@
 
 #include <stdlib.h>
 #include "glut-3.7.6-bin/glut.h"
+struct elem {
+	figure* obj;
+	string comm = "";
+};
 //Указатель на переменную на отрисовку
 extern bidir_list<figure*> queue;
+//Общий двусвязный список с командами
+extern bidir_list<elem> all;
 //Установить цвет
 void SetColor(int text, int Fon);
 //Печать меню

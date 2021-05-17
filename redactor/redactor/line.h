@@ -17,6 +17,8 @@ public:
 	line(double a = 1, double b = 1, double c = 0);
 	//Конструктор копирования прямой
 	line(const line& l);
+	//Деструктор
+	~line();
 
 	//Получить первую точку
 	point get_first() const { return _p1; }
@@ -52,6 +54,11 @@ public:
 
 	//Рисование прямой
 	void draw();
+	//Нарисован ли объект
+	bool is_drawn = false;
+
+	//Фрэнд функции
+	friend std::istream& operator>>(std::istream& in, line& l);
 
 private:
 	//Задать коэффициенты прямой

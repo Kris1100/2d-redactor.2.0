@@ -234,14 +234,10 @@ void print_line(int num)
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	point p1, p2, p3;
-	cout << "Введите координаты первой точки для задания прямой:" << endl;
-	cin >> p1;
-	cout << "Введите координаты второй точки:" << endl;
-	cin >> p2;
-	line l1(p1, p2);
-
-	while (true)
+	point p1, p2,p3;
+	line l1(p1,p2);
+	cin >> l1;
+while (true)
 	{
 		int key = _getch();
 
@@ -252,11 +248,14 @@ void print_line(int num)
 			case 0:
 			{
 				in.close();
-				queue.add_last(new line(l1));
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
-			case 1: cin >>l1; break;
+			case 1: { 
+				l1.~line();
+				cin >> l1;
+			}
+	        break;
 			case 2:
 			{
 				l1.print_v1();
@@ -288,7 +287,30 @@ void print_line(int num)
 				l2.print_v2();//не работает, как надо
 			}
 			break;
-
+			case 7:
+			{
+				if (not l1.is_drawn) {
+					queue.add_last(new line(l1));
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					l1.is_drawn = true;
+				}
+				else {
+					cout << "Объект уже в очереди на отрисовку";
+				}
+			}
+			break;
+			case 8:
+			{
+				if (l1.is_drawn) {
+					Node<figure*>* p;
+					p = queue.get_last();
+					delete p;
+					l1.is_drawn = false;
+					cout << "Объект успешно удален из очерди на отрисовку";
+				}
+				else cout << "Вы еще не нарисовали объект";
+			}
+			break;
 			default:
 				break;
 			}
@@ -306,6 +328,8 @@ void print_line(int num)
 			case 52: item = 4;  break;
 			case 53: item = 5;  break;
 			case 54: item = 6;  break;
+			case 55: item = 7; break;
+			case 56: item = 8; break;
 			}
 			print_inmenu(item, 15, commands);
 			if (item < 0)

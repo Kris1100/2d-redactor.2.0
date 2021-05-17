@@ -15,7 +15,14 @@ line::line(double a, double b, double c)
 line::line(const line& l) {
 	_p1 = l.get_first();
 	_p2 = l.get_second();
+	is_drawn = l.is_drawn;
 }
+line::~line() {
+	_p1.~point();
+	_p2.~point();
+	is_drawn = false;
+}
+
 void line::print_all(double& a,double& b,double& c)
 {
 	if (a != 0 && a != 1 && a != -1)
@@ -116,6 +123,16 @@ size_t line::is_increasing() const {
 	if (_p1.get_x()==_p2.get_x()) return 2;
 	if (_p1.get_y() == _p2.get_y()) return 3;
 }
+
+//Фрэнд функции
+istream& operator>>(istream& in, line& l) {
+	cout << "Введите координаты первой точки для задания прямой:" << endl;
+	cin >> l._p1;
+	cout << "Введите координаты второй точки:" << endl;
+	cin >> l._p2;
+	return in;
+}
+
 
 void line::draw() {
 	glColor3ub(255, 255, 255);
