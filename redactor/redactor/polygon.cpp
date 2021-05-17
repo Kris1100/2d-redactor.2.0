@@ -191,13 +191,24 @@ bool polygon::is_regular(bool convexity) const
 	}
 }
 
-void polygon::draw() {
+void polygon::draw() 
+{
 	glBegin(GL_POLYGON);
-	for (int i = 0; i < num_vert_; i++) {
-		glColor3f(255, 0, 0);
-		glVertex2f(vertex[i].get_x(), vertex[i].get_y());
+	int R = 220, G = 208, B = 255;
+	for (int i = 0; i < num_vert_; i++) 
+	{
+		glColor3f(R, G, B);
+		glVertex2f(vertex[i].centerize().get_x(), vertex[i].centerize().get_y());
 	}
 	glEnd;
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	for (int i = 0; i < num_vert_ - 1; i++)
+	{
+		glVertex2f(vertex[i].centerize().get_x(), vertex[i].centerize().get_y());
+		glVertex2f(vertex[i + 1].centerize().get_x(), vertex[i + 1].centerize().get_y());
+	}
+	glEnd();
 }
 
 //Friend функции

@@ -1,4 +1,5 @@
 #include "ray.h"
+
 ray::ray(const point& begin, const point& p)
 {
 	if (p != begin)
@@ -10,7 +11,8 @@ ray::ray(const point& begin, const point& p)
 		throw "Недостаточно информации о луче";
 }
 
-ray::ray(const ray& r) {
+ray::ray(const ray& r) 
+{
 	_begin = r.get_begin();
 	_p = r.get_p();
 }
@@ -33,11 +35,14 @@ ostream& operator<<(ostream& out, const ray& r)
 	return out;
 }
 
-void ray::draw() {
+void ray::draw() 
+{
+	glLineWidth(2);
 	glBegin(GL_LINES);
 	    glColor3ub(255, 255, 255);
-	    glVertex2f(_begin.get_x(), _begin.get_y());
+	    glVertex2f(_begin.centerize().get_x(), _begin.centerize().get_y());
 	    glColor3ub(238, 130, 238);
-	    glVertex2f(constants::width + _p.get_x(), constants::height + _p.get_y());
+		int coef = max(constants::height / 2, constants::width / 2);
+	    glVertex2f(coef * _p.centerize().get_x(), coef * _p.centerize().get_y());
 	glEnd();
 }

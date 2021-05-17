@@ -167,6 +167,7 @@ void print_point(int num)
 			case 0:
 			{
 				in.close();
+				queue.add_last(new point(p));
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
@@ -727,11 +728,63 @@ void main_pr()
 	glutMainLoop();
 }
 
+void paint_field()
+{
+	int R, G, B;
+	R = 84;
+	G = 84;
+	B = 84;
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	int middle = constants::width / 2;
+	int step = 40;
+	for (int i = 1; i < constants::width / 2 / step + 1; i++)
+	{
+		glBegin(GL_LINES);
+		glColor3ub(R, G, B);
+		glVertex2f(middle + i * step, constants::height);
+		glVertex2f(middle + i * step, 0);
+		glVertex2f(middle - i * step, constants::height);
+		glVertex2f(middle - i * step, 0);
+		glEnd();
+	}
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(middle, constants::height);
+	glVertex2f(middle, 0);
+	glVertex2f(middle, constants::height);
+	glVertex2f(middle + 6, constants::height - 15);
+	glVertex2f(middle, constants::height);
+	glVertex2f(middle - 6, constants::height - 15);
+	glEnd();
+	middle = constants::height / 2;
+	for (int i = 1; i < constants::height / 2 / step + 1; i++)
+	{
+		glBegin(GL_LINES);
+		glColor3ub(R, G, B);
+		glVertex2f(0, middle + i * step);
+		glVertex2f(constants::width, middle + i * step);
+		glVertex2f(0, middle - i * step);
+		glVertex2f(constants::width, middle - i * step);
+		glEnd();
+	}
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(0, middle);
+	glVertex2f(constants::width, middle);
+	glVertex2f(constants::width, middle);
+	glVertex2f(constants::width - 15, middle + 6);
+	glVertex2f(constants::width, middle);
+	glVertex2f(constants::width - 15, middle - 6);
+	glEnd();
+}
+
 void Display(void)
 {
 	//Пройдемся по списку на отрисовку 
 	Node<figure*>* cur = NULL;
 	cur = queue.get_head();
+	paint_field();
 	while (cur != NULL)
 	{
 		//Вызовем метод draw соответствующего объекта

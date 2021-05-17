@@ -45,6 +45,8 @@ void print_vector(int num);
 void print_ray(int num);
 //Фкнкция, соединяющая рисование
 void main_pr();
+//Оформление фона окна редактора
+void paint_field();
 //Вызывает метод draw конкретного класса,управляет выводом на экран
 void Display(void);
 //Вызывается при изменении размера окна

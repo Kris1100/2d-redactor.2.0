@@ -12,10 +12,13 @@ line::line(double a, double b, double c)
 	set_b(b);
 	set_c(c);
 }
-line::line(const line& l) {
+
+line::line(const line& l) 
+{
 	_p1 = l.get_first();
 	_p2 = l.get_second();
 }
+
 void line::print_all(double& a,double& b,double& c)
 {
 	if (a != 0 && a != 1 && a != -1)
@@ -44,17 +47,21 @@ void line::print_all(double& a,double& b,double& c)
 		cout << '+' << c;
 	cout << '=' << 0 << endl;
 }
+
 void line::print_v1()
 {
 	double a, b, c;
 	coef(a, b, c);
 	print_all(a, b, c);
 }
+
 void line::print_v2()
 {
+	coef(_a, _b, _c);
 	double a = _a, b = _b, c = _c;
 	print_all(a, b, c);
 }
+
 void line::print_param()
 {
 	double a, b, c;
@@ -86,7 +93,7 @@ myvector line::guide_vector()
 {
 	double a, b, c;
 	coef(a, b, c);
-	point p1(0, 0), p2(b,-a);
+	point p1(0, 0), p2(b, -a);
 	return myvector(p1, p2);
 }
 
@@ -97,36 +104,48 @@ void line::coef(double& a, double& b, double& c)
 	c = _p1.get_y() * (_p2.get_x() - _p1.get_x()) + _p1.get_x() * (_p1.get_y() - _p2.get_y());
 }
 
-line line::parallel(const point& p)const
+line line::parallel(const point& p)
 {
 	double a, b, c;
-	a = _a;
-	b = _b;
-	c = -(_a * p.get_x() + _b * p.get_y());
-	return line(a, b, c);
+	coef(a, b, c);
+	double a1 = a;
+	double b1 = b;
+	double c1 = -(a * p.get_x() + b * p.get_y());
+	return line(a1, b1, c1);
 }
 
-size_t line::is_increasing() const {
+size_t line::is_increasing() const
+{
 	long long int res = (_p1.get_x() - _p2.get_x()) * (_p1.get_y() - _p2.get_y());
 	//Если x и y изменяются обратнопропорционально, то убывает
-	if (res < 0) return 0;
+	if (res < 0) 
+		return 0;
 	//Если прямопропорционально, то возрастает
-	if (res > 0) return 1;
+	if (res > 0) 
+		return 1;
 	//Если x или y не меняется
-	if (_p1.get_x()==_p2.get_x()) return 2;
-	if (_p1.get_y() == _p2.get_y()) return 3;
+	if (_p1.get_x() == _p2.get_x()) 
+		return 2;
+	if (_p1.get_y() == _p2.get_y()) 
+		return 3;
 }
 
-void line::draw() {
-	glColor3ub(255, 255, 255);
+void line::draw()
+{
 	glBegin(GL_LINES);
-	long long int a, b;
+	glLineWidth(2);
+	size_t a, b;
 	a = constants::width;
 	b = constants::height;
-	if (this->is_increasing()==0)b *= -1;
-	if (this->is_increasing() == 2) a = 0;
-	if (this->is_increasing() == 3) b = 0;
-	glVertex2i(_p1.get_x()-2*a, _p1.get_y()-2*b);
-	glVertex2i(_p2.get_x()+2*a, _p2.get_y()+2*b);
+	if (this->is_increasing() == 0)
+		b *= -1;
+	if (this->is_increasing() == 2) 
+		a = 0;
+	if (this->is_increasing() == 3) 
+		b = 0;
+	glColor3ub(255, 255, 255);
+	glVertex2i(_p1.centerize().get_x() - 2 * a, _p1.centerize().get_y() - 2 * b);
+	glColor3ub(205, 164, 222);
+	glVertex2i(_p2.centerize().get_x() + 2 * a, _p2.centerize().get_y() + 2 * b);
 	glEnd();
 }

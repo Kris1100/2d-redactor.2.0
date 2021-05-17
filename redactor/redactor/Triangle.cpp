@@ -1,6 +1,4 @@
 #include "Triangle.h"
-#include "math_const.h"
-#include "glut-3.7.6-bin/glut.h"
 
 triangle::triangle()
 {
@@ -135,31 +133,31 @@ point* triangle::get_vertex() const
 
 void triangle::draw() 
 {
+	int x1, x2, x0, y1, y2, y0;
+
+	x0 = vertex[0].centerize().get_x();
+	y0 = vertex[0].centerize().get_y();
+	x1 = vertex[1].centerize().get_x();
+	y1 = vertex[1].centerize().get_y();
+	x2 = vertex[2].centerize().get_x();
+	y2 = vertex[2].centerize().get_y();
+
 	glBegin(GL_TRIANGLES);
-	     point* vert = vertex;
 	     glColor3ub(255, 0, 0);
-	     glVertex2f(vert[0].get_x(), vert[0].get_y());
+	     glVertex2f(x0, y0);
 	     glColor3ub(0, 255, 0);
-	     glVertex2f(vert[1].get_x(), vert[1].get_y());
+	     glVertex2f(x1, y1);
 	     glColor3ub(0, 0, 255);
-	     glVertex2f(vert[2].get_x(), vert[2].get_y());
+	     glVertex2f(x2, y2);
 	glEnd();
 
 	glBegin(GL_LINES);
 		glColor3ub(255, 255, 255);
-		glVertex2f(vert[0].get_x(), vert[0].get_y());
-		glVertex2f(vert[1].get_x(), vert[1].get_y());
-	glEnd();
-
-	glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(vert[1].get_x(), vert[1].get_y());
-		glVertex2f(vert[2].get_x(), vert[2].get_y());
-	glEnd();
-
-	glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(vert[2].get_x(), vert[2].get_y());
-		glVertex2f(vert[0].get_x(), vert[0].get_y());
+		glVertex2f(x0, y0);
+		glVertex2f(x1, y1);
+		glVertex2f(x1, y1);
+		glVertex2f(x2, y2);
+		glVertex2f(x2, y2);
+		glVertex2f(x0, y0);
 	glEnd();
 }

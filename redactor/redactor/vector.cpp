@@ -6,12 +6,15 @@ myvector::myvector(const point& begin, const point& end)
 	set_extm_points(begin, end);
 	set_coord(end.get_x() - begin.get_x(), end.get_y() - begin.get_y());
 }
-myvector::myvector(double a, double b) {
+
+myvector::myvector(double a, double b) 
+{
 	set_coord(a, b);
 	point begin, end;
 	begin.set_x(0); begin.set_y(0);
 	end.set_x(a); end.set_y(b);
 }
+
 void myvector::set_coord(double x, double y)
 {
 	x_ = x;
@@ -35,9 +38,12 @@ double vect_prod(const myvector& v1,const myvector& v2)
 
 double angle(const myvector& v1, const myvector& v2) 
 {
-	if (abs(v1.len()) == 0 || abs(v2.len()) == 0) return 0;
-	return round((acos((vect_prod(v1, v2)) / (abs(v1.len()) * abs(v2.len())))*180/constants::pi)*constants::rd)/constants::rd; 
+	if (abs(v1.len()) == 0 || abs(v2.len()) == 0) 
+		return 0;
+	return round((acos((vect_prod(v1, v2)) / (abs(v1.len()) * 
+		abs(v2.len())))*180/constants::pi)*constants::rd)/constants::rd; 
 }
+
 ostream& operator<<(ostream& out,const myvector& v)
 {
 	cout << "(" << v.get_x() << " ," << v.get_y() <<")"<< endl;

@@ -1,5 +1,4 @@
 #include "circle.h"
-#include "math_const.h"
 
 circle::circle(double x, double y, double r)
 {
@@ -7,7 +6,8 @@ circle::circle(double x, double y, double r)
 	set_r(r);
 }
 
-circle::circle(const circle& c) {
+circle::circle(const circle& c) 
+{
 	_p = c.get_p();
 	_r = c.get_r();
 }
@@ -29,7 +29,6 @@ istream& operator>>(istream& in, circle& c)
 	return in;
 }
 
-
 int circle::quarter() const //может, стоит переделать функцию так, чтобы она возвращала значение, а не печатала его
 							 //тогда она будет полезнее
 {
@@ -40,7 +39,6 @@ int circle::quarter() const //может, стоит переделать функцию так, чтобы она воз
 	else return -1;
 }
 
-
 void circle::intersection() const
 {    //не читабельный код - испрваить, также как в предыдущей
 	if (_r * _r - (_p.get_x() * _p.get_x()) > 0)
@@ -50,15 +48,18 @@ void circle::intersection() const
 	else cout << "Нет пересечения с осями" << endl;
 }
 
-void circle::draw() {
-	glColor3ub(255, 255, 255);
+void circle::draw() 
+{
+	glColor3ub(220, 195, 232);
 	long long int a, b;
 	a = constants::width;
 	b = constants::height;
 	int N = 300;
 	glBegin(GL_TRIANGLE_FAN);
-	for (int i = 1; i <= N + 2; i++) {
-		glVertex2f(_p.get_x() + _r * cos(2 * 3.14 / N * i), _p.get_y() + _r * sin(2 * 3.14 / N * i));
+	for (int i = 1; i <= N + 2; i++) 
+	{
+		glVertex2f(_p.centerize().get_x() + _r * cos(2 * 3.14 / N * i), 
+			       _p.centerize().get_y() + _r * sin(2 * 3.14 / N * i));
 	}
 	glEnd();
 }

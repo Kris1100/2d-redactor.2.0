@@ -20,6 +20,7 @@ public:
 	//Вычисление скалярного произведения векторов
 	friend double vect_prod(const myvector& v1,const myvector& v2);
 	friend ostream& operator<<(ostream& out,const myvector& v);
+
 private:
 	//Координаты вектора
 	double x_, y_;

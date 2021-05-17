@@ -5,8 +5,9 @@
 #include <cmath>
 #include "point.h"
 #include "line.h"
+#include "math_const.h"
 #include "glut-3.7.6-bin/glut.h"
-#include<math.h>
+#include <math.h>
 using namespace std;
 
 class circle : public figure
@@ -36,7 +37,7 @@ public:
 	int quarter() const;
 	//Возвращает длину окружности
 	double length() const {
-		return (get_r() * M_PI * 2);
+		return (get_r() * constants::pi * 2);
 	}
 	//Точки пересечения с осями
 	void intersection() const; // может, тогда получить на вход точки и поменять их в функции, чтобы она была полезна
@@ -45,6 +46,7 @@ public:
 	//деструктор?
 
 	void draw();
+
 private:
 	point _p;
 	double _r;

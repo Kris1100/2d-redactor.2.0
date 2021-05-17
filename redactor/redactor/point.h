@@ -1,9 +1,12 @@
 #pragma once
 #include <iostream>
 #include <cmath>
+#include "Figure.h"
+#include "math_const.h"
+#include "glut-3.7.6-bin/glut.h"
 using namespace std;
 
-class point
+class point: public figure
 {
 public:
 	// онструктор точки
@@ -25,6 +28,10 @@ public:
 	double dist();
 	//Ћежит ли точка на биссектрисе координатной плоскости
 	bool bisector();
+	//÷ентеризаци€ координат
+	point centerize();
+	//
+	void draw();
 
 	//перегрузка операторов равенства, вводва, вывода,присваивани€
 	friend bool operator==(const point& p1, const point& p2);
