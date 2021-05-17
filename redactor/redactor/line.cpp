@@ -132,6 +132,11 @@ istream& operator>>(istream& in, line& l) {
 	cin >> l._p2;
 	return in;
 }
+figure& line:: operator=(line& l) {
+	_p1 = l._p1;
+	_p2 = l._p2;
+	return *this;
+}
 
 
 void line::draw() {

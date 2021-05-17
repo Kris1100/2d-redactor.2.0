@@ -1,5 +1,5 @@
 ﻿#include "Menu.h"
-bidir_list<figure*> queue;
+bidir_list<figure*> queue;//Пока просто это костыль, потом уберу
 bidir_list<elem>all;
 void print_menu(int num, int col)
 {
@@ -237,7 +237,6 @@ void print_line(int num)
 	point p1, p2,p3;
 	line l1(p1,p2);
 	cin >> l1;
-	elem one;
 while (true)
 	{
 		int key = _getch();
@@ -253,8 +252,9 @@ while (true)
 				return;
 			}
 			case 1: { 
-				l1.~line();
 				cin >> l1;
+				roll_back_draw();
+				add_draw(l1);
 			}
 	        break;
 			case 2:
@@ -291,10 +291,7 @@ while (true)
 			case 7:
 			{
 				if (not l1.is_drawn) {
-					queue.add_last(new line(l1));
-					one.comm = "DRAW";
-					one.obj = queue.get_tail()->info;
-					all.add_last(one);
+					add_draw(l1);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					l1.is_drawn = true;
 				}
@@ -306,12 +303,7 @@ while (true)
 			case 8:
 			{
 				if (l1.is_drawn) {
-					Node<figure*>* p;
-					p = queue.get_last();
-					delete p;
-					Node<elem>* t;
-					t= all.get_last();
-					delete t;
+					roll_back_draw();
 					l1.is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
@@ -783,4 +775,20 @@ void Reshape(GLint w, GLint h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+void roll_back_draw() {
+	Node<figure*>* p;
+	p = queue.get_last();
+	delete p;
+	Node<elem>* t;
+	t = all.get_last();
+	delete t;
+}
+template<typename T>
+void add_draw(T& f) {
+	elem one;
+	queue.add_last(new T(f));
+	one.comm = "DRAW";
+	one.obj = queue.get_tail()->info;
+	all.add_last(one);
 }

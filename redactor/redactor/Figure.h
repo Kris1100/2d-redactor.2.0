@@ -8,6 +8,6 @@ public:
 	virtual void draw() {}
 
 	friend istream& operator>>(istream& in, figure& f) { return in; }
-	virtual figure& operator=(figure& f) { return *this; }
+	template<typename T> figure& operator=(T& f) { return *this; }
 };
 

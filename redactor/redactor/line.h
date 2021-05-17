@@ -58,7 +58,11 @@ public:
 	bool is_drawn = false;
 
 	//Фрэнд функции
+	//Опретатор ввода
 	friend std::istream& operator>>(std::istream& in, line& l);
+	//Оператор присваивания
+	figure& operator=(line& l);
+	
 
 private:
 	//Задать коэффициенты прямой

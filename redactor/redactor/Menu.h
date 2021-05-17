@@ -55,3 +55,8 @@ void main_pr();
 void Display(void);
 //Вызывается при изменении размера окна
 void Reshape(GLint w, GLint h);
+//Откатить рисование объекта
+void roll_back_draw();
+//Добваить объект в очередь рисования
+template<typename T>
+void add_draw(T& f);
