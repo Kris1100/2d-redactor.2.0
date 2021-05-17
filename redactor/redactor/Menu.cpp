@@ -1,6 +1,6 @@
 ﻿#include "Menu.h"
 bidir_list<figure*> queue;
-
+bidir_list<elem>all;
 void print_menu(int num, int col)
 {
 	int col2;
@@ -237,6 +237,7 @@ void print_line(int num)
 	point p1, p2,p3;
 	line l1(p1,p2);
 	cin >> l1;
+	elem one;
 while (true)
 	{
 		int key = _getch();
@@ -291,6 +292,9 @@ while (true)
 			{
 				if (not l1.is_drawn) {
 					queue.add_last(new line(l1));
+					one.comm = "DRAW";
+					one.obj = queue.get_tail()->info;
+					all.add_last(one);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					l1.is_drawn = true;
 				}
@@ -305,6 +309,9 @@ while (true)
 					Node<figure*>* p;
 					p = queue.get_last();
 					delete p;
+					Node<elem>* t;
+					t= all.get_last();
+					delete t;
 					l1.is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}

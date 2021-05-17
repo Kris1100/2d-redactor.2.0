@@ -5,7 +5,7 @@ using namespace std;
 template <class T>
 struct Node
 {
-	T info = 0;
+	T info;
 	Node<T>* next = NULL;
 	Node<T>* prev = NULL;
 	//Node()//need to test
