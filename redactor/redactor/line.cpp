@@ -19,7 +19,9 @@ line::line(const line& l)
 	_p2 = l.get_second();
 	is_drawn = l.is_drawn;
 }
-line::~line() {
+
+line::~line()
+{
 	_p1.~point();
 	_p2.~point();
 	is_drawn = false;
@@ -73,7 +75,7 @@ void line::print_param()
 	double a, b, c;
 	coef(a, b, c);
 	myvector v = guide_vector();
-	cout << "��������������� ���������" << endl;
+	cout << "Параметрическое уравнение" << endl;
 
 	cout << 'x' << '=' << _p1.get_x();
 	if (v.get_x() < 0)
@@ -123,13 +125,13 @@ line line::parallel(const point& p)
 size_t line::is_increasing() const
 {
 	long long int res = (_p1.get_x() - _p2.get_x()) * (_p1.get_y() - _p2.get_y());
-	//���� x � y ���������� ����������������������, �� �������
-	if (res < 0) 
+	//Если x и y изменяются обратнопропорционально, то убывает
+	if (res < 0)
 		return 0;
-	//���� ��������������������, �� ����������
-	if (res > 0) 
+	//Если прямопропорционально, то возрастает
+	if (res > 0)
 		return 1;
-	//���� x ��� y �� ��������
+	//Если x или y не меняется
 	if (_p1.get_x() == _p2.get_x()) 
 		return 2;
 	if (_p1.get_y() == _p2.get_y()) 
@@ -137,19 +139,21 @@ size_t line::is_increasing() const
 }
 
 //����� �������
-istream& operator>>(istream& in, line& l) {
+istream& operator>>(istream& in, line& l) 
+{
 	cout << "������� ���������� ������ ����� ��� ������� ������:" << endl;
 	cin >> l._p1;
 	cout << "������� ���������� ������ �����:" << endl;
 	cin >> l._p2;
 	return in;
 }
-figure& line:: operator=(line& l) {
+
+figure& line:: operator=(line& l) 
+{
 	_p1 = l._p1;
 	_p2 = l._p2;
 	return *this;
 }
-
 
 void line::draw()
 {
