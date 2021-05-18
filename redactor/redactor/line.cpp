@@ -138,12 +138,12 @@ size_t line::is_increasing() const
 		return 3;
 }
 
-//����� �������
+//Перегрузка оператора ввода
 istream& operator>>(istream& in, line& l) 
 {
-	cout << "������� ���������� ������ ����� ��� ������� ������:" << endl;
+	cout << "Введите координаты первой точки:" << endl;
 	cin >> l._p1;
-	cout << "������� ���������� ������ �����:" << endl;
+	cout << "Введите координаты второй точки:" << endl;
 	cin >> l._p2;
 	return in;
 }
