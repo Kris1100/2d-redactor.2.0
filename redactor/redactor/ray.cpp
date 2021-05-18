@@ -42,7 +42,6 @@ void ray::draw()
 	    glColor3ub(255, 255, 255);
 	    glVertex2f(_begin.centerize().get_x(), _begin.centerize().get_y());
 	    glColor3ub(238, 130, 238);
-		int coef = max(constants::height / 2, constants::width / 2);
-	    glVertex2f(coef * _p.centerize().get_x(), coef * _p.centerize().get_y());
+	    glVertex2f(_p.centerize().get_x(), _p.centerize().get_y());
 	glEnd();
 }

@@ -1,5 +1,7 @@
 #pragma once
 #include "segment.h"
+#include "math_const.h"
+#include "glut-3.7.6-bin/glut.h"
 #include <cmath>
 
 class myvector: public segment
@@ -20,6 +22,8 @@ public:
 	//Вычисление скалярного произведения векторов
 	friend double vect_prod(const myvector& v1,const myvector& v2);
 	friend ostream& operator<<(ostream& out,const myvector& v);
+	//
+	void draw();
 
 private:
 	//Координаты вектора

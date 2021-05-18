@@ -51,20 +51,22 @@ void circle::intersection() const
 void circle::draw() 
 {
 	glColor3ub(220, 195, 232);
-	long long int a, b;
-	a = constants::width;
-	b = constants::height;
+	//long long int a, b; do you really need it?
+	//a = constants::width;
+	//b = constants::height;
 	int N = 300;
+	int xp = _p.centerize().get_x();
+	int yp = _p.centerize().get_y();
 	glBegin(GL_TRIANGLE_FAN);
-	for (int i = 1; i <= N + 2; i++) 
+	for (int i = 1; i <= N + 2; i++)
 	{
-		glVertex2f(_p.centerize().get_x() + _r * cos(2 * 3.14 / N * i), 
-			       _p.centerize().get_y() + _r * sin(2 * 3.14 / N * i));
+		glVertex2f(xp + _r * 40 * cos(2 * 3.14 / N * i),
+			yp + _r * 40 * sin(2 * 3.14 / N * i));
 	}
 	glEnd();
 }
 
-line circle::tangent(point& p)  //входные данные мен€ютс€? если нет, то конст
+line circle::tangent(point& p)  //данные мен€ютс€? если нет, то конст
 {
 	double a = -2 * _p.get_x() + p.get_x();
 	double b = -2 * _p.get_y() + p.get_y();

@@ -1,5 +1,4 @@
 #include "vector.h"
-#include "math_const.h"
 
 myvector::myvector(const point& begin, const point& end)
 {
@@ -48,4 +47,38 @@ ostream& operator<<(ostream& out,const myvector& v)
 {
 	cout << "(" << v.get_x() << " ," << v.get_y() <<")"<< endl;
 	return out;
+}
+
+void myvector::draw()
+{
+	point p(p1_.centerize().get_x(), p1_.centerize().get_y());
+	point end(p2_.centerize().get_x(), p2_.centerize().get_y());
+	double angle = atan2(p.get_x() - end.get_x(), p.get_y() - end.get_y());
+	int arrow_length = 15;
+	int arrow_angle = 120;
+	point p1(end.get_x() + arrow_length * sin(angle + arrow_angle), 
+		     end.get_y() + arrow_length * cos(angle + arrow_angle));
+	point p2(end.get_x() + arrow_length * sin(angle - arrow_angle), 
+		     end.get_y() + arrow_length * cos(angle - arrow_angle));
+	glLineWidth(3);
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(p.get_x(), p.get_y());
+	glColor3ub(179, 222, 255);
+	glVertex2f(end.get_x(), end.get_y());
+	glVertex2f(end.get_x(), end.get_y());
+	glVertex2f(p1.get_x(), p1.get_y());
+	glVertex2f(end.get_x(), end.get_y());
+	glVertex2f(p2.get_x(), p2.get_y());
+	glEnd();
+	glBegin(GL_TRIANGLE_FAN);
+	glColor3ub(255, 255, 255);
+	int N = 360;
+	int R = 3;
+	for (int i = 1; i <= N; i++)
+	{
+		glVertex2f(p.centerize().get_x() + R * cos(2 * 3.14 / N * i),
+			p.centerize().get_y() + R * sin(2 * 3.14 / N * i));
+	}
+	glEnd();
 }

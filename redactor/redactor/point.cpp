@@ -42,8 +42,9 @@ bool point::bisector()
 point point::centerize()
 {
 	double x, y;
-	x = round(_x + constants::width / 2);
-	y = round(_y + constants::height / 2);
+	int step = 40;
+	x = round(_x * 40 + constants::width / 2);
+	y = round(_y * 40 + constants::height / 2);
 	point p(x, y);
 	return p;
 }

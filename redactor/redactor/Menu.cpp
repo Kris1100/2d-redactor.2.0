@@ -235,10 +235,10 @@ void print_line(int num)
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	point p1, p2,p3;
-	line l1(p1,p2);
+	point p1, p2, p3;
+	line l1(p1, p2);
 	cin >> l1;
-while (true)
+	while (true)
 	{
 		int key = _getch();
 
@@ -249,15 +249,17 @@ while (true)
 			case 0:
 			{
 				in.close();
+				queue.add_last(new line(l1));
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
-			case 1: { 
+			case 1:
+			{
 				cin >> l1;
 				roll_back_draw();
 				add_draw(l1);
 			}
-	        break;
+			break;
 			case 2:
 			{
 				l1.print_v1();
@@ -286,24 +288,27 @@ while (true)
 				cin >> p3;
 				line l2 = l1.parallel(p3);
 				cout << "Уравнение прямой, параллельной данной: ";
-				l2.print_v2();//не работает, как надо
+				l2.print_v2();//check it
 			}
 			break;
 			case 7:
 			{
-				if (not l1.is_drawn) {
+				if (not l1.is_drawn)
+				{
 					add_draw(l1);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					l1.is_drawn = true;
 				}
-				else {
+				else
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 8:
 			{
-				if (l1.is_drawn) {
+				if (l1.is_drawn)
+				{
 					roll_back_draw();
 					l1.is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
@@ -675,6 +680,7 @@ void print_vector(int num)
 			case 0:
 			{
 				in.close();
+				queue.add_last(new myvector(v));
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
@@ -829,7 +835,9 @@ void Reshape(GLint w, GLint h)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-void roll_back_draw() {
+
+void roll_back_draw() 
+{
 	Node<figure*>* p;
 	p = queue.get_last();
 	delete p;
@@ -837,8 +845,10 @@ void roll_back_draw() {
 	t = all.get_last();
 	delete t;
 }
+
 template<typename T>
-void add_draw(T& f) {
+void add_draw(T& f) 
+{
 	elem one;
 	queue.add_last(new T(f));
 	one.comm = "DRAW";

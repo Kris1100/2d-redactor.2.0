@@ -122,7 +122,7 @@ line line::parallel(const point& p)
 	return line(a1, b1, c1);
 }
 
-size_t line::is_increasing() const
+unsigned int line::is_increasing() const
 {
 	long long int res = (_p1.get_x() - _p2.get_x()) * (_p1.get_y() - _p2.get_y());
 	//Если x и y изменяются обратнопропорционально, то убывает
@@ -157,20 +157,122 @@ figure& line:: operator=(line& l)
 
 void line::draw()
 {
-	glBegin(GL_LINES);
-	glLineWidth(2);
-	size_t a, b;
-	a = constants::width;
-	b = constants::height;
-	if (this->is_increasing() == 0)
-		b *= -1;
-	if (this->is_increasing() == 2) 
-		a = 0;
-	if (this->is_increasing() == 3) 
-		b = 0;
-	glColor3ub(255, 255, 255);
-	glVertex2i(_p1.centerize().get_x() - 2 * a, _p1.centerize().get_y() - 2 * b);
-	glColor3ub(205, 164, 222);
-	glVertex2i(_p2.centerize().get_x() + 2 * a, _p2.centerize().get_y() + 2 * b);
-	glEnd();
+	double a, b, c;
+	coef(a, b, c);
+	double k = -1 * a / b;
+	size_t w, h;
+	w = constants::width;
+	h = constants::height;
+	int coef = max(w, h);
+	int increase = this->is_increasing();
+	if (increase == 0 || k < 0) //decreases
+	{
+		if (_p1.get_x() > _p2.get_x())
+			swap(_p1, _p2);
+		k = abs(k);
+		double y1 = _p1.centerize().get_y();
+		double x1 = _p1.centerize().get_x();
+		double y11 = k * x1;
+		double x1p, y1p, x2p, y2p;
+		if (y1 + y11 <= h)
+		{
+			x1p = 0;
+			y1p = y1 + y11;
+		}
+		else
+		{
+			y1p = h;
+			x1p = (y1 + y11 - h) / k;
+		}
+		double y2 = _p2.centerize().get_y();
+		double x2 = _p2.centerize().get_x();
+		double x22 = y2 / k;
+		if (x2 + x22 <= w)
+		{
+			x2p = x2 + x22;
+			y2p = 0;
+		}
+		else
+		{
+			x2p = w;
+			y2p = k * (x2 + x22 - w);
+		}
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(x1p, y1p);
+		glColor3ub(205, 164, 222);
+		glVertex2f(x2p, y2p);
+		glEnd();
+		return;
+	}
+	else if (increase == 1 || k > 0) //increases
+	{
+		if (_p1.get_x() > _p2.get_x())
+			swap(_p1, _p2);
+		k = abs(k);
+		double y2 = _p2.centerize().get_y();
+		double x2 = _p2.centerize().get_x();
+		double y22 = k * (w - x2);
+		double x1p, y1p, x2p, y2p;
+		if (y2 + y22 <= h)
+		{
+			x2p = w;
+			y2p = y2 + y22;
+		}
+		else
+		{
+			y2p = h;
+			x2p = (y2 + y22 - h) / k;
+		}
+		double y1 = _p1.centerize().get_y();
+		double x1 = _p1.centerize().get_x();
+		double x11 = y1 / k;
+		if (x1 - x11 > 0)
+		{
+			x1p = x1 - x11;
+			y1p = 0;
+		}
+		else
+		{
+			x1p = 0;
+			y1p = k * (x11 - x1);
+		}
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(x1p, y1p);
+		glColor3ub(158, 90, 140);
+		//glColor3ub(205, 164, 222);
+		glVertex2f(x2p, y2p);
+		glEnd();
+		return;
+	}
+	else if (increase == 2) //x=a
+	{
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(_p1.centerize().get_x(), 0);
+		glColor3ub(205, 164, 222);
+		glVertex2f(_p2.centerize().get_x(), h);
+		glEnd();
+		return;
+	}
+	else if (increase == 3 || k == 0) //y=b
+	{
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(0, _p1.centerize().get_y());
+		glColor3ub(205, 164, 222);
+		glVertex2f(w, _p2.centerize().get_y());
+		glEnd();
+		return;
+	}
+	//glColor3ub(255, 255, 255);
+	//glVertex2i(_p1.centerize().get_x() - 2 * a, _p1.centerize().get_y() - 2 * b);
+	//glColor3ub(205, 164, 222);
+	//glVertex2i(_p2.centerize().get_x() + 2 * a, _p2.centerize().get_y() + 2 * b);
+	//glEnd();
 }
