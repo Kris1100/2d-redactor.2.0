@@ -6,6 +6,7 @@
 #include "vector.h"
 #include "glut-3.7.6-bin/glut.h"
 #include "math_const.h"
+#include "private_menu.h"
 using namespace std;
 
 class line : public figure
@@ -56,6 +57,8 @@ public:
 	void draw();
 	//Нарисован ли объект
 	bool is_drawn = false;
+	//Меню прямой
+	void mymenu();
 
 	//Фрэнд функции
 	//Опретатор ввода

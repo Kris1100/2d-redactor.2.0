@@ -64,10 +64,10 @@ void circle::draw()
 	glEnd();
 }
 
-line circle::tangent(point& p)  //входные данные мен€ютс€? если нет, то конст
-{
-	double a = -2 * _p.get_x() + p.get_x();
-	double b = -2 * _p.get_y() + p.get_y();
-	double c = pow(_p.get_x(), 2) + pow(_p.get_y(), 2) - pow(_r, 2);
-	return line(a, b, c);
-}
+//line circle::tangent(point& p)  //входные данные мен€ютс€? если нет, то конст
+//{
+//	double a = -2 * _p.get_x() + p.get_x();
+//	double b = -2 * _p.get_y() + p.get_y();
+//	double c = pow(_p.get_x(), 2) + pow(_p.get_y(), 2) - pow(_r, 2);
+//	return line(a, b, c);
+//}

@@ -98,44 +98,6 @@ void print_menu(int num, int col)
 		cout << "9. Луч\n";
 }
 
-void print_inmenu(int num, int col, vector<string>& commands)
-{
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
-	int col2;
-	if (col == 1)
-		col2 = 7;
-	else
-		col2 = 1;
-	system("cls");
-	SetColor(15, 1);
-	cout << "\n";
-	SetColor(1, 15);
-	if (num < 0)
-		num = commands.size() + 1;
-	if (num > commands.size() + 1)
-		num = 0;
-	if (num == 0)
-	{
-		SetColor(col, col2);
-		cout << "    0) Выход\n";
-		SetColor(1, 15);
-	}
-	else
-		cout << "    0) Выход\n";
-	for (int i = 0; i < commands.size(); i++)
-	{
-		if (num == i + 1)
-		{
-			SetColor(col, col2);
-			cout << "    " << i + 1 << ") " << commands[i] << endl;
-			SetColor(1, 15);
-		}
-		else
-			cout << "    " << i + 1 << ") " << commands[i] << endl;
-	}
-}
-
 void print_point(int num)
 {
 	ifstream in("point.txt");
@@ -222,122 +184,9 @@ void print_point(int num)
 
 void print_line(int num)
 {
-	ifstream in("line.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-	point p1, p2,p3;
+	point p1, p2, p3;
 	line l1(p1,p2);
-	cin >> l1;
-while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: { 
-				cin >> l1;
-				roll_back_draw();
-				add_draw(l1);
-			}
-	        break;
-			case 2:
-			{
-				l1.print_v1();
-			}
-			break;
-			case 3:
-			{
-				l1.print_param();
-			}
-			break;
-			case 4:
-			{
-				myvector v1 = l1.normal_vector();
-				cout << "Координаты вектора нормали: " << v1;
-			}
-			break;
-			case 5:
-			{
-				myvector v2 = l1.guide_vector();
-				cout << "Координаты направляющего вектора: " << v2;
-			}
-			break;
-			case 6:
-			{
-				cout << "Введиите координаты точки, через которую нужно построить прямую, параллельную данной:" << endl;
-				cin >> p3;
-				line l2 = l1.parallel(p3);
-				cout << "Уравнение прямой, параллельной данной: ";
-				l2.print_v2();//не работает, как надо
-			}
-			break;
-			case 7:
-			{
-				if (not l1.is_drawn) {
-					add_draw(l1);
-					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
-					l1.is_drawn = true;
-				}
-				else {
-					cout << "Объект уже в очереди на отрисовку";
-				}
-			}
-			break;
-			case 8:
-			{
-				if (l1.is_drawn) {
-					roll_back_draw();
-					l1.is_drawn = false;
-					cout << "Объект успешно удален из очерди на отрисовку";
-				}
-				else cout << "Вы еще не нарисовали объект";
-			}
-			break;
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			case 53: item = 5;  break;
-			case 54: item = 6;  break;
-			case 55: item = 7; break;
-			case 56: item = 8; break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
+	l1.mymenu();
 }
 
 void print_polygon(int num)
@@ -828,20 +677,4 @@ void Reshape(GLint w, GLint h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-}
-void roll_back_draw() {
-	Node<figure*>* p;
-	p = queue.get_last();
-	delete p;
-	Node<elem>* t;
-	t = all.get_last();
-	delete t;
-}
-template<typename T>
-void add_draw(T& f) {
-	elem one;
-	queue.add_last(new T(f));
-	one.comm = "DRAW";
-	one.obj = queue.get_tail()->info;
-	all.add_last(one);
 }

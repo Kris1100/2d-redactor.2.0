@@ -8,6 +8,7 @@
 #include "math_const.h"
 #include "glut-3.7.6-bin/glut.h"
 #include <math.h>
+#include "Figure.h"
 using namespace std;
 
 class circle : public figure
@@ -42,7 +43,7 @@ public:
 	//Точки пересечения с осями
 	void intersection() const; // может, тогда получить на вход точки и поменять их в функции, чтобы она была полезна
 	//Возвращает касательную к окружности через данную точку
-	line tangent(point &p);
+	//line tangent(point &p);
 	//деструктор?
 
 	void draw();

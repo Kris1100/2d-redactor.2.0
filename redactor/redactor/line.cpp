@@ -1,5 +1,5 @@
 ﻿#include "line.h"
-
+#include "Menu.h";
 line::line(const point& p1, const point& p2)
 {
 	_p1 = point(p1.get_x(), p1.get_y());
@@ -173,4 +173,121 @@ void line::draw()
 	glColor3ub(205, 164, 222);
 	glVertex2i(_p2.centerize().get_x() + 2 * a, _p2.centerize().get_y() + 2 * b);
 	glEnd();
+}
+void line::mymenu() {
+	ifstream in("line.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+	cin >> *this;
+	point p3;
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: {
+				cin >> *this;
+				roll_back_draw();
+				add_draw(*this);
+			}
+				  break;
+			case 2:
+			{
+				(this)->print_v1();
+			}
+			break;
+			case 3:
+			{
+				this->print_param();
+			}
+			break;
+			case 4:
+			{
+				myvector v1 = this->normal_vector();
+				cout << "Координаты вектора нормали: " << v1;
+			}
+			break;
+			case 5:
+			{
+				myvector v2 = this->guide_vector();
+				cout << "Координаты направляющего вектора: " << v2;
+			}
+			break;
+			case 6:
+			{
+				cout << "Введиите координаты точки, через которую нужно построить прямую, параллельную данной:" << endl;
+				cin >> p3;
+				line l2 = this->parallel(p3);
+				cout << "Уравнение прямой, параллельной данной: ";
+				l2.print_v2();//не работает, как надо
+			}
+			break;
+			case 7:
+			{
+				if (not this->is_drawn) {
+					add_draw(*this);
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					this->is_drawn = true;
+				}
+				else {
+					cout << "Объект уже в очереди на отрисовку";
+				}
+			}
+			break;
+			case 8:
+			{
+				if (this->is_drawn) {
+					roll_back_draw();
+					this->is_drawn = false;
+					cout << "Объект успешно удален из очерди на отрисовку";
+				}
+				else cout << "Вы еще не нарисовали объект";
+			}
+			break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			case 54: item = 6;  break;
+			case 55: item = 7; break;
+			case 56: item = 8; break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }
