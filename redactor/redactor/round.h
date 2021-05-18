@@ -4,6 +4,7 @@
 #include <cmath>
 #include "point.h"
 #include "circle.h"
+#include "Figure.h"
 using namespace std;
 
 class my_round : public circle

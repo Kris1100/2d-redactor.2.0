@@ -1,5 +1,5 @@
 ﻿#include "line.h"
-
+#include "Menu.h";
 line::line(const point& p1, const point& p2)
 {
 	_p1 = point(p1.get_x(), p1.get_y());
