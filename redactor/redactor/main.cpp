@@ -27,7 +27,12 @@ int main(int argc, char* argv[])
 			case 7: print_segment(0);  break;
 			case 8: print_vector(0);  break;
 			case 9: print_ray(0); break;
-
+			case 10:
+			{
+				if (all.get_tail() != NULL) all.get_tail()->info.obj->mymenu();
+				else cout << "Вы еще ничего не делали";
+			}
+			break;
 			default:
 				break;
 			}
@@ -48,11 +53,12 @@ int main(int argc, char* argv[])
 			case 55: item = 7;  break;
 			case 56: item = 8; break;
 			case 57: item = 9; break;
+			case 58: item = 10; break;
 			}
 			print_menu(item, 15);
 			if (item < 0)
-				item = 9;
-			if (item > 9)
+				item = 10;
+			if (item > 10)
 				item = 0;
 		}
 	}

@@ -40,6 +40,7 @@ void print_inmenu(int num, int col, vector<string>& commands)
 void roll_back_draw() {
 	Node<figure*>* p;
 	p = queue.get_last();
+	p->info->is_drawn = false;
 	delete p;
 	Node<elem>* t;
 	t = all.get_last();

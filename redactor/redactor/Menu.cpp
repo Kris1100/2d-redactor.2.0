@@ -13,8 +13,8 @@ void print_menu(int num, int col)
 	cout << "\n";
 	SetColor(1, 15);
 	if (num < 0)
-		num = 9;
-	if (num > 9)
+		num = 10;
+	if (num > 10)
 		num = 0;
 	if (num == 0)
 	{
@@ -96,6 +96,14 @@ void print_menu(int num, int col)
 	}
 	else
 		cout << "9. Луч\n";
+	if (num == 10)
+	{
+		SetColor(col, col2);
+		cout << "10. Вернуться к предыдущему шагу\n";
+		SetColor(1, 15);
+	}
+	else 
+		cout << "10. Вернуться к предыдущему шагу\n";
 }
 
 void print_point(int num)

@@ -34,6 +34,7 @@ void add_draw(T& f) {
 	one.comm = "DRAW";
 	one.obj = (cur->info.obj);
 	all.add_last(one);
+	all.get_tail()->info.obj->is_drawn = true;
 }
 //Добавить в список то, что объект создан
 template<typename T>
