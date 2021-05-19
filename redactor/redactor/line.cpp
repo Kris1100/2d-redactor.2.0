@@ -292,7 +292,10 @@ void line::mymenu()
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	cin >> *this;
+	if (not this->is_created) {
+		cin >> *this;
+		add_create(*this);
+	}
 	point p3;
 	while (true)
 	{

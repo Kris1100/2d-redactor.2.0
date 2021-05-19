@@ -55,8 +55,6 @@ public:
 
 	//Рисование прямой
 	void draw();
-	//Нарисован ли объект
-	bool is_drawn = false;
 	//Меню прямой
 	void mymenu();
 

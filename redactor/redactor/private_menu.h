@@ -23,8 +23,24 @@ void roll_back_draw();
 template<typename T>
 void add_draw(T& f) {
 	elem one;
-	queue.add_last(new T(f));
+	Node<elem>* cur;
+	cur = all.get_tail();
+	bool t = false;
+	while (cur != NULL && not t) {
+		if (cur->info.comm == "CREATE") t = true;
+		else cur = cur->prev;
+	}
+	queue.add_last((cur->info.obj));
 	one.comm = "DRAW";
-	one.obj = queue.get_tail()->info;
+	one.obj = (cur->info.obj);
 	all.add_last(one);
+}
+//Добавить в список то, что объект создан
+template<typename T>
+void add_create(T& f) {
+	elem one;
+	one.comm = "CREATE";
+	one.obj = new T(f);
+	all.add_last(one);
+	all.get_tail()->info.obj->is_created = true;
 }
