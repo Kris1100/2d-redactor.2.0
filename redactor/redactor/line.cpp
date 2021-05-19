@@ -223,7 +223,7 @@ void line::draw()
 		else
 		{
 			y2p = h;
-			x2p = (y2 + y22 - h) / k;
+			x2p = w - (y2 + y22 - h) / k;
 		}
 		double y1 = _p1.centerize().get_y();
 		double x1 = _p1.centerize().get_x();
