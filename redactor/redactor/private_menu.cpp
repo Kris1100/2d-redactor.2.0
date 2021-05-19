@@ -45,3 +45,36 @@ void roll_back_draw() {
 	t = all.get_last();
 	delete t;
 }
+void roll_back_create() {
+	Node <elem>* cur; Node<elem>* beg = NULL;
+	Node<elem>* p;
+	bool t = false;
+	cur = all.get_tail();
+	if (cur != NULL) {
+		while (cur != NULL && not t) {
+			if (cur->info.comm == "CREATE") {
+				t = true;
+				beg = cur;
+			}
+			else cur = cur->prev;
+		}
+		if (not t) cout << "Заполнение списка произведено некорректно";
+		else {
+			cur = all.get_tail();
+			while (cur != beg) {
+				cur = cur->prev;
+				if (cur->next->info.comm == "DRAW") roll_back_draw();
+				else {
+					p = all.get_last();
+					delete p;
+				}
+			}
+			if (cur == beg) {
+				p = all.get_last();
+				delete p->info.obj;
+				delete p;
+			}
+		}
+	}
+	else cout << "Не создано ни одного объекта";
+}
