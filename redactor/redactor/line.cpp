@@ -1,5 +1,4 @@
 ﻿#include "line.h"
-#include "Menu.h";
 line::line(const point& p1, const point& p2)
 {
 	_p1 = point(p1.get_x(), p1.get_y());
@@ -294,7 +293,7 @@ void line::mymenu()
 	print_inmenu(0, 1, commands);
 	if (not this->is_created) {
 		cin >> *this;
-		add_create(*this);
+		this->is_created = true;
 	}
 	point p3;
 	while (true)

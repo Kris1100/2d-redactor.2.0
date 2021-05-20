@@ -5,7 +5,9 @@ using namespace std;
 class figure
 {
 public:
+	//Ğèñîâàíèå îáúåêòà
 	virtual void draw() {};
+	//Ìåíş îáúåêòà
 	virtual void mymenu() {};
 
 	friend istream& operator>>(istream& in, figure& f) { return in; }

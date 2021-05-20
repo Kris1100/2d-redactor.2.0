@@ -7,6 +7,8 @@
 #include "glut-3.7.6-bin/glut.h"
 #include "math_const.h"
 #include "private_menu.h"
+#include <fstream>
+#include <string>
 using namespace std;
 
 class line : public figure

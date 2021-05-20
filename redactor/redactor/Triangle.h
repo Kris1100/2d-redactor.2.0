@@ -6,6 +6,9 @@
 #include "line.h"
 #include "math_const.h"
 #include "glut-3.7.6-bin/glut.h"
+#include "private_menu.h"
+#include <fstream>
+#include <string>
 using namespace std;
 
 class triangle : public polygon
@@ -38,8 +41,11 @@ public:
 	segment median(const point& a, const segment& bc) const;
 	//Возвращает новый динамический массив точек
 	point* get_vertex() const;
+
 	//Рисование треугольника
 	void draw();
+	//Меню треугольника
+	void mymenu();
 
 private:
 	void set_vertex(const point& a, const point& b, const point& c);

@@ -43,7 +43,6 @@ void add_create(T& f) {
 	one.comm = "CREATE";
 	one.obj = new T(f);
 	all.add_last(one);
-	all.get_tail()->info.obj->is_created = true;
 }
 //Отменить создание объекта
 void roll_back_create();

@@ -50,10 +50,7 @@ void circle::intersection() const
 
 void circle::draw()
 {
-	glColor3ub(220, 195, 232);
-	//long long int a, b; do you really need it?
-	//a = constants::width;
-	//b = constants::height;
+	/*glColor3ub(220, 195, 232);
 	int N = 300;
 	int xp = _p.centerize().get_x();
 	int yp = _p.centerize().get_y();
@@ -63,13 +60,21 @@ void circle::draw()
 		glVertex2f(xp + _r * 40 * cos(2 * 3.14 / N * i),
 			yp + _r * 40 * sin(2 * 3.14 / N * i));
 	}
+	glEnd();*/
+	glLineWidth(5);
+	int n = 300;
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < n; i++) {
+		double angle = 2 * 3.14 * i / n;
+		glVertex2f(_r * cos(angle) - 50, _r * sin(angle) - 50);
+	}
 	glEnd();
 }
 
-//line circle::tangent(point& p)  //входные данные меняются? если нет, то конст
-//{
-//	double a = -2 * _p.get_x() + p.get_x();
-//	double b = -2 * _p.get_y() + p.get_y();
-//	double c = pow(_p.get_x(), 2) + pow(_p.get_y(), 2) - pow(_r, 2);
-//	return line(a, b, c);
-//}
+line circle::tangent(point& p)  //входные данные меняются? если нет, то конст
+{
+	double a = -2 * _p.get_x() + p.get_x();
+	double b = -2 * _p.get_y() + p.get_y();
+	double c = pow(_p.get_x(), 2) + pow(_p.get_y(), 2) - pow(_r, 2);
+	return line(a, b, c);
+}

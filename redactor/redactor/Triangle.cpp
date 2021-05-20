@@ -161,3 +161,159 @@ void triangle::draw()
 		glVertex2f(x0, y0);
 	glEnd();
 }
+void triangle:: mymenu() {
+	ifstream in("triangle.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+	if (not this->is_created) {
+		cin >> *this;
+		this->is_created = true;
+	}
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: {
+				cin >> *this;
+				roll_back_draw();
+				add_draw(*this);
+			}
+			break;
+			case 2:
+			{
+				if (this->is_equilateral())
+					cout << "Треугольник равносторонний" << endl;
+				else
+					cout << "Треугольник не является расносторонним" << endl;
+			}
+			break;
+			case 3:
+			{
+				if (this->is_isosceles())
+					cout << "Треугольник равнобедренный" << endl;
+				else
+					cout << "Треугольник не является равнобедренным" << endl;
+			}
+			break;
+			case 4:
+			{
+				if (this->is_right())
+					cout << "Треугольник прямоугольный" << endl;
+				else
+					cout << "Треугольник не является прямоугольным" << endl;
+			}
+			break;
+			case 5:
+			{
+				cout << "Площадь: " <<this->area() << endl;
+			}
+			break;
+			case 6:
+			{
+				cout << "Периметр: " << this->perimetr() << endl;
+			}
+			break;
+			case 7:
+			{
+				try
+				{
+					cout << "Радиус вписанной окружности: " << this->radius_inside() << endl;
+				}
+				catch (const string& e)
+				{
+					cout << e << endl;
+				}
+			}
+			break;
+			case 8:
+			{
+				try
+				{
+					cout << "Радиус описанной окружности: " << this->radius_outside() << endl;
+				}
+				catch (const string& e)
+				{
+					cout << e << endl;
+				}
+			}
+			break;
+			case 9:
+			{
+				if (not this->is_drawn) {
+					add_draw(*this);
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					this->is_drawn = true;
+				}
+				else {
+					cout << "Объект уже в очереди на отрисовку";
+				}
+			}
+			break;
+			case 10:
+			{
+				if (this->is_drawn) {
+					roll_back_draw();
+					this->is_drawn = false;
+					cout << "Объект успешно удален из очерди на отрисовку";
+				}
+				else cout << "Вы еще не нарисовали объект";
+			}
+			break;
+			case 11:
+			{
+				roll_back_create();
+				cout << "Объект успешно удален,перейдите в главное меню";
+				return;
+			}
+			break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			case 54: item = 6;  break;
+			case 55: item = 7;  break;
+			case 56: item = 8; break;
+			case 57: item = 9; break;
+			case 58: item = 10; break;
+			case 59: item = 11; break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
+}

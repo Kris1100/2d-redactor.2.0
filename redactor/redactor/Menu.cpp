@@ -194,7 +194,8 @@ void print_line(int num)
 {
 	point p1, p2, p3;
 	line l1(p1,p2);
-	l1.mymenu();
+	add_create(l1);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_polygon(int num)
@@ -376,126 +377,9 @@ void print_segment(int num)
 
 void print_triangle(int num)
 {
-	ifstream in("triangle.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-
 	triangle abc;
-	cin >> abc;
-
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0: 
-			{
-				in.close();
-				//Нарисовать треугольник
-				queue.add_last(new triangle(abc));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> abc; break;
-			case 2:
-			{
-				if (abc.is_equilateral())
-					cout << "Треугольник равносторонний" << endl;
-				else
-					cout << "Треугольник не является расносторонним" << endl;
-			}
-			break;
-			case 3:
-			{
-				if (abc.is_isosceles())
-					cout << "Треугольник равнобедренный" << endl;
-				else
-					cout << "Треугольник не является равнобедренным" << endl;
-			}
-			break;
-			case 4:
-			{
-				if (abc.is_right())
-					cout << "Треугольник прямоугольный" << endl;
-				else
-					cout << "Треугольник не является прямоугольным" << endl;
-			}
-			break;
-			case 5:
-			{
-				cout << "Площадь: " << abc.area() << endl;
-			}
-			break;
-			case 6:
-			{
-				cout << "Периметр: " << abc.perimetr() << endl;
-			}
-			break;
-			case 7:
-			{
-				try
-				{
-					cout << "Радиус вписанной окружности: " << abc.radius_inside() << endl;
-				}
-				catch (const string& e)
-				{
-					cout << e << endl;
-				}
-			}
-			break;
-			case 8:
-			{
-				try
-				{
-					cout << "Радиус описанной окружности: " << abc.radius_outside() << endl;
-				}
-				catch (const string& e)
-				{
-					cout << e << endl;
-				}
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			case 53: item = 5;  break;
-			case 54: item = 6;  break;
-			case 55: item = 7;  break;
-			case 56: item = 8; break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
+	add_create(abc);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_vector(int num)
