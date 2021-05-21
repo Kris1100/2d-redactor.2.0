@@ -161,67 +161,12 @@ void print_triangle(int num)
 
 void print_vector(int num)
 {
-	ifstream in("myvector.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-	double x1, x2, y1, y2;
-	cout << "Введите координаты начальной точки:" << endl;
-	cin >> x1 >> y1;
-	cout << "Введите координаты конечной точки:" << endl;
-	cin >> x2 >> y2;
+	double x1=0, x2=0, y1=0, y2=0;
 	point p1(x1, y1);
 	point p2(x2, y2);
-	myvector v(p1, p2);
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				queue.add_last(new myvector(v));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> v; break;
-			case 2:	cout << "Длина вектора: " << v.len() << endl; break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
-	in.close();
+	myvector v(p1, p2);	
+	add_create(v);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_ray(int num)

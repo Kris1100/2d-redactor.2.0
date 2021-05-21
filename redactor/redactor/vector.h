@@ -25,6 +25,7 @@ public:
 	//
 	void draw();
 
+	void mymenu();
 private:
 	//Координаты вектора
 	double x_, y_;
