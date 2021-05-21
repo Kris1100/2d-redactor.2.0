@@ -35,6 +35,8 @@ public:
 	//Нарисовать отрезок
 	void draw();
 
+	void mymenu();
+
 protected:
 	point p1_;
 	point p2_;

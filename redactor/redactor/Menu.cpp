@@ -144,73 +144,10 @@ void print_circle(int num)
 
 void print_segment(int num)
 {
-	ifstream in("segment.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-
 	double x1, x2, y1, y2;
-	cout << "Введите координаты первой точки:" << endl;
-	cin >> x1 >> y1;
-	cout << "Введите координаты второй точки:" << endl;
-	cin >> x2 >> y2;
 	point p1(x1, y1);
 	point p2(x2, y2);
 	segment s(p1, p2);
-
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				//Добавим в очередь на отрисовку
-				queue.add_last(new segment(s));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> s; break;
-			case 2:
-			{
-				cout << "Длина отрезка: " << s.len() << endl;
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
 }
 
 void print_triangle(int num)
