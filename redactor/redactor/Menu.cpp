@@ -144,10 +144,12 @@ void print_circle(int num)
 
 void print_segment(int num)
 {
-	double x1, x2, y1, y2;
+	double x1=0, x2=0, y1=0, y2=0;
 	point p1(x1, y1);
 	point p2(x2, y2);
 	segment s(p1, p2);
+	add_create(s);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_triangle(int num)
