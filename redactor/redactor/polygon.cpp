@@ -215,6 +215,14 @@ void polygon::draw()
 std::istream& operator>>(istream& in, polygon& p)
 {
 	double x, y;
+	//ѕеревыделить пам€ть на список вершин
+	long long int n;
+	cout << "¬ведите количество вершин" << endl;
+	cin >> n;
+	delete[] p.vertex;
+	p.set_num(n);
+	point* vert = new point[n];
+	p.set_point_array(vert);
 	cout << "¬ведите координаты " << p.num_vert_ << " вершин:" << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{

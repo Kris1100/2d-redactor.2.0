@@ -47,6 +47,10 @@ public:
 	//Меню треугольника
 	void mymenu();
 
+	//Friend функции
+	//Ввод многоугольника 
+	friend std::istream& operator>>(std::istream& in, triangle& t);
+
 private:
 	void set_vertex(const point& a, const point& b, const point& c);
 };
