@@ -108,86 +108,10 @@ void print_menu(int num, int col)
 
 void print_point(int num)
 {
-	ifstream in("point.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-	double x, y;
-	cout << "Введите координаты точки:" << endl;
-	cin >> x >> y;
+	double x=0, y=0;
 	point p(x, y);
-
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				queue.add_last(new point(p));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> p; break;
-			case 2:
-			{
-				cout << "Данная точка лежит в ";
-				double a = p.quarter();
-				cout << a << "четверти" << endl;
-			}
-			break;
-			case 3:
-			{
-				double b = p.dist();
-				cout << "Расстояние от данной точки до начала координат: " << b << endl;
-			}
-			break;
-			case 4:
-			{
-				if (p.bisector() == true)
-					cout << "Данная точка лежит на биссектрисе координатной плоскости";
-				else
-					cout << "Данная точка не лежит на биссектрисе координатной плоскости";
-				cout << endl;
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
+	add_create(p);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_line(int num)
