@@ -41,6 +41,8 @@ public:
 	//Вывод всей информации по многоугольнику
 	friend std::ostream& operator<<(std::ostream& out, polygon& p);
 
+	void mymenu();
+
 protected:
 	size_t num_vert_;
 	point* vertex;
