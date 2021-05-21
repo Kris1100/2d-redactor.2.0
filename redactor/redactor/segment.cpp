@@ -55,6 +55,14 @@ void segment::draw()
 	      glVertex2f(p2_.centerize().get_x(), p2_.centerize().get_y());
 	glEnd();
 }
+istream& operator>>(istream& in, segment& s)
+{
+	cout << "Введите координаты первой точки:" << endl;
+	cin >> s.p1_;
+	cout << "Введите координаты второй точки:" << endl;
+	cin >> s.p2_;
+	return in;
+}
 void segment::mymenu() {
 	ifstream in("segment.txt");
 	vector<string> commands;
@@ -93,7 +101,7 @@ void segment::mymenu() {
 				cout << "Длина отрезка: " << this->len() << endl;
 			}
 			break;
-			case 7:
+			case 3:
 			{
 				if (not this->is_drawn) {
 					add_draw(*this);
@@ -105,7 +113,7 @@ void segment::mymenu() {
 				}
 			}
 			break;
-			case 8:
+			case 4:
 			{
 				if (this->is_drawn) {
 					roll_back_draw();
@@ -115,7 +123,7 @@ void segment::mymenu() {
 				else cout << "Вы еще не нарисовали объект";
 			}
 			break;
-			case 9:
+			case 5:
 			{
 				roll_back_create();
 				cout << "Объект успешно удален,перейдите в главное меню";

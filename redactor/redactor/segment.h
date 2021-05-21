@@ -34,9 +34,11 @@ public:
 
 	//Нарисовать отрезок
 	void draw();
-
 	void mymenu();
 
+	//Фрэнд функции
+	//Опретатор ввода
+	friend std::istream& operator>>(std::istream& in, segment& s);
 protected:
 	point p1_;
 	point p2_;
