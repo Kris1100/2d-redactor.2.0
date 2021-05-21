@@ -24,11 +24,12 @@ void triangle::set_vertex(const point& a, const point& b, const point& c)
 
 bool triangle::exists() const
 {
-	segment ab(vertex[0], vertex[1]);
-	segment bc(vertex[1], vertex[2]);
-	segment ac(vertex[0], vertex[2]);
-	if (ab.len() + bc.len() < ac.len() || ab.len() + ac.len() < bc.len() ||
-		ac.len() + bc.len() < ab.len())
+	line l(vertex[0], vertex[1]);
+	double a, b, c;
+	l.coef(a, b, c);
+	double x = vertex[2].get_x();
+	double y = vertex[2].get_y();
+	if (a * x + b * y + c == 0)
 		return false;
 	return true;
 }
@@ -78,8 +79,7 @@ double triangle::radius_inside() const
 {
 	if (exists())
 		return 2 * area() / perimetr();
-	else
-		throw "Вырожденный случай";
+	throw "Вырожденный случай";
 }
 
 double triangle::radius_outside() const
@@ -92,8 +92,7 @@ double triangle::radius_outside() const
 		segment ac(vertex[0], vertex[2]);
 		return ab.len() * bc.len() * ac.len() / (4 * abc_square);
 	}
-	else
-		throw "Вырожденный случай";
+	throw "Вырожденный случай";
 }
 
 bool triangle::is_inside(const point& p) const
@@ -197,7 +196,8 @@ void triangle:: mymenu()
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
-			case 1: {
+			case 1: 
+			{
 				cin >> *this;
 				roll_back_draw();
 				add_draw(*this);
@@ -239,29 +239,46 @@ void triangle:: mymenu()
 			break;
 			case 7:
 			{
+				double rad = 0;
+				cout << "Радиус вписанной окружности";
 				try
 				{
-					cout << "Радиус вписанной окружности: " << this->radius_inside() << endl;
+					rad = this->radius_inside();
+					cout << ": " << rad << endl;
 				}
-				catch (const string& e)
+				catch (...)
 				{
-					cout << e << endl;
+					cout << " неопределён" << endl;
 				}
 			}
 			break;
 			case 8:
 			{
+				
+				double rad = 0;
+				cout << "Радиус описанной окружности";
 				try
 				{
-					cout << "Радиус описанной окружности: " << this->radius_outside() << endl;
+					rad = this->radius_outside();
+					cout << ": " << rad << endl;
 				}
-				catch (const string& e)
+				catch (...)
 				{
-					cout << e << endl;
+					cout << " неопределён" << endl;
 				}
 			}
 			break;
 			case 9:
+			{
+				point p;
+				cin >> p;
+				if (is_inside(p))
+					cout << "Точка внутри треугольника" << endl;
+				else
+					cout << "Точка снаружи" << endl;
+			}
+			break;
+			case 10:
 			{
 				if (not this->is_drawn) 
 				{
@@ -275,7 +292,7 @@ void triangle:: mymenu()
 				}
 			}
 			break;
-			case 10:
+			case 11:
 			{
 				if (this->is_drawn) 
 				{
@@ -286,7 +303,7 @@ void triangle:: mymenu()
 				else cout << "Вы еще не нарисовали объект";
 			}
 			break;
-			case 11:
+			case 12:
 			{
 				roll_back_create();
 				cout << "Объект успешно удален,перейдите в главное меню";
@@ -315,6 +332,7 @@ void triangle:: mymenu()
 			case 57: item = 9; break;
 			case 58: item = 10; break;
 			case 59: item = 11; break;
+			case 60: item = 12; break;
 			}
 			print_inmenu(item, 15, commands);
 			if (item < 0)
