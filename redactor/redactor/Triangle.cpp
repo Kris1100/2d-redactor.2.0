@@ -61,9 +61,16 @@ bool triangle::is_right() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (abs(ab.len() * ab.len() + ac.len() * ac.len() - bc.len() * bc.len()) <= constants::eps ||
-		abs(ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len()) <= constants::eps ||
-		abs(bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len()) <= constants::eps)
+	if (is_equilateral())
+		return false;
+	double hyp;
+	if (ab.len() < bc.len())
+		swap(ab, bc);
+	if (ab.len() < ac.len())
+		swap(ab, ac);
+	double kat1 = ac.len(), kat2 = bc.len();
+	double hyp = ab.len();
+	if (abs(kat1 * kat1 + kat2 * kat2 - hyp * hyp) < 0.00001)
 		return true;
 	return false;
 }
@@ -142,26 +149,23 @@ void triangle::draw()
 	x2 = vertex[2].centerize().get_x();
 	y2 = vertex[2].centerize().get_y();
 
-	glBegin(GL_TRIANGLES);
-	     glColor3ub(255, 0, 0);
-	     glVertex2f(x0, y0);
-	     glColor3ub(0, 255, 0);
-	     glVertex2f(x1, y1);
-	     glColor3ub(0, 0, 255);
-	     glVertex2f(x2, y2);
-	glEnd();
-
+	glLineWidth(3);
 	glBegin(GL_LINES);
 		glColor3ub(255, 255, 255);
 		glVertex2f(x0, y0);
+		glColor3ub(205, 164, 222);
 		glVertex2f(x1, y1);
 		glVertex2f(x1, y1);
+		glColor3ub(88, 84, 171);
 		glVertex2f(x2, y2);
 		glVertex2f(x2, y2);
+		glColor3ub(255, 255, 255);
 		glVertex2f(x0, y0);
 	glEnd();
 }
-void triangle:: mymenu() {
+
+void triangle:: mymenu() 
+{
 	ifstream in("triangle.txt");
 	vector<string> commands;
 	while (in)
@@ -175,7 +179,8 @@ void triangle:: mymenu() {
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
+	if (not this->is_created) 
+	{
 		cin >> *this;
 		this->is_created = true;
 	}
@@ -259,19 +264,22 @@ void triangle:: mymenu() {
 			break;
 			case 9:
 			{
-				if (not this->is_drawn) {
+				if (not this->is_drawn) 
+				{
 					add_draw(*this);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else {
+				else 
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 10:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn) 
+				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
