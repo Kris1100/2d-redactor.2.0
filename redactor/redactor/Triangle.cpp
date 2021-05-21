@@ -63,7 +63,6 @@ bool triangle::is_right() const
 	segment ac(vertex[0], vertex[2]);
 	if (is_equilateral())
 		return false;
-	double hyp;
 	if (ab.len() < bc.len())
 		swap(ab, bc);
 	if (ab.len() < ac.len())
