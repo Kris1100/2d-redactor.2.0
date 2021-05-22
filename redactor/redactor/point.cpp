@@ -99,3 +99,115 @@ point& point::operator=(const point& p)
 	_y = p.get_y();
 	return *this;
 }
+
+void point::mymenu() {
+	ifstream in("point.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+	if (not this->is_created) {
+		cin >> *this;
+		this->is_created = true;
+	}
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: cin >> *this; break;
+			case 2:
+			{
+				cout << "Данная точка лежит в ";
+				double a = this->quarter();
+				cout << a << "четверти" << endl;
+			}
+			break;
+			case 3:
+			{
+				double b = this->dist();
+				cout << "Расстояние от данной точки до начала координат: " << b << endl;
+			}
+			break;
+			case 4:
+			{
+				if (this->bisector() == true)
+					cout << "Данная точка лежит на биссектрисе координатной плоскости";
+				else
+					cout << "Данная точка не лежит на биссектрисе координатной плоскости";
+				cout << endl;
+			}
+			break;
+			case 5:
+			{
+				if (not this->is_drawn) {
+					add_draw(*this);
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					this->is_drawn = true;
+				}
+				else {
+					cout << "Объект уже в очереди на отрисовку";
+				}
+			}
+			break;
+			case 6:
+			{
+				if (this->is_drawn) {
+					roll_back_draw();
+					this->is_drawn = false;
+					cout << "Объект успешно удален из очерди на отрисовку";
+				}
+				else cout << "Вы еще не нарисовали объект";
+			}
+			break;
+			case 7:
+			{
+				roll_back_create();
+				cout << "Объект успешно удален,перейдите в главное меню";
+				return;
+			}
+			break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53:item = 5; break;
+			case 54:item = 6; break;
+			case 55:item = 7; break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
+}

@@ -20,6 +20,8 @@ public:
 
 	//Возвращает площадь сегмента, аргумент - угол в радианах
 	double get_square_of_segment(double a = 1) const;
+
+	void draw();
 	
 private:
 	point _p;

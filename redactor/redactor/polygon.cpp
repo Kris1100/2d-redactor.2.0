@@ -215,6 +215,14 @@ void polygon::draw()
 std::istream& operator>>(istream& in, polygon& p)
 {
 	double x, y;
+	//Перевыделить память на список вершин
+	long long int n;
+	cout << "Введите количество вершин" << endl;
+	cin >> n;
+	delete[] p.vertex;
+	p.set_num(n);
+	point* vert = new point[n];
+	p.set_point_array(vert);
 	cout << "Введите координаты " << p.num_vert_ << " вершин:" << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
@@ -233,4 +241,124 @@ std::ostream& operator<<(ostream& out, polygon& p)
 		out << "x = " << p.vertex[i].get_x() << ", y = " << p.vertex[i].get_y() << endl;
 	}
 	return out;
+}
+void polygon::mymenu() {
+	ifstream in("polygon.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+	if (not this->is_created) {
+		cin >> *this;
+		this->is_created = true;
+	}
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1: cin >> *this; break;
+			case 2:
+			{
+				double per = this->perimetr();
+				cout << "Периметр: " << per << endl;
+			}
+			break;
+			case 3:
+			{
+				double sq = this->area();
+				cout << "Площадь: " << sq << endl;
+			}
+			break;
+			case 4:
+			{
+				bool f = this->is_convex();
+				if (f)
+					cout << "Многоугольник выпуклый" << endl;
+				else
+					cout << "Многоугольник невыпуклый" << endl;;
+			}
+			break;
+			case 5:
+			{
+				if (this->is_regular(this->is_convex()))
+					cout << "Многоугольник правильный" << endl;
+				else
+					cout << "Многоугольник не является правильным" << endl;
+			}
+			break;
+			case 6:
+			{
+				if (not this->is_drawn) {
+					add_draw(*this);
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					this->is_drawn = true;
+				}
+				else {
+					cout << "Объект уже в очереди на отрисовку";
+				}
+			}
+			break;
+			case 7:
+			{
+				if (this->is_drawn) {
+					roll_back_draw();
+					this->is_drawn = false;
+					cout << "Объект успешно удален из очерди на отрисовку";
+				}
+				else cout << "Вы еще не нарисовали объект";
+			}
+			break;
+			case 8:
+			{
+				roll_back_create();
+				cout << "Объект успешно удален,перейдите в главное меню";
+				return;
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			case 54: item = 6;  break;
+			case 55: item = 7;  break;
+			case 56: item = 8;  break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }

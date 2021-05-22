@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include <string>
+#include <fstream>
+#include"private_menu.h"
 #include "Figure.h"
 #include "math_const.h"
 #include "glut-3.7.6-bin/glut.h"
@@ -40,6 +44,9 @@ public:
 	friend istream& operator>>(istream& in, point& p);
 	friend ostream& operator<<(ostream& out, const point& p);
 	point& operator=(const point& p);
+
+	void mymenu();
+
 private:
 	double _x, _y;
 };

@@ -136,6 +136,19 @@ point* triangle::get_vertex() const
 	return vert;
 }
 
+std::istream& operator>>(istream& in, triangle& t)
+{
+	double x, y;
+	cout << "¬ведите координаты " << 3 << " вершин:" << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		cin >> x >> y;
+		t.vertex[i].set_x(x);
+		t.vertex[i].set_y(y);
+	}
+	return in;
+}
+
 void triangle::draw() 
 {
 	int x1, x2, x0, y1, y2, y0;
@@ -199,8 +212,6 @@ void triangle:: mymenu()
 			case 1: 
 			{
 				cin >> *this;
-				roll_back_draw();
-				add_draw(*this);
 			}
 			break;
 			case 2:

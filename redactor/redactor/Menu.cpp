@@ -108,86 +108,10 @@ void print_menu(int num, int col)
 
 void print_point(int num)
 {
-	ifstream in("point.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-	double x, y;
-	cout << "Введите координаты точки:" << endl;
-	cin >> x >> y;
+	double x=0, y=0;
 	point p(x, y);
-
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				queue.add_last(new point(p));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> p; break;
-			case 2:
-			{
-				cout << "Данная точка лежит в ";
-				double a = p.quarter();
-				cout << a << "четверти" << endl;
-			}
-			break;
-			case 3:
-			{
-				double b = p.dist();
-				cout << "Расстояние от данной точки до начала координат: " << b << endl;
-			}
-			break;
-			case 4:
-			{
-				if (p.bisector() == true)
-					cout << "Данная точка лежит на биссектрисе координатной плоскости";
-				else
-					cout << "Данная точка не лежит на биссектрисе координатной плоскости";
-				cout << endl;
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
+	add_create(p);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_line(int num)
@@ -200,96 +124,10 @@ void print_line(int num)
 
 void print_polygon(int num)
 {
-	ifstream in("polygon.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-
-	int n;
-	cout << "Введите количество вершин:" << endl;
-	cin >> n;
+	int n=3;
 	polygon p(n);
-	cout << p;
-
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				queue.add_last(new polygon(p));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> p; break;
-			case 2:
-			{
-				double per = p.perimetr();
-				cout << "Периметр: " << per << endl;
-			}
-			break;
-			case 3:
-			{
-				double sq = p.area();
-				cout << "Площадь: " << sq << endl;
-			}
-			break;
-			case 4:
-			{
-				bool f = p.is_convex();
-				if (f)
-					cout << "Многоугольник выпуклый" << endl;
-				else
-					cout << "Многоугольник невыпуклый" << endl;;
-			}
-			break;
-			case 5:
-			{
-				if (p.is_regular(p.is_convex()))
-					cout << "Многоугольник правильный" << endl;
-				else
-					cout << "Многоугольник не является правильным" << endl;
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			case 53: item = 5;  break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
+	add_create(p);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_circle(int num)
@@ -306,73 +144,12 @@ void print_circle(int num)
 
 void print_segment(int num)
 {
-	ifstream in("segment.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-
-	double x1, x2, y1, y2;
-	cout << "Введите координаты первой точки:" << endl;
-	cin >> x1 >> y1;
-	cout << "Введите координаты второй точки:" << endl;
-	cin >> x2 >> y2;
+	double x1=0, x2=0, y1=0, y2=0;
 	point p1(x1, y1);
 	point p2(x2, y2);
 	segment s(p1, p2);
-
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				//Добавим в очередь на отрисовку
-				queue.add_last(new segment(s));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> s; break;
-			case 2:
-			{
-				cout << "Длина отрезка: " << s.len() << endl;
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
+	add_create(s);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_triangle(int num)
@@ -384,67 +161,12 @@ void print_triangle(int num)
 
 void print_vector(int num)
 {
-	ifstream in("myvector.txt");
-	vector<string> commands;
-	while (in)
-	{
-		string s = "";
-		getline(in, s, '\n');
-		commands.push_back(s);
-	}
-	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-		commands.pop_back();
-	SetColor(1, 15);
-	int item = 0;
-	print_inmenu(0, 1, commands);
-	double x1, x2, y1, y2;
-	cout << "Введите координаты начальной точки:" << endl;
-	cin >> x1 >> y1;
-	cout << "Введите координаты конечной точки:" << endl;
-	cin >> x2 >> y2;
+	double x1=0, x2=0, y1=0, y2=0;
 	point p1(x1, y1);
 	point p2(x2, y2);
-	myvector v(p1, p2);
-	while (true)
-	{
-		int key = _getch();
-
-		if (key == 13)
-		{
-			switch (item)
-			{
-			case 0:
-			{
-				in.close();
-				queue.add_last(new myvector(v));
-				cout << "Работа завершена, перейдите в главное меню" << endl;
-				return;
-			}
-			case 1: cin >> v; break;
-			case 2:	cout << "Длина вектора: " << v.len() << endl; break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (key)
-			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			}
-			print_inmenu(item, 15, commands);
-			if (item < 0)
-				item = commands.size() + 1;
-			if (item > commands.size() + 1)
-				item = 0;
-		}
-	}
-	in.close();
+	myvector v(p1, p2);	
+	add_create(v);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_ray(int num)
