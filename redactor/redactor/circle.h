@@ -46,6 +46,7 @@ public:
 	line tangent(point &p);
 	//деструктор?
 
+	//Рисование окружности
 	void draw();
 
 private:

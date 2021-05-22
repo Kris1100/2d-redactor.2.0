@@ -50,23 +50,14 @@ void circle::intersection() const
 
 void circle::draw()
 {
-	/*glColor3ub(220, 195, 232);
-	int N = 300;
-	int xp = _p.centerize().get_x();
-	int yp = _p.centerize().get_y();
-	glBegin(GL_TRIANGLE_FAN);
-	for (int i = 1; i <= N + 2; i++)
-	{
-		glVertex2f(xp + _r * 40 * cos(2 * 3.14 / N * i),
-			yp + _r * 40 * sin(2 * 3.14 / N * i));
-	}
-	glEnd();*/
-	glLineWidth(5);
+	glColor3ub(220, 195, 232);
+	glLineWidth(3);
 	int n = 300;
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < n; i++) {
 		double angle = 2 * 3.14 * i / n;
-		glVertex2f(_r * cos(angle) - 50, _r * sin(angle) - 50);
+		point p(_r * cos(angle), _r * sin(angle));
+		glVertex2f(p.centerize().get_x() , p.centerize().get_y());
 	}
 	glEnd();
 }
