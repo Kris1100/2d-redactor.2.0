@@ -61,9 +61,15 @@ bool triangle::is_right() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (abs(ab.len() * ab.len() + ac.len() * ac.len() - bc.len() * bc.len()) <= constants::eps ||
-		abs(ab.len() * ab.len() + bc.len() * bc.len() - ac.len() * ac.len()) <= constants::eps ||
-		abs(bc.len() * bc.len() + ac.len() * ac.len() - ab.len() * ab.len()) <= constants::eps)
+	if (is_equilateral())
+		return false;
+	if (ab.len() < bc.len())
+		swap(ab, bc);
+	if (ab.len() < ac.len())
+		swap(ab, ac);
+	double kat1 = ac.len(), kat2 = bc.len();
+	double hyp = ab.len();
+	if (abs(kat1 * kat1 + kat2 * kat2 - hyp * hyp) < 0.00001)
 		return true;
 	return false;
 }
@@ -72,8 +78,7 @@ double triangle::radius_inside() const
 {
 	if (exists())
 		return 2 * area() / perimetr();
-	else
-		throw "Вырожденный случай";
+	throw "Вырожденный случай";
 }
 
 double triangle::radius_outside() const
@@ -86,10 +91,8 @@ double triangle::radius_outside() const
 		segment ac(vertex[0], vertex[2]);
 		return ab.len() * bc.len() * ac.len() / (4 * abc_square);
 	}
-	else
-		throw "Вырожденный случай";
+	throw "Вырожденный случай";
 }
-
 bool triangle::is_inside(const point& p) const
 {
 	double a, b, c;
@@ -144,7 +147,7 @@ std::istream& operator>>(istream& in, triangle& t)
 	return in;
 }
 
-void triangle::draw() 
+void triangle::draw()
 {
 	int x1, x2, x0, y1, y2, y0;
 
@@ -155,23 +158,18 @@ void triangle::draw()
 	x2 = vertex[2].centerize().get_x();
 	y2 = vertex[2].centerize().get_y();
 
-	glBegin(GL_TRIANGLES);
-	     glColor3ub(255, 0, 0);
-	     glVertex2f(x0, y0);
-	     glColor3ub(0, 255, 0);
-	     glVertex2f(x1, y1);
-	     glColor3ub(0, 0, 255);
-	     glVertex2f(x2, y2);
-	glEnd();
-
+	glLineWidth(3);
 	glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(x0, y0);
-		glVertex2f(x1, y1);
-		glVertex2f(x1, y1);
-		glVertex2f(x2, y2);
-		glVertex2f(x2, y2);
-		glVertex2f(x0, y0);
+	glColor3ub(255, 255, 255);
+	glVertex2f(x0, y0);
+	glColor3ub(205, 164, 222);
+	glVertex2f(x1, y1);
+	glVertex2f(x1, y1);
+	glColor3ub(88, 84, 171);
+	glVertex2f(x2, y2);
+	glVertex2f(x2, y2);
+	glColor3ub(255, 255, 255);
+	glVertex2f(x0, y0);
 	glEnd();
 }
 void triangle:: mymenu() {
@@ -246,27 +244,35 @@ void triangle:: mymenu() {
 			break;
 			case 7:
 			{
+				double rad = 0;
+				cout << "Радиус вписанной окружности";
 				try
 				{
-					cout << "Радиус вписанной окружности: " << this->radius_inside() << endl;
+					rad = this->radius_inside();
+					cout << ": " << rad << endl;
 				}
-				catch (const string& e)
+				catch (...)
 				{
-					cout << e << endl;
+					cout << " неопределён" << endl;
 				}
 			}
 			break;
 			case 8:
 			{
+
+				double rad = 0;
+				cout << "Радиус описанной окружности";
 				try
 				{
-					cout << "Радиус описанной окружности: " << this->radius_outside() << endl;
+					rad = this->radius_outside();
+					cout << ": " << rad << endl;
 				}
-				catch (const string& e)
+				catch (...)
 				{
-					cout << e << endl;
+					cout << " неопределён" << endl;
 				}
 			}
+			break;
 			break;
 			case 9:
 			{

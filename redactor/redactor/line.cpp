@@ -138,12 +138,14 @@ unsigned int line::is_increasing() const
 }
 
 //Перегрузка оператора ввода
-istream& operator>>(istream& in, line& l) 
+istream& operator>>(istream& in, line& l)
 {
 	cout << "Введите координаты первой точки:" << endl;
 	cin >> l._p1;
 	cout << "Введите координаты второй точки:" << endl;
 	cin >> l._p2;
+	if (l._p1 == l._p2)
+		throw "Недостаточно информации";
 	return in;
 }
 
@@ -291,8 +293,21 @@ void line::mymenu()
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
-		cin >> *this;
+	if (not this->is_created)
+	{
+		bool flag = false;
+		while (!flag)
+		{
+			try
+			{
+				cin >> *this;
+				flag = true;
+			}
+			catch (...)
+			{
+				cout << "Недостаточно информации" << endl;
+			}
+		}
 		this->is_created = true;
 	}
 	point p3;
@@ -311,7 +326,21 @@ void line::mymenu()
 				return;
 			}
 			case 1: {
-				cin >> *this;
+				bool flag = false;
+				while (!flag)
+				{
+					try
+					{
+						cin >> *this;
+						flag = true;
+					}
+					catch (...)
+					{
+						cout << "Недостаточно информации" << endl;
+					}
+				}
+				roll_back_draw();
+				add_draw(*this);
 			}
 				  break;
 			case 2:
