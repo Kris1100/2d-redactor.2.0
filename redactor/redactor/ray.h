@@ -2,6 +2,7 @@
 #include <iostream>
 #include "point.h"
 #include "Figure.h"
+#include "line.h"
 #include "glut-3.7.6-bin/glut.h"
 #include "math_const.h"
 

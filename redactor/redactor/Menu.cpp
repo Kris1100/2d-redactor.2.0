@@ -449,29 +449,25 @@ void print_vector(int num)
 
 void print_ray(int num)
 {
-	//ifstream in("triangle.txt");
-	//vector<string> commands;
-	//while (in)
-	//{
-	//	string s = "";
-	//	getline(in, s, '\n');
-	//	commands.push_back(s);
-	//}
-	//if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
-	//	commands.pop_back();
-	//SetColor(1, 15);
-	//int item = 0;
-	//print_inmenu(0, 1, commands);
-
-	double x, y;
+	point p1, p2;
 	cout << "Введите координаты начала луча:" << endl;
-	cin >> x >> y;
-	point beg(x, y);
-	cout << "Введите координаты произвольной точки луча:" << endl;
-	cin >> x >> y;
-	point p(x, y);
-	ray r(beg, p);
-
+	cin >> p1;
+	cout << "Введите произвольную точку на луче:" << endl;
+	cin >> p2;
+	ray r(p1, p2);
+	//bool flag = false;
+	//while (!flag)
+	//{
+	//	try
+	//	{
+	//		cin >> r;
+	//		flag = true;
+	//	}
+	//	catch (...)
+	//	{
+	//		cout << "Недостаточно информации" << endl;
+	//	}
+	//}
 	//Рисование луча
 	queue.add_last(new ray(r));
 }

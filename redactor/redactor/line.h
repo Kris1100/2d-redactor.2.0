@@ -47,14 +47,12 @@ public:
 	//Проверка возрастания прямой. 1-возрастает, 0-убывает, 2-x постоянна, 3-y постоянна
 	unsigned int is_increasing() const;
 
-	//Вывод уравнениия прямой в виде ax+by+c=0(заданной двумя точками)
-	void print_v1();
-	//Вывод уравнениия прямой в виде ax+by+c=0(заданной коэф.)
-	void print_v2();
-	void print_all(double& a, double& b, double& c);
+	//Вывод уравнениия прямой в виде ax+by+c=0
+	void print_all();
 	//Вывод параметрического уравнения прямой
 	void print_param();
 
+	line extend();
 	//Рисование прямой
 	void draw();
 	//Меню прямой
@@ -65,7 +63,7 @@ public:
 	friend std::istream& operator>>(std::istream& in, line& l);
 	//Оператор присваивания
 	figure& operator=(line& l);
-	
+
 
 private:
 	//Задать коэффициенты прямой
@@ -76,5 +74,5 @@ private:
 protected:
 	point _p1;
 	point _p2;
-	double _a, _b, _c;
+	double _a = 0, _b = 0, _c = 0;
 };
