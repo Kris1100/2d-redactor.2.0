@@ -1,7 +1,8 @@
 ﻿#include "Menu.h"
 bidir_list<figure*> queue;
 bidir_list<elem>all;
-bool window = false;
+bool win= false;
+int window;
 void print_menu(int num, int col)
 {
 	int col2;
@@ -206,10 +207,9 @@ void main_pr()
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glutInitWindowSize(constants::width, constants::height);
-	if (not window) {
-		glutCreateWindow("Let's paint it!");
-		window = true;
-	}
+	if (win) glutDestroyWindow(window);
+	else win = true;
+	window=glutCreateWindow("Let's paint it!");
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(KeyBoard);
