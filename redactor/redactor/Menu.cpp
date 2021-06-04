@@ -274,7 +274,7 @@ void KeyBoard(unsigned char key, int x, int y)
 
 void Reshape(GLint w, GLint h)
 {
-	glViewport(0, 0, w, h);
+	glutReshapeWindow(constants::width, constants::height);
 
 	/* ортографическая проекция */
 	glMatrixMode(GL_PROJECTION);

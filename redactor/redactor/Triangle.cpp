@@ -124,38 +124,22 @@ bool triangle::is_inside(const point& p) const
 
 segment triangle::middle_line(const segment& ab, const segment& bc) const
 {
-	if (exists())
-	{
-		segment l(ab.middle(), bc.middle());
-		return l;
-	}
-	throw "error";
+	segment l(ab.middle(), bc.middle());
+	return l;
 }
 
 segment triangle::median(const point& a, const segment& bc) const
 {
-	if (exists())
-	{
-		segment l(a, bc.middle());
-		return l;
-	}
-	throw "error";
+	segment l(a, bc.middle());
+	return l;
 }
 
 point* triangle::get_vertex() const
 {
 	point* vert = new point[3];
-	try
-	{
-		vert[0] = vertex[0];
-		vert[1] = vertex[1];
-		vert[2] = vertex[2];
-	}
-	catch (...)
-	{
-		delete[] vert;
-		throw;
-	}
+	vert[0] = vertex[0];
+	vert[1] = vertex[1];
+	vert[2] = vertex[2];
 	return vert;
 }
 

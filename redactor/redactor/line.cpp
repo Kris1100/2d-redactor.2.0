@@ -9,8 +9,8 @@ line::line(const point& p1, const point& p2)
 
 line::line(double a, double b, double c)
 {
-	if (a == 0 && b == 0 && c != 0)
-		throw "error";
+	//if (a == 0 && b == 0 && c != 0)
+		//throw "error";
 	set_a(a);
 	set_b(b);
 	set_c(c);
