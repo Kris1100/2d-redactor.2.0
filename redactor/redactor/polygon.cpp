@@ -12,18 +12,35 @@ polygon::polygon(size_t num_vert)
 
 polygon::polygon(const polygon& t) 
 {
-	num_vert_ = t.num_vert_;
-	vertex = new point[num_vert_];
-	for (int i = 0; i < num_vert_; i++) 
+	if (this == &t)
+		return;
+	if (t.num_vert_ == 0)
+		return;
+	point* vert = new point[t.num_vert_];
+	for (int i = 0; i < t.num_vert_; i++) 
 	{
-		vertex[i] = t.vertex[i];
+		try
+		{
+			vert[i] = t.vertex[i];
+		}
+		catch (...)
+		{
+			delete[] vert;
+			vert = nullptr;
+			throw;
+		}
 	}
+	if (vertex)
+		delete[] vertex;
+	vertex = vert;
+	num_vert_ = t.num_vert_;
 }
 
 polygon::~polygon()
 {
 	delete[] vertex;
 	vertex = nullptr;
+	is_drawn = false;
 }
 
 //Сеттеры
@@ -60,12 +77,11 @@ double polygon::perimetr() const
 	double p = 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
-		segment s(vertex[i], vertex[i + 1]);
-		p += s.len();
+		segment s1(vertex[i], vertex[i + 1]);
+		p += s1.len();
 	}
 	segment s(vertex[num_vert_ - 1], vertex[0]);
 	p += s.len();
-	s.~segment();
 	return p;
 }
 
@@ -88,13 +104,17 @@ double polygon::area() const
 	return s;
 }
 
-bool polygon::is_correct() const {
-	for (int i=0;i<num_vert_;i++)
-		for (int j = i + 1; j < num_vert_; j++) {
-			if (vertex[i] == vertex[j]) return false;
+bool polygon::is_correct() const
+{
+	for (int i = 0; i < num_vert_; i++)
+		for (int j = i + 1; j < num_vert_; j++)
+		{
+			if (vertex[i] == vertex[j])
+				return false;
 		}
 	return true;
 }
+
 void polygon::print() const
 {
 	for (int i = 0; i < num_vert_; i++)
@@ -152,7 +172,7 @@ bool polygon::is_regular(bool convexity) const
 	if (not is_correct()) return 0;
 	if (not convexity)
 		return false;
-	else 
+	else
 	{
 		double side = -1; double ang = -1;
 		//Пройдемся по всем сторонам, кроме последней
@@ -191,7 +211,6 @@ bool polygon::is_regular(bool convexity) const
 		segment s(vertex[num_vert_ - 1], vertex[0]);
 		myvector v1(vertex[0], vertex[num_vert_ - 1]);
 		myvector v2(vertex[0], vertex[1]);
-
 		double d = abs(s.len() - side);
 		if (d > constants::eps)
 			return false;
@@ -202,18 +221,12 @@ bool polygon::is_regular(bool convexity) const
 	}
 }
 
-void polygon::draw() 
+void polygon::draw()
 {
-	glBegin(GL_POLYGON);
 	int R = 220, G = 208, B = 255;
-	for (int i = 0; i < num_vert_; i++) 
-	{
-		glColor3f(R, G, B);
-		glVertex2f(vertex[i].centerize().get_x(), vertex[i].centerize().get_y());
-	}
-	glEnd;
+	glLineWidth(3);
 	glBegin(GL_LINES);
-	glColor3ub(255, 255, 255);
+	glColor3ub(R, G, B);
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
 		glVertex2f(vertex[i].centerize().get_x(), vertex[i].centerize().get_y());
@@ -253,7 +266,9 @@ std::ostream& operator<<(ostream& out, polygon& p)
 	}
 	return out;
 }
-void polygon::mymenu() {
+
+void polygon::mymenu() 
+{
 	ifstream in("polygon.txt");
 	vector<string> commands;
 	while (in)
@@ -267,7 +282,8 @@ void polygon::mymenu() {
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
+	if (not this->is_created) 
+	{
 		cin >> *this;
 		this->is_created = true;
 	}
@@ -317,27 +333,33 @@ void polygon::mymenu() {
 			break;
 			case 6:
 			{
-				if (not this->is_drawn) {
-					if (not this->is_correct()) cout << "Вы ввели некорректные данные, не можем нарисовать!";
-					else {
+				if (not this->is_drawn) 
+				{
+					if (not this->is_correct()) 
+						cout << "Вы ввели некорректные данные, не можем нарисовать!";
+					else 
+					{
 						add_draw(*this);
 						cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 						this->is_drawn = true;
 					}
 				}
-				else {
+				else 
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 7:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn) 
+				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else 
+					cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 8:

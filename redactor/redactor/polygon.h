@@ -46,8 +46,8 @@ public:
 	void mymenu();
 
 protected:
-	size_t num_vert_;
-	point* vertex;
+	size_t num_vert_ = 0;
+	point* vertex = nullptr;
 
 private:
 	//Установить количество углов
