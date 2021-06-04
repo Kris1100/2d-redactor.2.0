@@ -82,7 +82,9 @@ void myvector::draw()
 	}
 	glEnd();
 }
-void myvector::mymenu() {
+
+void myvector::mymenu() 
+{
 	ifstream in("myvector.txt");
 	vector<string> commands;
 	while (in)
@@ -96,7 +98,8 @@ void myvector::mymenu() {
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
+	if (not this->is_created) 
+	{
 		cin >> *this;
 		this->is_created = true;
 	}
@@ -118,24 +121,28 @@ void myvector::mymenu() {
 			case 2:	cout << "Длина вектора: " << this->len() << endl; break;
 			case 3:
 			{
-				if (not this->is_drawn) {
+				if (not this->is_drawn) 
+				{
 					add_draw(*this);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else {
+				else 
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 4:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn) 
+				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else 
+					cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 5:

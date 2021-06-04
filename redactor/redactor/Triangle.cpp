@@ -323,7 +323,19 @@ void triangle::mymenu()
 			{
 				point p;
 				cout << "Введите координаты точки:" << endl;
-				cin >> p;
+				bool flag = false;
+				while (!flag)
+				{
+					try
+					{
+						cin >> p;
+						flag = true;
+					}
+					catch (...)
+					{
+						cout << "Недостаточно информации" << endl;
+					}
+				}
 				if (is_inside(p))
 					cout << "Точка внутри треугольника" << endl;
 				else
@@ -427,7 +439,7 @@ void triangle::mymenu()
 			case 14:
 			{
 				roll_back_create();
-				cout << "Объект успешно удален,перейдите в главное меню";
+				cout << "Объект успешно удален, перейдите в главное меню";
 				return;
 			}
 			break;
@@ -439,16 +451,16 @@ void triangle::mymenu()
 		{
 			switch (key)
 			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			case 53: item = 5;  break;
-			case 54: item = 6;  break;
-			case 55: item = 7;  break;
+			case 72: item--; break;
+			case 80: item++; break;
+			case 48: item = 0; break;
+			case 49: item = 1; break;
+			case 50: item = 2; break;
+			case 51: item = 3; break;
+			case 52: item = 4; break;
+			case 53: item = 5; break;
+			case 54: item = 6; break;
+			case 55: item = 7; break;
 			case 56: item = 8; break;
 			case 57: item = 9; break;
 			case 58: item = 10; break;
