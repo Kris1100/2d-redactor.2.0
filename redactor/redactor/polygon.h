@@ -54,4 +54,5 @@ private:
 	void set_num(size_t num_vert);
 	//Задать массив точек(по умолчанию задает точки правильного num_vert-угольника)
 	void set_point_array(point* vert);
+	double non_convex_area();
 };
