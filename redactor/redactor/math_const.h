@@ -12,5 +12,7 @@ namespace constants
 	//Параметры окна с изображением
 	const size_t width = 1024;
 	const size_t height = 700;
+	//Толщина прямой
+	const unsigned int line_width = 3;
 }
 #endif // !CONSTANTS_H
