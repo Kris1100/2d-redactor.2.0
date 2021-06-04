@@ -76,7 +76,7 @@ void circle::intersection() const
 void circle::draw()
 {
 	glColor3ub(220, 195, 232);
-	glLineWidth(3);
+	glLineWidth(constants::line_width);
 	int n = 300;
 	int xp = _p.centerize().get_x();
 	int yp = _p.centerize().get_y();
@@ -84,12 +84,12 @@ void circle::draw()
 	for (int i = 0; i < n; i++)
 	{
 		double angle = 2 * 3.14 * i / n;
-		glVertex2f(xp + _r * 40 * cos(angle), yp + _r * 40 * sin(angle));
+		glVertex2f(xp + _r * constants::scale * cos(angle), yp + _r * constants::scale * sin(angle));
 	}
 	glEnd();
 }
 
-line circle::tangent(point& p)  //входные данные меняются? если нет, то конст
+line circle::tangent(point& p)
 {
 	double a = -2 * _p.get_x() + p.get_x();
 	double b = -2 * _p.get_y() + p.get_y();

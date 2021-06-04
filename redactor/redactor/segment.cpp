@@ -1,18 +1,27 @@
 #include "segment.h"
-#include"math_const.h"
-#include "glut-3.7.6-bin/glut.h"
+
 segment::segment(const point& p1,const point& p2) 
 {
 	set_extm_points(p1, p2);
 	is_correct();
-	
 }
+
 segment::segment(const segment& s) 
 {
 	p1_ = s.get_start();
 	p2_ = s.get_end();
+	is_drawn = s.is_drawn;
 }
-void segment::is_correct() {
+
+segment::~segment()
+{
+	p1_.~point();
+	p2_.~point();
+	is_drawn = false;
+}
+
+void segment::is_correct()
+{
 	//Отлавливаем ошибку на две одинаковые точки
 	try
 	{
@@ -28,7 +37,8 @@ void segment::is_correct() {
 		set_extm_points(d1, d2);
 	}
 }
-void segment::set_extm_points(const point& p1,const point& p2)
+
+void segment::set_extm_points(const point& p1, const point& p2)
 {
 	p1_ = p1;
 	p2_ = p2;
@@ -47,16 +57,17 @@ point segment::middle() const
 	return point(x, y);
 }
 
-void segment::draw()  
+void segment::draw()
 {
-	glLineWidth(3);
+	glLineWidth(constants::line_width);
 	glBegin(GL_LINES);
-	      glColor3ub(255, 203, 219);
-	      glVertex2f(p1_.centerize().get_x(), p1_.centerize().get_y());
-		  glColor3ub(255, 107, 142);
-	      glVertex2f(p2_.centerize().get_x(), p2_.centerize().get_y());
+	glColor3ub(255, 203, 219);
+	glVertex2f(p1_.centerize().get_x(), p1_.centerize().get_y());
+	glColor3ub(255, 107, 142);
+	glVertex2f(p2_.centerize().get_x(), p2_.centerize().get_y());
 	glEnd();
 }
+
 istream& operator>>(istream& in, segment& s)
 {
 	cout << "Введите координаты первой точки:" << endl;
@@ -66,7 +77,9 @@ istream& operator>>(istream& in, segment& s)
 	s.is_correct();
 	return in;
 }
-void segment::mymenu() {
+
+void segment::mymenu()
+{
 	ifstream in("segment.txt");
 	vector<string> commands;
 	while (in)
@@ -80,7 +93,8 @@ void segment::mymenu() {
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
+	if (not this->is_created)
+	{
 		cin >> *this;
 		this->is_created = true;
 	}
@@ -101,29 +115,33 @@ void segment::mymenu() {
 			case 1: cin >> *this; break;
 			case 2:
 			{
-				cout << "Длина отрезка: " << this->len() << endl;
+				cout << "Длина отрезка: " << len() << endl;
 			}
 			break;
 			case 3:
 			{
-				if (not this->is_drawn) {
+				if (not this->is_drawn)
+				{
 					add_draw(*this);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else {
+				else
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 4:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn)
+				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else
+					cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 5:

@@ -43,8 +43,8 @@ point point::centerize()
 {
 	double x, y;
 	int step = 40;
-	x = round(_x * 40 + constants::width / 2);
-	y = round(_y * 40 + constants::height / 2);
+	x = round(_x * constants::scale + constants::width / 2);
+	y = round(_y * constants::scale + constants::height / 2);
 	point p(x, y);
 	return p;
 }
@@ -100,7 +100,8 @@ point& point::operator=(const point& p)
 	return *this;
 }
 
-void point::mymenu() {
+void point::mymenu()
+{
 	ifstream in("point.txt");
 	vector<string> commands;
 	while (in)
@@ -114,7 +115,8 @@ void point::mymenu() {
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
+	if (not this->is_created)
+	{
 		cin >> *this;
 		this->is_created = true;
 	}
@@ -136,19 +138,19 @@ void point::mymenu() {
 			case 2:
 			{
 				cout << "Данная точка лежит в ";
-				double a = this->quarter();
+				double a = quarter();
 				cout << a << "четверти" << endl;
 			}
 			break;
 			case 3:
 			{
-				double b = this->dist();
+				double b = dist();
 				cout << "Расстояние от данной точки до начала координат: " << b << endl;
 			}
 			break;
 			case 4:
 			{
-				if (this->bisector() == true)
+				if (bisector() == true)
 					cout << "Данная точка лежит на биссектрисе координатной плоскости";
 				else
 					cout << "Данная точка не лежит на биссектрисе координатной плоскости";
@@ -157,24 +159,28 @@ void point::mymenu() {
 			break;
 			case 5:
 			{
-				if (not this->is_drawn) {
+				if (not this->is_drawn)
+				{
 					add_draw(*this);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else {
+				else
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 6:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn)
+				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else
+					cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 7:

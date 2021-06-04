@@ -1,39 +1,40 @@
 ﻿#include "line.h"
+
 line::line(const point& p1, const point& p2)
 {
-	//if (p1 == p2)
-	//	throw "error";
 	_p1 = point(p1.get_x(), p1.get_y());
 	_p2 = point(p2.get_x(), p2.get_y());
 }
 
 line::line(double a, double b, double c)
 {
-	//if (a == 0 && b == 0 && c != 0)
-		//throw "error";
 	set_a(a);
 	set_b(b);
 	set_c(c);
 	double x1, x2, y1, y2;
-	if (_a != 0 && _b != 0) {
+	if (_a != 0 && _b != 0)
+	{
 		x1 = 0;
 		y1 = -c / b;
 		x2 = -c / a;
 		y2 = 0;
 	}
-	else if (_a == 0 && _b != 0) {
+	else if (_a == 0 && _b != 0)
+	{
 		x1 = 0;
 		y1 = -c / b;
 		x2 = 1;
 		y2 = -c / b;
 	}
-	else if (_b == 0 && _a != 0) {
+	else if (_b == 0 && _a != 0)
+	{
 		x1 = -c / a;
 		y1 = 0;
 		x2 = -c / a;
 		y2 = 1;
 	}
-	else if (_b == 0 && _a == 0) {
+	else if (_b == 0 && _a == 0)
+	{
 		x1 = 0;
 		y1 = 0;
 		x2 = 1;
@@ -85,49 +86,60 @@ void line::print_all(double& a, double& b, double& c)
 		cout << '+' << c;
 	cout << '=' << 0 << endl;
 }
-void line::print_v() {
+
+void line::print_v()
+{
 	double a, b, c;
 	coef(a, b, c);
 	print_all(a, b, c);
 }
+
 void line::print_param()
 {
 	double a, b, c;
 	coef(a, b, c);
 	double t_x, t_y;
 	myvector v = guide_vector();
-	if (b == 0) {
+	if (b == 0)
+	{
 		t_x = -c / a;
 		t_y = 0;
 	}
-	else {
+	else
+	{
 		t_x = 0;
 		t_y = -c / b;
 	}
 	cout << "Параметрическое уравнение" << endl;
 
 	cout << 'x' << '=';
-	if (t_x != 0)cout << t_x;
+	if (t_x != 0)
+		cout << t_x;
 	if (v.get_x() < 0)
 		cout << v.get_x() << 't';
 	else if (v.get_x() > 0 && t_x != 0)
 		cout << '+' << v.get_x() << 't';
 	else if (v.get_x() > 0 && t_x == 0)
 		cout << v.get_x() << 't';
-	else {
-		if (t_x == 0)cout << 0;
+	else
+	{
+		if (t_x == 0)
+			cout << 0;
 	}
 	cout << endl;
 	cout << 'y' << '=';
-	if (t_y != 0)cout << t_y;
+	if (t_y != 0)
+		cout << t_y;
 	if (v.get_y() < 0)
 		cout << v.get_y() << 't';
 	else if (v.get_y() > 0 && t_y != 0)
 		cout << '+' << v.get_y() << 't';
 	else if (v.get_y() > 0 && t_y == 0)
 		cout << v.get_y() << 't';
-	else {
-		if (t_y == 0)cout << 0;
+	else
+	{
+		if (t_y == 0)
+			cout << 0;
 	}
 	cout << endl;
 }
@@ -314,7 +326,7 @@ void line::draw()
 {
 	point p1, p2;
 	extend(p1, p2);
-	glLineWidth(2);
+	glLineWidth(constants::line_width);
 	glBegin(GL_LINES);
 	glColor3ub(255, 255, 255);
 	glVertex2f(p1.get_x(), p1.get_y());
@@ -417,7 +429,7 @@ void line::mymenu()
 				cin >> p3;
 				line l2 = parallel(p3);
 				cout << "Уравнение прямой, параллельной данной: ";
-				l2.print_v();//не работает, как надо
+				l2.print_v();
 			}
 			break;
 			case 7:

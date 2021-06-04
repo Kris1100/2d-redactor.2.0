@@ -22,10 +22,12 @@ public:
 	//Перегрузка операторов ввода и вывода
 	friend ifstream& operator>>(ifstream& in, ray& r);
 	friend ostream& operator<<(ostream& out, const ray& r);
+	//Принадлежит ли точка лучу
+	bool is_element(const point& t);
 
 	//Рисование 
 	void draw();
-	//
+	
 	void mymenu();
 
 private:

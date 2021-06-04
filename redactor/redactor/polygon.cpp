@@ -1,6 +1,6 @@
 ﻿#include "polygon.h"
 
-//������������ � �����������
+//Конструкторы и деструкторы
 polygon::polygon(size_t num_vert)
 {
 	if (num_vert < 3)
@@ -43,24 +43,24 @@ polygon::~polygon()
 	is_drawn = false;
 }
 
-//�������
+//Сеттеры
 void polygon::set_point_array(point* vert)
 {
-	//�� ��������� ���������� ���������� n- ��������, ������ �� ����� �� ������������ ��� 
-	//���������� ��-�� ����������� ��������� (��� ������� ��������� num_vert_). 
-	//���� ��� � ���������� ��������������
+	//По умолчанию орпеделяем правильный n- угольник, однако он может не определяться как
+	//правильный из-за пограшности измерений (при больших значениях num_vert_).
+	//Этот баг я постараюсь минимизировать
 	vertex = vert;
-	//��������� ��������� ����������
+	//Установим единичную окружность
 	int R = 1;
-	//��������� ����
+	//Начальный угол
 	double ang = 0;
 	for (int i = 0; i < num_vert_; i++)
 	{
-		//��������� ���������� ��������� ����� - ���������� ������� � ������� � ����� (0,0), 
-		//����������� �� ���� ang ������ ������� �������
+		//Посчитаем коррдинаты очередной точки - координаты вектора с началом в точке (0,0),
+		//повернутого на угол ang против часовой стрелки
 		vertex[i].set_x(R * round(cos(ang * constants::pi / 180) * constants::rd) / constants::rd);
 		vertex[i].set_y(R * round(sin(ang * constants::pi / 180) * constants::rd) / constants::rd);
-		//�������� ����
+		//Поменяем угол
 		ang += (360 / num_vert_);
 	}
 }
@@ -70,7 +70,7 @@ void polygon::set_num(size_t num_vert)
 	num_vert_ = num_vert;
 }
 
-//�������� ������� ������
+//Основные функции класса
 double polygon::perimetr() const
 {
 	if (not is_correct()) return 0;
@@ -87,7 +87,7 @@ double polygon::perimetr() const
 
 double polygon::area() const
 {
-	//���������� ������� ������� ������ https://cpp.mazurok.com/tag/%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0/#:~:text=%D0%94%D0%BB%D1%8F%20%D1%82%D0%BE%D0%B3%D0%BE%2C%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C%20%D0%B5%D0%B3%D0%BE,%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B4%D0%B5%D1%81%D1%8C.
+	//Используем формулу площади Гаусса https://cpp.mazurok.com/tag/%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0/#:~:text=%D0%94%D0%BB%D1%8F%20%D1%82%D0%BE%D0%B3%D0%BE%2C%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C%20%D0%B5%D0%B3%D0%BE,%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B4%D0%B5%D1%81%D1%8C.
 	double s1 = 0, s2 = 0, s = 0;
 	if (not is_correct()) return 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
@@ -103,30 +103,40 @@ double polygon::area() const
 	s = 0.5 * abs(s1 - s2);
 	return s;
 }
-double polygon::non_convex_area() {
+
+double polygon::non_convex_area()
+{
 	//http://opita.net/node/27
 	if (not is_correct()) return 0;
-	double s = 0,res=0;
-	for (int i = 0; i < num_vert_; i++) {
-		if (i == 0) {
-			s=vertex[i].get_x()* (vertex[num_vert_ - 1].get_y() - vertex[i + 1].get_y());
+	double s = 0, res = 0;
+	for (int i = 0; i < num_vert_; i++)
+	{
+		if (i == 0)
+		{
+			s = vertex[i].get_x() * (vertex[num_vert_ - 1].get_y() - vertex[i + 1].get_y());
 			res += s;
 		}
-		else if (i == num_vert_ - 1) {
-			s = vertex[i].get_x() * (vertex[i- 1].get_y() - vertex[0].get_y());
+		else if (i == num_vert_ - 1)
+		{
+			s = vertex[i].get_x() * (vertex[i - 1].get_y() - vertex[0].get_y());
 			res += s;
-			}
-		else {
+		}
+		else
+		{
 			s = vertex[i].get_x() * (vertex[i - 1].get_y() - vertex[i + 1].get_y());
 			res += s;
 		}
 	}
 	return abs(res / 2);
 }
-bool polygon::is_correct() const {
-	for (int i=0;i<num_vert_;i++)
-		for (int j = i + 1; j < num_vert_; j++) {
-			if (vertex[i] == vertex[j]) return false;
+
+bool polygon::is_correct() const
+{
+	for (int i = 0; i < num_vert_; i++)
+		for (int j = i + 1; j < num_vert_; j++)
+		{
+			if (vertex[i] == vertex[j])
+				return false;
 		}
 	return true;
 }
@@ -141,22 +151,22 @@ void polygon::print() const
 
 bool polygon::is_convex() const
 {
-	//������������� ����� �������� ���� ��� ��� ������ � ������ ������ ���������������� ������ 
-	//���������� ������� ������ � ���� � �� �� �������. ��� ������ �������������� ������ �������
-	//������� ������� ����� ������ ������, � ��� ������ �� ������� - �������.
-	//��� �������� ������ ���(�������� ������� � total) �������� ����� �������������,
-	//� ��� �������� ������� - �������������.
+	//Многоугольник будет выпуклым если при его обходе в каждой тройке последовательных вершин
+	//происходит поворот всегда в одну и ту же сторону. При обходе многоугольника против часовой
+	//стрелки поворот будет всегда налево, а при обходе по часовой - направо.
+	//Для поворота налево это(значение формулы в total) значение будет положительным,
+	//а для поворота направо - отрицательным.
 	if (not is_correct()) return false;
 	int sign = 0;
-	//���������� ��� ������ ������, � ������� ����� ���������� ����������
+	//Перебираем все тройки вершин, к которым можем циклически обратиться
 	for (int i = 0; i < num_vert_ - 2; i++)
 	{
-		//������� ��� ������� ����� ��� ������� (���� ������� �����)
+		//Зададим два вектора через три вершины (одна вершина общая)
 		myvector v1(vertex[i], vertex[i + 1]);
 		myvector v2(vertex[i + 1], vertex[i + 2]);
-		//��������� ��������� ������������ ������ ��������
+		//Вычисляем векторное произведение данных векторов
 		double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
-		//���������, ����������� �� ����
+		//Проверяем, сохраняется ли знак
 		if (sign == 0)
 		{
 			if (total < 0)
@@ -168,7 +178,7 @@ bool polygon::is_convex() const
 			if (total * sign < 0)
 				return false;
 	}
-	//�������� ������������� ��� ��������� ������, ������ ���� �����
+	//Отдельно рассматриваем две последние тройки, делаем тоже самое
 	myvector v1(vertex[num_vert_ - 1], vertex[0]);
 	myvector v2(vertex[0], vertex[1]);
 	myvector v3(vertex[num_vert_ - 2], vertex[num_vert_ - 1]);
@@ -183,29 +193,29 @@ bool polygon::is_convex() const
 
 bool polygon::is_regular(bool convexity) const
 {
-	//�������� �� ����������. ���������� ������������� �� �������� ����������.
-	//������������� �������� ����������, ���� ��� ��� ������� � ���� �����
+	//Проверка на выпуклость. Невыпуклый многоугольник не является правильным.
+	//Многоугольник является правильным, если все его стороны и углы равны
 	if (not is_correct()) return 0;
 	if (not convexity)
 		return false;
 	else
 	{
 		double side = -1; double ang = -1;
-		//��������� �� ���� ��������, ����� ���������
+		//Пройдемся по всем сторонам, кроме последней
 		for (int i = 0; i < num_vert_ - 1; i++)
 		{
 			segment s(vertex[i], vertex[i + 1]);
-			//���� �� ������ ��� ��������� ����� �������, �� ��� ���� �� � ��� �� ���������. ������� ������� (������)
+			//Если мы первый раз вычисляем длину стороны, то нам пока не с чем ее сранивать. Зададим сторону (шаблон)
 			if (side == -1)
 				side = s.len();
 			else
 			{
-				//���� ��������� ������� �� ����� �������, �� ������������� ������������
+				//Если очередная сторона не равна шаблону, то многоугольник неправильный
 				double d = abs(s.len() - side);
 				if (d > constants::eps)
 					return false;
 			}
-			//������� ��� �������, ����� �������� ����� ���������� ����
+			//Создаем два вектора, между которыми будем определять угол
 			myvector v1(vertex[i + 1], vertex[i]);
 			point p;
 			if (i == num_vert_ - 2)
@@ -213,7 +223,7 @@ bool polygon::is_regular(bool convexity) const
 			else
 				p = vertex[i + 2];
 			myvector v2(vertex[i + 1], p);
-			//����� ������ ���������� �������� ������
+			//Далее логика аналогично проверке сторон
 			if (ang == -1)
 				ang = angle(v1, v2);
 			else
@@ -223,7 +233,7 @@ bool polygon::is_regular(bool convexity) const
 					return false;
 			}
 		}
-		//��������� �������� ��� ��������� �������, �� � ��� ������ ���������� � ������� �����
+		//Отдельная проверка для последней стороны, тк к ней трудно обратиться с помощью цикла
 		segment s(vertex[num_vert_ - 1], vertex[0]);
 		myvector v1(vertex[0], vertex[num_vert_ - 1]);
 		myvector v2(vertex[0], vertex[1]);
@@ -251,19 +261,19 @@ void polygon::draw()
 	glEnd();
 }
 
-//Friend �������
+//Friend functions
 std::istream& operator>>(istream& in, polygon& p)
 {
 	double x, y;
-	//������������ ������ �� ������ ������
+	//Перевыделить память на список вершин
 	long long int n;
-	cout << "������� ���������� ������" << endl;
+	cout << "Введите количество вершин:" << endl;
 	cin >> n;
 	delete[] p.vertex;
 	p.set_num(n);
 	point* vert = new point[n];
 	p.set_point_array(vert);
-	cout << "������� ���������� " << p.num_vert_ << " ������:" << endl;
+	cout << "Введите координаты " << p.num_vert_ << " вершин:" << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
 		cin >> x >> y;
@@ -275,7 +285,7 @@ std::istream& operator>>(istream& in, polygon& p)
 
 std::ostream& operator<<(ostream& out, polygon& p)
 {
-	out << "���������� �����: " << p.num_vert_ << endl;
+	out << "Количество углов: " << p.num_vert_ << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
 		out << "x = " << p.vertex[i].get_x() << ", y = " << p.vertex[i].get_y() << endl;
@@ -314,59 +324,62 @@ void polygon::mymenu()
 			case 0:
 			{
 				in.close();
-				cout << "������ ���������, ��������� � ������� ����" << endl;
+				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
 			case 1: cin >> *this; break;
 			case 2:
 			{
-				double per = this->perimetr();
-				cout << "��������: " << per << endl;
+				double per = perimetr();
+				cout << "Периметр: " << per << endl;
 			}
 			break;
 			case 3:
 			{
 				double sq;
-				sq = this->area();
-				cout << "�������: " << sq << endl;
+				sq = area();
+				cout << "Площадь: " << sq << endl;
 			}
 			break;
 			case 4:
 			{
-				bool f = this->is_convex();
+				bool f = is_convex();
 				if (f)
-					cout << "������������� ��������" << endl;
+					cout << "Многоугольник выпуклый" << endl;
 				else
-					cout << "������������� ����������" << endl;;
+					cout << "Многоугольник невыпуклый" << endl;;
 			}
 			break;
 			case 5:
 			{
-				if (this->is_regular(this->is_convex()))
-					cout << "������������� ����������" << endl;
+				if (is_regular(is_convex()))
+					cout << "Многоугольник правильный" << endl;
 				else
-					cout << "������������� �� �������� ����������" << endl;
+					cout << "Многоугольник не является правильным" << endl;
 			}
 			break;
 			case 6:
 			{
-				if (this->is_correct()) cout << "Многоугольник задан корректно" << endl;
+				if (is_correct()) cout << "Многоугольник задан корректно" << endl;
 				else cout << "Многоугольник задан некорректно" << endl;
 			}
 			break;
 			case 7:
 			{
-				if (not this->is_drawn) {
-					if (not this->is_correct()) cout << "Вы ввели некорректные данные, не можем нарисовать!";
-					else {
+				if (not this->is_drawn) 
+				{
+					if (not is_correct()) 
+						cout << "Вы ввели некорректные данные, не можем нарисовать!";
+					else 
+					{
 						add_draw(*this);
-						cout << "������ ������� �������� � ������� �� ���������, �� ������� ���, ����� ��������� ������";
+						cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 						this->is_drawn = true;
 					}
 				}
 				else 
 				{
-					cout << "������ ��� � ������� �� ���������";
+					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
@@ -376,16 +389,16 @@ void polygon::mymenu()
 				{
 					roll_back_draw();
 					this->is_drawn = false;
-					cout << "������ ������� ������ �� ������ �� ���������";
+					cout << "бъект успешно удален из очерди на отрисовку";
 				}
 				else 
-					cout << "�� ��� �� ���������� ������";
+					cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 9:
 			{
 				roll_back_create();
-				cout << "������ ������� ������,��������� � ������� ����";
+				cout << "Объект успешно удален,перейдите в главное меню";
 				return;
 			}
 			break;

@@ -13,6 +13,7 @@ triangle::triangle(const point* vert)
 	vertex[0] = vert[0];
 	vertex[1] = vert[1];
 	vertex[2] = vert[2];
+	is_drawn = false;
 }
 
 void triangle::set_vertex(const point& a, const point& b, const point& c)
@@ -30,7 +31,7 @@ bool triangle::exists() const
 	double a, b, c;
 	l.coef(a, b, c);
 	double x = vertex[2].get_x(), y = vertex[2].get_y();
-	if (abs(a * x + b * y + c) <= 0.00000001)
+	if (abs(a * x + b * y + c) <= constants::eps)
 		return false;
 	return true;
 }
@@ -124,12 +125,16 @@ bool triangle::is_inside(const point& p) const
 
 segment triangle::middle_line(const segment& ab, const segment& bc) const
 {
+	if (!exists())
+		throw "error";
 	segment l(ab.middle(), bc.middle());
 	return l;
 }
 
 segment triangle::median(const point& a, const segment& bc) const
 {
+	if (!exists())
+		throw "error";
 	segment l(a, bc.middle());
 	return l;
 }
@@ -167,7 +172,7 @@ void triangle::draw()
 	x2 = vertex[2].centerize().get_x();
 	y2 = vertex[2].centerize().get_y();
 
-	glLineWidth(3);
+	glLineWidth(constants::line_width);
 	glBegin(GL_LINES);
 	glColor3ub(255, 255, 255);
 	glVertex2f(x0, y0);
@@ -307,19 +312,7 @@ void triangle::mymenu()
 			{
 				point p;
 				cout << "Введите координаты точки:" << endl;
-				bool flag = false;
-				while (!flag)
-				{
-					try
-					{
-						cin >> p;
-						flag = true;
-					}
-					catch (...)
-					{
-						cout << "Недостаточно информации" << endl;
-					}
-				}
+				cin >> p;
 				if (is_inside(p))
 					cout << "Точка внутри треугольника" << endl;
 				else

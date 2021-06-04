@@ -1,7 +1,8 @@
 ﻿#include "Menu.h"
+
 bidir_list<figure*> queue;
 bidir_list<elem>all;
-bool win= false;
+bool win = false;
 int window;
 
 void print_menu(int num, int col)
