@@ -35,6 +35,7 @@ public:
 			catch (...)
 			{
 				delete[] tmp;
+				tmp = nullptr;
 				throw;
 			}
 		}
