@@ -30,7 +30,7 @@ bool triangle::exists() const
 	double a, b, c;
 	l.coef(a, b, c);
 	double x = vertex[2].get_x(), y = vertex[2].get_y();
-	if (abs(a * x + b * y + c) <= 0.00000001)
+	if (abs(a * x + b * y + c) <= constants::eps)
 		return false;
 	return true;
 }
@@ -219,6 +219,8 @@ void triangle::mymenu()
 			case 1:
 			{
 				cin >> *this;
+				roll_back_draw();
+				add_draw(*this);
 			}
 			break;
 			case 2:
