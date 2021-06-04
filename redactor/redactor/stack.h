@@ -21,9 +21,21 @@ public:
 	}
 	stack(const stack& st)
 	{
+		if (this == st)
+			return;
 		T* tmp = new T[st._size];
 		for (int i = 0; i < st._used; i++)
-			tmp[i] = st._buf[i];
+		{
+			try
+			{
+				tmp[i] = st._buf[i];
+			}
+			catch (...)
+			{
+				delete[] tmp;
+				throw;
+			}
+		}
 		delete[] _buf;
 		_buf = tmp;
 		_size = st._size;
@@ -53,9 +65,19 @@ public:
 		else
 			if (_used == _size)
 			{
-				T* tmp = new T[_size * 2];
+				T* tmp = new T[_size * 2 + 1];
 				for (int i = 0; i < _used; i++)
-					tmp[i] = _buf[i];
+				{
+					try
+					{
+						tmp[i] = _buf[i];
+					}
+					catch (...)
+					{
+						delete[] tmp;
+						throw;
+					}
+				}
 				delete[] _buf;
 				_buf = tmp;
 				_size = _size * 2;
