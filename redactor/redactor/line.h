@@ -2,13 +2,13 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "point.h"
-#include "vector.h"
-#include "glut-3.7.6-bin/glut.h"
-#include "math_const.h"
-#include "private_menu.h"
 #include <fstream>
 #include <string>
+#include "point.h"
+#include "vector.h"
+#include "math_const.h"
+#include "private_menu.h"
+#include "glut-3.7.6-bin/glut.h"
 using namespace std;
 
 class line : public figure
@@ -49,8 +49,7 @@ public:
 
 	//Вывод уравнениия прямой в виде ax+by+c=0
 	void print_all(double& a, double& b, double& c);
-	void print_v1();
-	void print_v2();
+	void print_v();
 	//Вывод параметрического уравнения прямой
 	void print_param();
 
@@ -66,7 +65,6 @@ public:
 	friend std::istream& operator>>(std::istream& in, line& l);
 	//Оператор присваивания
 	figure& operator=(const line& l);
-
 
 private:
 	//Задать коэффициенты прямой

@@ -1,15 +1,46 @@
 ﻿#include "line.h"
 line::line(const point& p1, const point& p2)
 {
+	//if (p1 == p2)
+	//	throw "error";
 	_p1 = point(p1.get_x(), p1.get_y());
 	_p2 = point(p2.get_x(), p2.get_y());
 }
 
 line::line(double a, double b, double c)
 {
+	if (a == 0 && b == 0 && c != 0)
+		throw "error";
 	set_a(a);
 	set_b(b);
 	set_c(c);
+	double x1, x2, y1, y2;
+	if (_a != 0 && _b != 0) {
+		x1 = 0;
+		y1 = -c / b;
+		x2 = -c / a;
+		y2 = 0;
+	}
+	else if (_a == 0 && _b != 0) {
+		x1 = 0;
+		y1 = -c / b;
+		x2 = 1;
+		y2 = -c / b;
+	}
+	else if (_b == 0 && _a != 0) {
+		x1 = -c / a;
+		y1 = 0;
+		x2 = -c / a;
+		y2 = 1;
+	}
+	else if (_b == 0 && _a == 0) {
+		x1 = 0;
+		y1 = 0;
+		x2 = 1;
+		y2 = 1;
+	}
+	_p1 = point(x1, y1);
+	_p2 = point(x2, y2);
 }
 
 line::line(const line& l)
@@ -33,7 +64,7 @@ void line::print_all(double& a, double& b, double& c)
 	else if (a == 1)
 		cout << 'x';
 	else if (a == -1)
-		cout << '-x';
+		cout << '-' << 'x';
 
 	if (b < 0 && b != -1)
 		cout << b << 'y';
@@ -41,11 +72,11 @@ void line::print_all(double& a, double& b, double& c)
 		cout << '-' << 'y';
 	else if (b > 0 && b != 1 && a != 0)
 		cout << '+' << b << 'y';
+	else if (b > 0 && b != 1 && a == 0)
+		cout << b << 'y';
 	else if (b == 1 && a != 0)
 		cout << '+' << 'y';
-	else if (b > 0 && b != 1)
-		cout << b << 'y';
-	else if (b == 1)
+	else if (b == 1 && a == 0)
 		cout << 'y';
 
 	if (c < 0)
@@ -54,39 +85,51 @@ void line::print_all(double& a, double& b, double& c)
 		cout << '+' << c;
 	cout << '=' << 0 << endl;
 }
-
-void line::print_v1()
-{
+void line::print_v() {
 	double a, b, c;
 	coef(a, b, c);
 	print_all(a, b, c);
 }
-
-void line::print_v2()
-{
-	coef(_a, _b, _c);
-	double a = _a, b = _b, c = _c;
-	print_all(a, b, c);
-}
-
 void line::print_param()
 {
 	double a, b, c;
 	coef(a, b, c);
+	double t_x, t_y;
 	myvector v = guide_vector();
+	if (b == 0) {
+		t_x = -c / a;
+		t_y = 0;
+	}
+	else {
+		t_x = 0;
+		t_y = -c / b;
+	}
 	cout << "Параметрическое уравнение" << endl;
 
-	cout << 'x' << '=' << _p1.get_x();
+	cout << 'x' << '=';
+	if (t_x != 0)cout << t_x;
 	if (v.get_x() < 0)
-		cout << v.get_x() << 't' << endl;
-	else if (v.get_x() > 0)
-		cout << '+' << v.get_x() << endl;
-
-	cout << 'y' << '=' << _p1.get_y();
+		cout << v.get_x() << 't';
+	else if (v.get_x() > 0 && t_x != 0)
+		cout << '+' << v.get_x() << 't';
+	else if (v.get_x() > 0 && t_x == 0)
+		cout << v.get_x() << 't';
+	else {
+		if (t_x == 0)cout << 0;
+	}
+	cout << endl;
+	cout << 'y' << '=';
+	if (t_y != 0)cout << t_y;
 	if (v.get_y() < 0)
-		cout << v.get_y() << 't' << endl;
-	else if (v.get_y() > 0)
-		cout << '+' << v.get_y() << endl;
+		cout << v.get_y() << 't';
+	else if (v.get_y() > 0 && t_y != 0)
+		cout << '+' << v.get_y() << 't';
+	else if (v.get_y() > 0 && t_y == 0)
+		cout << v.get_y() << 't';
+	else {
+		if (t_y == 0)cout << 0;
+	}
+	cout << endl;
 }
 
 myvector line::normal_vector()
@@ -119,6 +162,8 @@ void line::coef(double& a, double& b, double& c)
 		b = 1;
 		c = 1;
 	}
+	if (a == 0 && b == 0 && c != 0)
+		throw "error";
 }
 
 line line::parallel(const point& p)
@@ -325,7 +370,7 @@ void line::mymenu()
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
-			case 1: 
+			case 1:
 			{
 				bool flag = false;
 				while (!flag)
@@ -346,7 +391,7 @@ void line::mymenu()
 			break;
 			case 2:
 			{
-				print_v1();
+				print_v();
 			}
 			break;
 			case 3:
@@ -372,7 +417,7 @@ void line::mymenu()
 				cin >> p3;
 				line l2 = parallel(p3);
 				cout << "Уравнение прямой, параллельной данной: ";
-				l2.print_v2();//не работает, как надо
+				l2.print_v();//не работает, как надо
 			}
 			break;
 			case 7:
@@ -383,7 +428,7 @@ void line::mymenu()
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else 
+				else
 				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
@@ -391,13 +436,13 @@ void line::mymenu()
 			break;
 			case 8:
 			{
-				if (this->is_drawn) 
+				if (this->is_drawn)
 				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else 
+				else
 					cout << "Вы еще не нарисовали объект";
 			}
 			break;
