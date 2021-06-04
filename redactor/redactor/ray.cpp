@@ -38,7 +38,7 @@ ostream& operator<<(ostream& out, const ray& r)
 void ray::draw() 
 {
 	glLineWidth(2);
-	line l(_begin, _p);
+	/*line l(_begin, _p);
 	line t = l.extend();
 	point p2;
 	double t1x = t.get_first().get_x();
@@ -59,11 +59,11 @@ void ray::draw()
 			p2 = t.get_first();
 		else
 			p2 = t.get_second();
-	}
+	}*/
 	glBegin(GL_LINES);
 	    glColor3ub(255, 255, 255);
 	    glVertex2f(_begin.centerize().get_x(), _begin.centerize().get_y());
 	    glColor3ub(238, 130, 238);
-	    glVertex2f(p2.centerize().get_x(), p2.centerize().get_y());
+	    glVertex2f(_p.centerize().get_x()*100, _p.centerize().get_y()*100);
 	glEnd();
 }
