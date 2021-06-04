@@ -49,6 +49,9 @@ public:
 	//Рисование окружности
 	void draw();
 
+	void mymenu();
+
+
 private:
 	point _p;
 	double _r;
