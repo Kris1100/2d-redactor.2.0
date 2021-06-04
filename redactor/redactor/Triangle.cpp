@@ -24,12 +24,11 @@ void triangle::set_vertex(const point& a, const point& b, const point& c)
 
 bool triangle::exists() const
 {
-	line l(vertex[0], vertex[1]);
-	double a, b, c;
-	l.coef(a, b, c);
-	double x = vertex[2].get_x();
-	double y = vertex[2].get_y();
-	if (a * x + b * y + c == 0)
+	segment ab(vertex[0], vertex[1]);
+	segment bc(vertex[1], vertex[2]);
+	segment ac(vertex[0], vertex[2]);
+	if (ab.len() + bc.len() < ac.len() || ab.len() + ac.len() < bc.len() ||
+		ac.len() + bc.len() < ab.len())
 		return false;
 	return true;
 }
@@ -39,7 +38,7 @@ bool triangle::is_equilateral() const
 	segment ab(vertex[0], vertex[1]);
 	segment bc(vertex[1], vertex[2]);
 	segment ac(vertex[0], vertex[2]);
-	if (abs(ab.len() - bc.len()) <= constants::eps && 
+	if (abs(ab.len() - bc.len()) <= constants::eps &&
 		abs(ab.len() - ac.len()) <= constants::eps)
 		return true;
 	return false;
@@ -281,16 +280,6 @@ void triangle:: mymenu()
 			break;
 			case 9:
 			{
-				point p;
-				cin >> p;
-				if (is_inside(p))
-					cout << "Точка внутри треугольника" << endl;
-				else
-					cout << "Точка снаружи" << endl;
-			}
-			break;
-			case 10:
-			{
 				if (not this->is_drawn) 
 				{
 					add_draw(*this);
@@ -303,7 +292,7 @@ void triangle:: mymenu()
 				}
 			}
 			break;
-			case 11:
+			case 10:
 			{
 				if (this->is_drawn) 
 				{
@@ -314,7 +303,7 @@ void triangle:: mymenu()
 				else cout << "Вы еще не нарисовали объект";
 			}
 			break;
-			case 12:
+			case 11:
 			{
 				roll_back_create();
 				cout << "Объект успешно удален,перейдите в главное меню";
@@ -343,7 +332,6 @@ void triangle:: mymenu()
 			case 57: item = 9; break;
 			case 58: item = 10; break;
 			case 59: item = 11; break;
-			case 60: item = 12; break;
 			}
 			print_inmenu(item, 15, commands);
 			if (item < 0)
