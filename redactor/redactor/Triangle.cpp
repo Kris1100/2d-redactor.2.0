@@ -1,4 +1,4 @@
-#include "Triangle.h"
+п»ї#include "Triangle.h"
 
 triangle::triangle()
 {
@@ -78,7 +78,7 @@ double triangle::radius_inside() const
 {
 	if (exists())
 		return 2 * area() / perimetr();
-	throw "Вырожденный случай";
+	throw "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
 }
 
 double triangle::radius_outside() const
@@ -91,9 +91,8 @@ double triangle::radius_outside() const
 		segment ac(vertex[0], vertex[2]);
 		return ab.len() * bc.len() * ac.len() / (4 * abc_square);
 	}
-	throw "Вырожденный случай";
+	throw "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
 }
-
 bool triangle::is_inside(const point& p) const
 {
 	double a, b, c;
@@ -138,7 +137,7 @@ point* triangle::get_vertex() const
 std::istream& operator>>(istream& in, triangle& t)
 {
 	double x, y;
-	cout << "Введите координаты " << 3 << " вершин:" << endl;
+	cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " << 3 << " пїЅпїЅпїЅпїЅпїЅпїЅ:" << endl;
 	for (int i = 0; i < 3; i++)
 	{
 		cin >> x >> y;
@@ -148,7 +147,7 @@ std::istream& operator>>(istream& in, triangle& t)
 	return in;
 }
 
-void triangle::draw() 
+void triangle::draw()
 {
 	int x1, x2, x0, y1, y2, y0;
 
@@ -161,16 +160,16 @@ void triangle::draw()
 
 	glLineWidth(3);
 	glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(x0, y0);
-		glColor3ub(205, 164, 222);
-		glVertex2f(x1, y1);
-		glVertex2f(x1, y1);
-		glColor3ub(88, 84, 171);
-		glVertex2f(x2, y2);
-		glVertex2f(x2, y2);
-		glColor3ub(255, 255, 255);
-		glVertex2f(x0, y0);
+	glColor3ub(255, 255, 255);
+	glVertex2f(x0, y0);
+	glColor3ub(205, 164, 222);
+	glVertex2f(x1, y1);
+	glVertex2f(x1, y1);
+	glColor3ub(88, 84, 171);
+	glVertex2f(x2, y2);
+	glVertex2f(x2, y2);
+	glColor3ub(255, 255, 255);
+	glVertex2f(x0, y0);
 	glEnd();
 }
 
@@ -205,7 +204,7 @@ void triangle:: mymenu()
 			case 0:
 			{
 				in.close();
-				cout << "Работа завершена, перейдите в главное меню" << endl;
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ" << endl;
 				return;
 			}
 			case 1: 
@@ -216,41 +215,41 @@ void triangle:: mymenu()
 			case 2:
 			{
 				if (this->is_equilateral())
-					cout << "Треугольник равносторонний" << endl;
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 				else
-					cout << "Треугольник не является расносторонним" << endl;
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 			}
 			break;
 			case 3:
 			{
 				if (this->is_isosceles())
-					cout << "Треугольник равнобедренный" << endl;
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 				else
-					cout << "Треугольник не является равнобедренным" << endl;
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 			}
 			break;
 			case 4:
 			{
 				if (this->is_right())
-					cout << "Треугольник прямоугольный" << endl;
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 				else
-					cout << "Треугольник не является прямоугольным" << endl;
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 			}
 			break;
 			case 5:
 			{
-				cout << "Площадь: " <<this->area() << endl;
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " <<this->area() << endl;
 			}
 			break;
 			case 6:
 			{
-				cout << "Периметр: " << this->perimetr() << endl;
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << this->perimetr() << endl;
 			}
 			break;
 			case 7:
 			{
 				double rad = 0;
-				cout << "Радиус вписанной окружности";
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 				try
 				{
 					rad = this->radius_inside();
@@ -258,7 +257,7 @@ void triangle:: mymenu()
 				}
 				catch (...)
 				{
-					cout << " неопределён" << endl;
+					cout << " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 				}
 			}
 			break;
@@ -266,7 +265,7 @@ void triangle:: mymenu()
 			{
 				
 				double rad = 0;
-				cout << "Радиус описанной окружности";
+				cout << "Р Р°РґРёСѓСЃ РѕРїРёСЃР°РЅРЅРѕР№ РѕРєСЂСѓР¶РЅРѕСЃС‚Рё";
 				try
 				{
 					rad = this->radius_outside();
@@ -274,21 +273,22 @@ void triangle:: mymenu()
 				}
 				catch (...)
 				{
-					cout << " неопределён" << endl;
+					cout << " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 				}
 			}
+			break;
 			break;
 			case 9:
 			{
 				if (not this->is_drawn) 
 				{
 					add_draw(*this);
-					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
 					this->is_drawn = true;
 				}
 				else 
 				{
-					cout << "Объект уже в очереди на отрисовку";
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 				}
 			}
 			break;
@@ -298,15 +298,15 @@ void triangle:: mymenu()
 				{
 					roll_back_draw();
 					this->is_drawn = false;
-					cout << "Объект успешно удален из очерди на отрисовку";
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else cout << "пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ";
 			}
 			break;
 			case 11:
 			{
 				roll_back_create();
-				cout << "Объект успешно удален,перейдите в главное меню";
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ,пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
 				return;
 			}
 			break;
