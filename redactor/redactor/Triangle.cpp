@@ -455,6 +455,7 @@ void triangle::mymenu()
 			case 59: item = 11; break;
 			case 60: item = 12; break;
 			case 61: item = 13; break;
+			case 62: item = 14; break;
 			}
 			print_inmenu(item, 15, commands);
 			if (item < 0)
