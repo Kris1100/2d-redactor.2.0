@@ -128,8 +128,7 @@ line line::parallel(const point& p)
 	double a1 = a;
 	double b1 = b;
 	double c1 = -(a * p.get_x() + b * p.get_y());
-	line l(a1, b1, c1);
-	return l;
+	return line(a1, b1, c1);
 }
 
 unsigned int line::is_increasing() const
@@ -168,14 +167,17 @@ figure& line::operator=(const line& l)
 	return *this;
 }
 
-void line::extend(point& p1, point& p2)
+void line::draw()
 {
 	double a, b, c;
 	coef(a, b, c);
 	double k = -1 * a / b;
-	size_t w = constants::width, h = constants::height;
-	int inc = is_increasing();
-	if (inc == 0) //decreases
+	size_t w, h;
+	w = constants::width;
+	h = constants::height;
+	int coef = max(w, h);
+	int increase = is_increasing();
+	if (increase == 0 || k < 0) //decreases
 	{
 		if (_p1.get_x() > _p2.get_x())
 			swap(_p1, _p2);
@@ -207,12 +209,16 @@ void line::extend(point& p1, point& p2)
 			x2p = w;
 			y2p = k * (x2 + x22 - w);
 		}
-		point p1_(x1p, y1p);
-		point p2_(x2p, y2p);
-		p1 = p1_;
-		p2 = p2_;
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(x1p, y1p);
+		glColor3ub(205, 164, 222);
+		glVertex2f(x2p, y2p);
+		glEnd();
+		return;
 	}
-	else if (inc == 1) //increases
+	else if (increase == 1 || k > 0) //increases
 	{
 		if (_p1.get_x() > _p2.get_x())
 			swap(_p1, _p2);
@@ -244,38 +250,38 @@ void line::extend(point& p1, point& p2)
 			x1p = 0;
 			y1p = k * (x11 - x1);
 		}
-		point p1_(x1p, y1p);
-		point p2_(x2p, y2p);
-		p1 = p1_;
-		p2 = p2_;
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(x1p, y1p);
+		glColor3ub(158, 90, 140);
+		//glColor3ub(205, 164, 222);
+		glVertex2f(x2p, y2p);
+		glEnd();
+		return;
 	}
-	else if (inc == 2) //x = a
+	else if (increase == 2) //x=a
 	{
-		point p1_(_p1.centerize().get_x(), 0);
-		point p2_(_p2.centerize().get_x(), h);
-		p1 = p1_;
-		p2 = p2_;
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(_p1.centerize().get_x(), 0);
+		glColor3ub(205, 164, 222);
+		glVertex2f(_p2.centerize().get_x(), h);
+		glEnd();
+		return;
 	}
-	else if (inc == 3) //y = b
+	else if (increase == 3 || k == 0) //y=b
 	{
-		point p1_(0, _p1.centerize().get_y());
-		point p2_(w, _p2.centerize().get_y());
-		p1 = p1_;
-		p2 = p2_;
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(0, _p1.centerize().get_y());
+		glColor3ub(205, 164, 222);
+		glVertex2f(w, _p2.centerize().get_y());
+		glEnd();
+		return;
 	}
-}
-
-void line::draw()
-{
-	point p1, p2;
-	extend(p1, p2);
-	glLineWidth(2);
-	glBegin(GL_LINES);
-	glColor3ub(255, 255, 255);
-	glVertex2f(p1.get_x(), p1.get_y());
-	glColor3ub(158, 90, 140);
-	glVertex2f(p2.get_x(), p2.get_y());
-	glEnd();
 }
 
 void line::mymenu()

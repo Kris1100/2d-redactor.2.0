@@ -87,7 +87,26 @@ double polygon::area() const
 	s = 0.5 * abs(s1 - s2);
 	return s;
 }
-
+double polygon::non_convex_area() {
+	//http://opita.net/node/27
+	if (not is_correct()) return 0;
+	double s = 0,res=0;
+	for (int i = 0; i < num_vert_; i++) {
+		if (i == 0) {
+			s=vertex[i].get_x()* (vertex[num_vert_ - 1].get_y() - vertex[i + 1].get_y());
+			res += s;
+		}
+		else if (i == num_vert_ - 1) {
+			s = vertex[i].get_x() * (vertex[i- 1].get_y() - vertex[0].get_y());
+			res += s;
+			}
+		else {
+			s = vertex[i].get_x() * (vertex[i - 1].get_y() - vertex[i + 1].get_y());
+			res += s;
+		}
+	}
+	return abs(res / 2);
+}
 bool polygon::is_correct() const {
 	for (int i=0;i<num_vert_;i++)
 		for (int j = i + 1; j < num_vert_; j++) {
@@ -294,7 +313,8 @@ void polygon::mymenu() {
 			break;
 			case 3:
 			{
-				double sq = this->area();
+				double sq;
+				sq = this->area();
 				cout << "Площадь: " << sq << endl;
 			}
 			break;
