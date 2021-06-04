@@ -2,19 +2,27 @@
 
 ray::ray(const point& begin, const point& p)
 {
-	if (p != begin)
-	{
+	//if (p != begin)
+	//{
 		_begin = begin;
 		_p = p;
-	}
-	else
-		throw "Недостаточно информации о луче";
+	//}
+	//else
+	//	throw "Недостаточно информации о луче";
+}
+
+ray::~ray()
+{
+	_p.~point();
+	_begin.~point();
+	is_drawn = false;
 }
 
 ray::ray(const ray& r)
 {
 	_begin = r.get_begin();
 	_p = r.get_p();
+	is_drawn = r.is_drawn;
 }
 
 bool ray::is_element(const point& t)
@@ -87,4 +95,151 @@ void ray::draw()
 	glColor3ub(238, 130, 238);
 	glVertex2f(p1.get_x(), p1.get_y());
 	glEnd();
+}
+
+void ray::mymenu()
+{
+	ifstream in("ray.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+	if (not this->is_created)
+	{
+		bool flag = false;
+		while (!flag)
+		{
+			try
+			{
+				cin >> *this;
+				flag = true;
+			}
+			catch (...)
+			{
+				cout << "Недостаточно информации" << endl;
+			}
+		}
+		this->is_created = true;
+	}
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1:
+			{
+				bool flag = false;
+				while (!flag)
+				{
+					try
+					{
+						cin >> *this;
+						flag = true;
+					}
+					catch (...)
+					{
+						cout << "Недостаточно информации" << endl;
+					}
+				}
+				roll_back_draw();
+				add_draw(*this);
+			}
+			break;
+			case 2:
+			{
+				point p;
+				bool flag = false;
+				while (!flag)
+				{
+					try
+					{
+						cin >> p;
+						flag = true;
+					}
+					catch (...)
+					{
+						cout << "Недостаточно информации" << endl;
+					}
+				}
+				if (is_element(p))
+					cout << "Точка принадлежит лучу" << endl;
+				else
+					cout << "Точка не принадлежит лучу" << endl;
+			}
+			break;
+			case 3:
+			{
+				if (not this->is_drawn)
+				{
+					add_draw(*this);
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					this->is_drawn = true;
+				}
+				else
+				{
+					cout << "Объект уже в очереди на отрисовку";
+				}
+			}
+			break;
+			case 4:
+			{
+				if (this->is_drawn)
+				{
+					roll_back_draw();
+					this->is_drawn = false;
+					cout << "Объект успешно удален из очерди на отрисовку";
+				}
+				else
+					cout << "Вы еще не нарисовали объект";
+			}
+			break;
+			case 5:
+			{
+				roll_back_create();
+				cout << "Объект успешно удален, перейдите в главное меню";
+				return;
+			}
+			break;
+			break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }
