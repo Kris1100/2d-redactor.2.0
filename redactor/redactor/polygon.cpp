@@ -337,6 +337,12 @@ void polygon::mymenu() {
 			break;
 			case 6:
 			{
+				if (this->is_correct()) cout << "Многоугольник задан корректно" << endl;
+				else cout << "Многоугольник задан некорректно" << endl;
+			}
+			break;
+			case 7:
+			{
 				if (not this->is_drawn) {
 					if (not this->is_correct()) cout << "Вы ввели некорректные данные, не можем нарисовать!";
 					else {
@@ -350,7 +356,7 @@ void polygon::mymenu() {
 				}
 			}
 			break;
-			case 7:
+			case 8:
 			{
 				if (this->is_drawn) {
 					roll_back_draw();
@@ -360,7 +366,7 @@ void polygon::mymenu() {
 				else cout << "Вы еще не нарисовали объект";
 			}
 			break;
-			case 8:
+			case 9:
 			{
 				roll_back_create();
 				cout << "Объект успешно удален,перейдите в главное меню";
@@ -387,6 +393,7 @@ void polygon::mymenu() {
 			case 54: item = 6;  break;
 			case 55: item = 7;  break;
 			case 56: item = 8;  break;
+			case 57: item = 9; break;
 			}
 			print_inmenu(item, 15, commands);
 			if (item < 0)
