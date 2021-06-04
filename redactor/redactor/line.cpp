@@ -168,14 +168,13 @@ figure& line::operator=(const line& l)
 	return *this;
 }
 
-void line::draw()
+void line::extend(point& p1, point& p2)
 {
 	double a, b, c;
 	coef(a, b, c);
 	double k = -1 * a / b;
 	size_t w = constants::width, h = constants::height;
 	int inc = is_increasing();
-	point p1, p2;
 	if (inc == 0) //decreases
 	{
 		if (_p1.get_x() > _p2.get_x())
@@ -264,6 +263,12 @@ void line::draw()
 		p1 = p1_;
 		p2 = p2_;
 	}
+}
+
+void line::draw()
+{
+	point p1, p2;
+	extend(p1, p2);
 	glLineWidth(2);
 	glBegin(GL_LINES);
 	glColor3ub(255, 255, 255);
