@@ -3,7 +3,6 @@ line::line(const point& p1, const point& p2)
 {
 	_p1 = point(p1.get_x(), p1.get_y());
 	_p2 = point(p2.get_x(), p2.get_y());
-	coef(_a, _b, _c);
 }
 
 line::line(double a, double b, double c)
@@ -11,20 +10,6 @@ line::line(double a, double b, double c)
 	set_a(a);
 	set_b(b);
 	set_c(c);
-	if (b == 0)
-	{
-		point p1(-1 * c / a, 1);
-		point p2(-1 * c / a, -1);
-		_p1 = p1;
-		_p2 = p2;
-	}
-	else
-	{
-		point p1(1, (-1 * a - c) / b);
-		point p2(-1, (a - c) / b);
-		_p1 = p1;
-		_p2 = p2;
-	}
 }
 
 line::line(const line& l)
@@ -41,63 +26,67 @@ line::~line()
 	is_drawn = false;
 }
 
-void line::print_all()
+void line::print_all(double& a, double& b, double& c)
 {
-	if (_a != 0 && _a != 1 && _a != -1)
-		cout << _a << 'x';
-	else if (_a == 1)
+	if (a != 0 && a != 1 && a != -1)
+		cout << a << 'x';
+	else if (a == 1)
 		cout << 'x';
-	else if (_a == -1)
-		cout << '- x';
+	else if (a == -1)
+		cout << '-x';
 
-	if (_b < 0 && _b != -1)
-		cout << _b << 'y';
-	else if (_b == -1)
-		cout << ' - ' << 'y';
-	else if (_b > 0 && _b != 1 && _a != 0)
-		cout << ' + ' << _b << 'y';
-	else if (_b == 1 && _a != 0)
-		cout << ' + ' << 'y';
-	else if (_b > 0 && _b != 1)
-		cout << _b << 'y';
-	else if (_b == 1)
+	if (b < 0 && b != -1)
+		cout << b << 'y';
+	else if (b == -1)
+		cout << '-' << 'y';
+	else if (b > 0 && b != 1 && a != 0)
+		cout << '+' << b << 'y';
+	else if (b == 1 && a != 0)
+		cout << '+' << 'y';
+	else if (b > 0 && b != 1)
+		cout << b << 'y';
+	else if (b == 1)
 		cout << 'y';
 
-	if (_c < 0)
-		cout << _c;
-	else if (_c > 0)
-		cout << '+' << _c;
-	cout << ' = ' << 0 << endl;
+	if (c < 0)
+		cout << c;
+	else if (c > 0)
+		cout << '+' << c;
+	cout << '=' << 0 << endl;
+}
+
+void line::print_v1()
+{
+	double a, b, c;
+	coef(a, b, c);
+	print_all(a, b, c);
+}
+
+void line::print_v2()
+{
+	coef(_a, _b, _c);
+	double a = _a, b = _b, c = _c;
+	print_all(a, b, c);
 }
 
 void line::print_param()
 {
+	double a, b, c;
+	coef(a, b, c);
 	myvector v = guide_vector();
-	cout << "Параметрическое уравнение:" << endl;
+	cout << "Параметрическое уравнение" << endl;
 
-	cout << 'x ' << '= ';
-	if (_p1.get_x() != 0)
-		cout << _p1.get_x();
+	cout << 'x' << '=' << _p1.get_x();
 	if (v.get_x() < 0)
-		cout << " - " << abs(v.get_x()) << 't' << endl;
+		cout << v.get_x() << 't' << endl;
 	else if (v.get_x() > 0)
-	{
-		if (_p1.get_x() != 0)
-			cout << ' + ';
-		cout << v.get_x() << endl;
-	}
+		cout << '+' << v.get_x() << endl;
 
-	cout << 'y ' << '= ';
-	if (_p1.get_y() != 0)
-		cout << _p1.get_y();
+	cout << 'y' << '=' << _p1.get_y();
 	if (v.get_y() < 0)
-		cout << " - " << abs(v.get_y()) << 't' << endl;
+		cout << v.get_y() << 't' << endl;
 	else if (v.get_y() > 0)
-	{
-		if (_p1.get_y() != 0)
-			cout << ' + ';
-		cout << v.get_y() << endl;
-	}
+		cout << '+' << v.get_y() << endl;
 }
 
 myvector line::normal_vector()
@@ -160,38 +149,30 @@ istream& operator>>(istream& in, line& l)
 	return in;
 }
 
-figure& line::operator=(line& l)
+figure& line:: operator=(line& l)
 {
 	_p1 = l._p1;
 	_p2 = l._p2;
 	return *this;
 }
 
-line line::extend()
+void line::draw()
 {
-	point p1, p2;
 	double a, b, c;
-	//coef(a, b, c);
-	a = _p2.get_y() - _p1.get_y();
-	b = _p1.get_x() - _p2.get_x();
-	double k = 0;
-	if (b != 0)
-		k = -1 * a / b;
+	coef(a, b, c);
+	double k = -1 * a / b;
 	size_t w, h;
 	w = constants::width;
 	h = constants::height;
+	int coef = max(w, h);
 	int increase = this->is_increasing();
-	if (increase == 0/* && k < 0 && b != 0*/) //decreases
+	if (increase == 0 || k < 0) //decreases
 	{
-		//point p1_(-1, (a * (-1) + c) / (-1 * b));
-		//point p2_(1, (a + c) / (-1 * b));
-		point p1_ = _p1;
-		point p2_ = _p2;
 		if (_p1.get_x() > _p2.get_x())
-			swap(p1_, p2_);
+			swap(_p1, _p2);
 		k = abs(k);
-		double y1 = p1_.centerize().get_y();
-		double x1 = p1_.centerize().get_x();
+		double y1 = _p1.centerize().get_y();
+		double x1 = _p1.centerize().get_x();
 		double y11 = k * x1;
 		double x1p, y1p, x2p, y2p;
 		if (y1 + y11 <= h)
@@ -204,8 +185,8 @@ line line::extend()
 			y1p = h;
 			x1p = (y1 + y11 - h) / k;
 		}
-		double y2 = p2_.centerize().get_y();
-		double x2 = p2_.centerize().get_x();
+		double y2 = _p2.centerize().get_y();
+		double x2 = _p2.centerize().get_x();
 		double x22 = y2 / k;
 		if (x2 + x22 <= w)
 		{
@@ -217,22 +198,22 @@ line line::extend()
 			x2p = w;
 			y2p = k * (x2 + x22 - w);
 		}
-		point p11(x1p, x2p);
-		point p22(x2p, y2p);
-		p1 = p11;
-		p2 = p22;
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(x1p, y1p);
+		glColor3ub(205, 164, 222);
+		glVertex2f(x2p, y2p);
+		glEnd();
+		return;
 	}
-	else if (increase == 1/* && k > 0 && b != 0*/) //increases
+	else if (increase == 1 || k > 0) //increases
 	{
-		//point p1_(-1, (a * (-1) + c) / (-1 * b));
-		//point p2_(1, (a + c) / (-1 * b));
-		point p1_ = _p1;
-		point p2_ = _p2;
 		if (_p1.get_x() > _p2.get_x())
-			swap(p1_, p2_);
+			swap(_p1, _p2);
 		k = abs(k);
-		double y2 = p2_.centerize().get_y();
-		double x2 = p2_.centerize().get_x();
+		double y2 = _p2.centerize().get_y();
+		double x2 = _p2.centerize().get_x();
 		double y22 = k * (w - x2);
 		double x1p, y1p, x2p, y2p;
 		if (y2 + y22 <= h)
@@ -245,8 +226,8 @@ line line::extend()
 			y2p = h;
 			x2p = w - (y2 + y22 - h) / k;
 		}
-		double y1 = p1_.centerize().get_y();
-		double x1 = p1_.centerize().get_x();
+		double y1 = _p1.centerize().get_y();
+		double x1 = _p1.centerize().get_x();
 		double x11 = y1 / k;
 		if (x1 - x11 > 0)
 		{
@@ -258,38 +239,43 @@ line line::extend()
 			x1p = 0;
 			y1p = k * (x11 - x1);
 		}
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(x1p, y1p);
+		glColor3ub(158, 90, 140);
+		//glColor3ub(205, 164, 222);
+		glVertex2f(x2p, y2p);
+		glEnd();
+		return;
 	}
-	else if (increase == 2/* && b == 0*/) //x=a
+	else if (increase == 2) //x=a
 	{
-		point p11(_p1.centerize().get_x(), 0);
-		point p22(_p2.centerize().get_x(), h);
-		p1 = p11;
-		p2 = p22;
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(_p1.centerize().get_x(), 0);
+		glColor3ub(205, 164, 222);
+		glVertex2f(_p2.centerize().get_x(), h);
+		glEnd();
+		return;
 	}
-	else if (increase == 3/* && b != 0 && k == 0*/) //y=b
+	else if (increase == 3 || k == 0) //y=b
 	{
-		point p11(0, _p1.centerize().get_y());
-		point p22(w, _p2.centerize().get_y());
-		p1 = p11;
-		p2 = p22;
+		glLineWidth(2);
+		glBegin(GL_LINES);
+		glColor3ub(255, 255, 255);
+		glVertex2f(0, _p1.centerize().get_y());
+		glColor3ub(205, 164, 222);
+		glVertex2f(w, _p2.centerize().get_y());
+		glEnd();
+		return;
 	}
-	line l(p1, p2);
-	return l;
-}
-
-void line::draw()
-{
-	point p1, p2;
-	line l = extend();
-	p1 = l.get_first();
-	p2 = l.get_second();
-	glLineWidth(2);
-	glBegin(GL_LINES);
-	glColor3ub(255, 255, 255);
-	glVertex2f(p1.get_x(), p1.get_y());
-	glColor3ub(88, 84, 171);
-	glVertex2f(p2.get_x(), p2.get_y());
-	glEnd();
+	//glColor3ub(255, 255, 255);
+	//glVertex2i(_p1.centerize().get_x() - 2 * a, _p1.centerize().get_y() - 2 * b);
+	//glColor3ub(205, 164, 222);
+	//glVertex2i(_p2.centerize().get_x() + 2 * a, _p2.centerize().get_y() + 2 * b);
+	//glEnd();
 }
 
 void line::mymenu()
@@ -339,8 +325,7 @@ void line::mymenu()
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
-			case 1:
-			{
+			case 1: {
 				bool flag = false;
 				while (!flag)
 				{
@@ -357,10 +342,10 @@ void line::mymenu()
 				roll_back_draw();
 				add_draw(*this);
 			}
-			break;
+				  break;
 			case 2:
 			{
-				(this)->print_all();
+				(this)->print_v1();
 			}
 			break;
 			case 3:
@@ -386,36 +371,35 @@ void line::mymenu()
 				cin >> p3;
 				line l2 = this->parallel(p3);
 				cout << "Уравнение прямой, параллельной данной: ";
-				l2.print_all();
+				l2.print_v2();//не работает, как надо
 			}
 			break;
 			case 7:
 			{
-				if (not this->is_drawn)
-				{
+				if (not this->is_drawn) {
 					add_draw(*this);
-					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу" << endl;
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else
-					cout << "Объект уже в очереди на отрисовку" << endl;
+				else {
+					cout << "Объект уже в очереди на отрисовку";
+				}
 			}
 			break;
 			case 8:
 			{
-				if (this->is_drawn)
-				{
+				if (this->is_drawn) {
 					roll_back_draw();
 					this->is_drawn = false;
-					cout << "Объект успешно удален из очерди на отрисовку" << endl;
+					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else cout << "Вы еще не нарисовали объект" << endl;
+				else cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 9:
 			{
 				roll_back_create();
-				cout << "Объект успешно удален,перейдите в главное меню" << endl;
+				cout << "Объект успешно удален,перейдите в главное меню";
 				return;
 			}
 			break;
