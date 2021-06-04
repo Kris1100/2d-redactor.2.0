@@ -19,6 +19,8 @@ public:
 	//Получить точку начала луча и точку на луче
 	point get_begin() const { return _begin; }
 	point get_p() const { return _p; }
+	//Функция принадлежности точки лучу
+	bool is_element(const point& t);
 	//Перегрузка операторов ввода и вывода
 	friend ifstream& operator>>(ifstream& in, ray& r);
 	friend ostream& operator<<(ostream& out, const ray& r);

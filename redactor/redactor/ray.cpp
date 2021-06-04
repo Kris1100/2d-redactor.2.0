@@ -11,10 +11,47 @@ ray::ray(const point& begin, const point& p)
 		throw "Недостаточно информации о луче";
 }
 
-ray::ray(const ray& r) 
+ray::ray(const ray& r)
 {
 	_begin = r.get_begin();
 	_p = r.get_p();
+}
+
+bool ray::is_element(const point& t)
+{
+	//если совпадает с объявленными точками луча
+	if (t == _p || t == _begin)
+		return true;
+	//пернадлежит ли прямой, на которой лежит луч
+	double x = t.get_x(), y = t.get_y();
+	line l(_begin, _p);
+	double a, b, c;
+	l.coef(a, b, c);
+	if (abs(a * x + b * y + c) >= constants::eps)
+		return false;
+	//чтобы избежать копипаста, добавлены переменные, характеризующие координаты точек
+	double tmp_b = _begin.get_x();
+	double tmp_p = _p.get_x();
+	double  tmp_t = x;
+	//случай с вертикальным лучом
+	if (_begin.get_x() == _p.get_x())
+	{
+		tmp_b = _begin.get_y();
+		tmp_p = _p.get_y();
+		tmp_t = y;
+	}
+	//отличия в блоках только в знаках больше/меньше
+	//pоэтому использую новую переменную, чтобы избежать копипаста
+	int sign = 1;
+	//если вверх или вправо
+	if (tmp_b < tmp_p)
+		sign = 1;
+	//если вниз или влево
+	else
+		sign = -1;
+	if (tmp_t * sign > tmp_b)
+		return true;
+	return false;
 }
 
 ifstream& operator>>(ifstream& in, ray& r)
@@ -35,35 +72,19 @@ ostream& operator<<(ostream& out, const ray& r)
 	return out;
 }
 
-void ray::draw() 
+void ray::draw()
 {
 	glLineWidth(2);
-	/*line l(_begin, _p);
-	line t = l.extend();
-	point p2;
-	double t1x = t.get_first().get_x();
-	double t1y = t.get_first().get_y();
-	double t2x = t.get_second().get_x();
-	if (t1x == t2x)
-	{
-		if (t1y > _begin.get_y() && t1y > _p.get_y() ||
-			t1y < _begin.get_y() && t1y < _p.get_y())
-			p2 = t.get_first();
-		else
-			p2 = t.get_second();
-	}
-	else
-	{
-		if (t1x > _begin.get_x() && t1x > _p.get_x() ||
-			t1x < _begin.get_x() && t1x < _p.get_x())
-			p2 = t.get_first();
-		else
-			p2 = t.get_second();
-	}*/
+	line l(_begin, _p);
+	point p1, p2;
+	l.extend(p1, p2);
+	ray r(_begin.centerize(), _p.centerize());
+	if (r.is_element(p2))
+		p1 = p2;
 	glBegin(GL_LINES);
-	    glColor3ub(255, 255, 255);
-	    glVertex2f(_begin.centerize().get_x(), _begin.centerize().get_y());
-	    glColor3ub(238, 130, 238);
-	    glVertex2f(_p.centerize().get_x()*100, _p.centerize().get_y()*100);
+	glColor3ub(255, 255, 255);
+	glVertex2f(_begin.centerize().get_x(), _begin.centerize().get_y());
+	glColor3ub(238, 130, 238);
+	glVertex2f(p1.get_x(), p1.get_y());
 	glEnd();
 }
