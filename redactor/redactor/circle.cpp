@@ -2,7 +2,7 @@
 
 circle::circle(double x, double y, double r)
 {
-	_p = point(x, y);
+	_p = point(x, y );
 	set_r(r);
 }
 
@@ -24,7 +24,7 @@ istream& operator>>(istream& in, circle& c)
 	double x, y, r;
 	cout << "Введите координаты центра и радиус: ";
 	in >> x >> y >> r;
-	c._p = point(x, y);
+	c._p = point(x , y );
 	c.set_r(r);
 	return in;
 }
@@ -41,11 +41,20 @@ int circle::quarter() const //может, стоит переделать фун
 
 void circle::intersection() const
 {    //не читабельный код - испрваить, также как в предыдущей
-	if (_r * _r - (_p.get_x() * _p.get_x()) > 0)
-		cout << "Точка пересечения с осью x:(0, " << sqrt(_r * _r - (_p.get_x() * _p.get_x())) << ")  " << endl;
-	else if (_r * _r - (_p.get_y() * _p.get_y()) > 0)
-		cout << "Точка пересечения с осью y:(" << sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
-	else cout << "Нет пересечения с осями" << endl;
+	bool fl = false;
+	if (_r * _r - (_p.get_x() * _p.get_x()) > 0) {
+		cout << "Точка пересечения с осью x:(0, " << _p.get_y() + sqrt(_r * _r - (_p.get_x() * _p.get_x())) << ")  " << endl;
+		cout << "Точка пересечения с осью x:(0, " << - _p.get_y() +sqrt(_r * _r - (_p.get_x() * _p.get_x())) << ")  " << endl;
+
+		fl = true;
+	}
+	if (_r * _r - (_p.get_y() * _p.get_y()) > 0) {
+		cout << "Точка пересечения с осью y:(" << _p.get_x() + sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
+		cout << "Точка пересечения с осью y:(" << -_p.get_x() + sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
+
+		fl = true;
+	}
+	if(!fl) cout << "Нет пересечения с осями" << endl;
 }
 
 void circle::draw()
@@ -63,10 +72,12 @@ void circle::draw()
 	glEnd();*/
 	glLineWidth(5);
 	int n = 300;
+	int xp = _p.centerize().get_x();
+	int yp = _p.centerize().get_y();
 	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n ; i++) {
 		double angle = 2 * 3.14 * i / n;
-		glVertex2f(_r * cos(angle) - 50, _r * sin(angle) - 50);
+		glVertex2f(xp +_r * 40 * cos(angle) , yp +_r * 40 * sin(angle) );
 	}
 	glEnd();
 }
@@ -77,4 +88,150 @@ line circle::tangent(point& p)  //входные данные меняются? 
 	double b = -2 * _p.get_y() + p.get_y();
 	double c = pow(_p.get_x(), 2) + pow(_p.get_y(), 2) - pow(_r, 2);
 	return line(a, b, c);
+}
+
+
+void circle::mymenu()
+{
+	ifstream in("circle.txt");
+	vector<string> commands;
+	while (in)
+	{
+		string s = "";
+		getline(in, s, '\n');
+		commands.push_back(s);
+	}
+	if (commands[commands.size() - 1] == "" || commands[commands.size() - 1] == "\n")
+		commands.pop_back();
+	SetColor(1, 15);
+	int item = 0;
+	print_inmenu(0, 1, commands);
+	if (not this->is_created)
+	{
+		bool flag = false;
+		while (!flag)
+		{
+			try
+			{
+				cin >> *this;
+				flag = true;
+			}
+			catch (...)
+			{
+				cout << "Недостаточно информации" << endl;
+			}
+		}
+		this->is_created = true;
+	}
+	point p3;
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0:
+			{
+				in.close();
+				cout << "Работа завершена, перейдите в главное меню" << endl;
+				return;
+			}
+			case 1:
+			{
+				bool flag = false;
+				while (!flag)
+				{
+					try
+					{
+						cin >> *this;
+						flag = true;
+					}
+					catch (...)
+					{
+						cout << "Недостаточно информации" << endl;
+					}
+				}
+				roll_back_draw();
+				add_draw(*this);
+			}
+			break;
+			case 2:
+			{
+				cout << "Длина окружности " << length();
+					}
+			break;
+			case 3:
+			{
+				int k = quarter();
+				if (k > 0) cout << "Окружность лежит в " << k << " четверти.";		
+			}
+			break;
+			case 4:
+			{
+				intersection();
+
+			}
+			break;
+
+			case 5:
+			{
+				if (not this->is_drawn)
+				{
+					add_draw(*this);
+					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+					this->is_drawn = true;
+				}
+				else
+				{
+					cout << "Объект уже в очереди на отрисовку";
+				}
+			}
+			break;
+			case 6:
+			{
+				if (this->is_drawn)
+				{
+					roll_back_draw();
+					this->is_drawn = false;
+					cout << "Объект успешно удален из очерди на отрисовку";
+				}
+				else
+					cout << "Вы еще не нарисовали объект";
+			}
+			break;
+			case 7:
+			{
+				roll_back_create();
+				cout << "Объект успешно удален,перейдите в главное меню";
+				return;
+			}
+			break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			case 54: item = 6;  break;
+			case 55: item = 7; break;
+			}
+			print_inmenu(item, 15, commands);
+			if (item < 0)
+				item = commands.size() + 1;
+			if (item > commands.size() + 1)
+				item = 0;
+		}
+	}
 }
