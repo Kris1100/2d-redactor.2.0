@@ -26,6 +26,8 @@ public:
 	double perimetr() const;
 	//Вычислить площадь
 	double area() const;
+	//Проверка многоугольника на существование(корректность ввода)
+	bool is_correct() const;
 	//Вывести координаты точек
 	void print() const;
 	//Проверка на выпуклость
