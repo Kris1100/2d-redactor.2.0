@@ -14,5 +14,7 @@ namespace constants
 	const size_t height = 700;
 	//Толщина прямой
 	const unsigned int line_width = 3;
+	//Масштаб увеличения
+	const int scale = 40;
 }
 #endif // !CONSTANTS_H
