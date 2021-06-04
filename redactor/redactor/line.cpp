@@ -1,4 +1,5 @@
 ﻿#include "line.h"
+
 line::line(const point& p1, const point& p2)
 {
 	_p1 = point(p1.get_x(), p1.get_y());
@@ -172,12 +173,10 @@ void line::draw()
 	double a, b, c;
 	coef(a, b, c);
 	double k = -1 * a / b;
-	size_t w, h;
-	w = constants::width;
-	h = constants::height;
-	int coef = max(w, h);
-	int increase = is_increasing();
-	if (increase == 0 || k < 0) //decreases
+	size_t w = constants::width, h = constants::height;
+	int inc = is_increasing();
+	point p1, p2;
+	if (inc == 0) //decreases
 	{
 		if (_p1.get_x() > _p2.get_x())
 			swap(_p1, _p2);
@@ -209,16 +208,12 @@ void line::draw()
 			x2p = w;
 			y2p = k * (x2 + x22 - w);
 		}
-		glLineWidth(2);
-		glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(x1p, y1p);
-		glColor3ub(205, 164, 222);
-		glVertex2f(x2p, y2p);
-		glEnd();
-		return;
+		point p1_(x1p, y1p);
+		point p2_(x2p, y2p);
+		p1 = p1_;
+		p2 = p2_;
 	}
-	else if (increase == 1 || k > 0) //increases
+	else if (inc == 1) //increases
 	{
 		if (_p1.get_x() > _p2.get_x())
 			swap(_p1, _p2);
@@ -250,38 +245,32 @@ void line::draw()
 			x1p = 0;
 			y1p = k * (x11 - x1);
 		}
-		glLineWidth(2);
-		glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(x1p, y1p);
-		glColor3ub(158, 90, 140);
-		//glColor3ub(205, 164, 222);
-		glVertex2f(x2p, y2p);
-		glEnd();
-		return;
+		point p1_(x1p, y1p);
+		point p2_(x2p, y2p);
+		p1 = p1_;
+		p2 = p2_;
 	}
-	else if (increase == 2) //x=a
+	else if (inc == 2) //x = a
 	{
-		glLineWidth(2);
-		glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(_p1.centerize().get_x(), 0);
-		glColor3ub(205, 164, 222);
-		glVertex2f(_p2.centerize().get_x(), h);
-		glEnd();
-		return;
+		point p1_(_p1.centerize().get_x(), 0);
+		point p2_(_p2.centerize().get_x(), h);
+		p1 = p1_;
+		p2 = p2_;
 	}
-	else if (increase == 3 || k == 0) //y=b
+	else if (inc == 3) //y = b
 	{
-		glLineWidth(2);
-		glBegin(GL_LINES);
-		glColor3ub(255, 255, 255);
-		glVertex2f(0, _p1.centerize().get_y());
-		glColor3ub(205, 164, 222);
-		glVertex2f(w, _p2.centerize().get_y());
-		glEnd();
-		return;
+		point p1_(0, _p1.centerize().get_y());
+		point p2_(w, _p2.centerize().get_y());
+		p1 = p1_;
+		p2 = p2_;
 	}
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glColor3ub(255, 255, 255);
+	glVertex2f(p1.get_x(), p1.get_y());
+	glColor3ub(158, 90, 140);
+	glVertex2f(p2.get_x(), p2.get_y());
+	glEnd();
 }
 
 void line::mymenu()
@@ -331,7 +320,7 @@ void line::mymenu()
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
-			case 1: 
+			case 1:
 			{
 				bool flag = false;
 				while (!flag)
@@ -389,7 +378,7 @@ void line::mymenu()
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else 
+				else
 				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
@@ -397,13 +386,13 @@ void line::mymenu()
 			break;
 			case 8:
 			{
-				if (this->is_drawn) 
+				if (this->is_drawn)
 				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else 
+				else
 					cout << "Вы еще не нарисовали объект";
 			}
 			break;
