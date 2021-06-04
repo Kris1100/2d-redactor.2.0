@@ -8,43 +8,14 @@ struct Node
 	T info;
 	Node<T>* next = NULL;
 	Node<T>* prev = NULL;
-	//Node()//need to test
-	//{
-	//	return new Node<T>;
-	//}
 };
 
 template <class T>
 class bidir_list
 {
 public:
-	////
-	//bidir_list() { }
-	////
-	//bidir_list(size_t size_);
-	////Деструктор
-	//~bidir_list();
-	////Добавить элемент в конец списка
-	//void add_last(const T x);
-	////Добавить элемент в начало списка
-	//void add_first(const T x);
-	////Извлечь первый элемент
-	//Node<T>* get_first(); //const?
-	////Получить последний элемент аналогично получению первого
-	//Node<T>* get_last(); //const?
 	//Конструктор
 	bidir_list() { }
-	//Конструктор по количеству элементов
-	bidir_list(size_t size_)
-	{
-		if (size_ == 0)
-			return;
-		for (int i = 0; i < size_; i++)
-		{
-			add_last(0);
-		}
-		size = size_;
-	}
 	//Деструктор
 	~bidir_list()
 	{
@@ -148,6 +119,49 @@ public:
 			return elem;
 		}
 	}
+	//извлечь элемент из конца списка
+	T pop_back()
+	{
+		if (size == 0)
+			throw "List is empty";
+		T element = tail->info;
+		Node<T>* tmp = tail;
+		if (size == 1)
+		{
+			head = NULL;
+			tail = NULL;
+		}
+		else
+		{
+			tail = tail->prev;
+			tail->next = NULL;
+		}
+		delete tmp;
+		size--;
+		return element;
+	}
+	//извлечь элемент из начала списка
+	T pop_front()
+	{
+		if (size == 0)
+			throw "List is empty";
+		T element = head->info;
+		Node<T>* tmp = head;
+		if (size == 1)
+		{
+			head = NULL;
+			tail = NULL;
+		}
+		else
+		{
+			head = head->next;
+			head->prev = NULL;
+		}
+		delete tmp;
+		size--;
+		return element;
+	}
+
 	//Получить размер списка
 	size_t get_size() const { return size; }
 	//Получить указатель на первый элемент
