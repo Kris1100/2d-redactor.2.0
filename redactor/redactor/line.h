@@ -49,11 +49,12 @@ public:
 
 	//Вывод уравнениия прямой в виде ax+by+c=0
 	void print_all(double& a, double& b, double& c);
-	void print_v1();
-	void print_v2();
+	void print_v();
 	//Вывод параметрического уравнения прямой
 	void print_param();
 
+	//Растягивание прямой по размерам окна
+	void extend(point& p1, point& p2);
 	//Рисование прямой
 	void draw();
 	//Меню прямой
