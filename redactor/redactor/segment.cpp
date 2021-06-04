@@ -3,29 +3,31 @@
 #include "glut-3.7.6-bin/glut.h"
 segment::segment(const point& p1,const point& p2) 
 {
-	//Отлавливаем ошибку на две одинаковые точки
-	try 
-	{
-		if (p1 == p2) 
-			throw "Обе точки отрезка совпадают, будет установлено значение по умолчанию (0,0) и (1,1)";
-		//Если все хорошо создаем отрезок с полученными точками
-		set_extm_points(p1, p2);
-	}
-	catch (const char* err) 
-	{
-		cout << "Ошибка: " << err<<endl;
-		//В случае ошибки задаем значение по умолчанию
-		point d1(0, 0);
-		point d2(1, 1);
-		set_extm_points(d1, d2);
-	}
+	set_extm_points(p1, p2);
+	is_correct();
+	
 }
 segment::segment(const segment& s) 
 {
 	p1_ = s.get_start();
 	p2_ = s.get_end();
 }
-
+void segment::is_correct() {
+	//Отлавливаем ошибку на две одинаковые точки
+	try
+	{
+		if (p1_ == p2_)
+			throw "Обе точки отрезка совпадают, будет установлено значение по умолчанию (0,0) и (1,1)";
+	}
+	catch (const char* err)
+	{
+		cout << "Ошибка: " << err << endl;
+		//В случае ошибки задаем значение по умолчанию
+		point d1(0, 0);
+		point d2(1, 1);
+		set_extm_points(d1, d2);
+	}
+}
 void segment::set_extm_points(const point& p1,const point& p2)
 {
 	p1_ = p1;
@@ -61,6 +63,7 @@ istream& operator>>(istream& in, segment& s)
 	cin >> s.p1_;
 	cout << "Введите координаты второй точки:" << endl;
 	cin >> s.p2_;
+	s.is_correct();
 	return in;
 }
 void segment::mymenu() {
