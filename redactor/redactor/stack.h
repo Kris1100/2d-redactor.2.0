@@ -5,16 +5,14 @@ class stack
 {
 public:
 
-	stack(size_t size = 10)
+	stack(size_t size)
 	{
-		if (size == 0)
-			return;
 		_buf = new T[size];
 		_size = size;
 	}
 	~stack()
 	{
-		if (!_buf)
+		if (size_ == 0)
 			return;
 		delete[] _buf;
 		_buf = nullptr;
@@ -23,21 +21,9 @@ public:
 	}
 	stack(const stack& st)
 	{
-		if (st == this)
-			return;
 		T* tmp = new T[st._size];
 		for (int i = 0; i < st._used; i++)
-		{
-			try
-			{
-				tmp[i] = st._buf[i];
-			}
-			catch (...)
-			{
-				delete[] tmp;
-				throw;
-			}
-		}
+			tmp[i] = st._buf[i];
 		delete[] _buf;
 		_buf = tmp;
 		_size = st._size;
@@ -67,19 +53,9 @@ public:
 		else
 			if (_used == _size)
 			{
-				T* tmp = new T[_size * 2 + 1];
+				T* tmp = new T[_size * 2];
 				for (int i = 0; i < _used; i++)
-				{
-					try
-					{
-						tmp[i] = _buf[i];
-					}
-					catch (...)
-					{
-						delete[] tmp;
-						throw;
-					}
-				}
+					tmp[i] = _buf[i];
 				delete[] _buf;
 				_buf = tmp;
 				_size = _size * 2;
@@ -91,7 +67,7 @@ public:
 	{
 		if (_used == 0)
 			throw "error";
-		T element = _buf[_used - 1];
+		T element = _buf[_used];
 		_used--;
 		return element;
 	}
