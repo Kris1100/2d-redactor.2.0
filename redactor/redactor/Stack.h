@@ -7,6 +7,8 @@ public:
 
 	stack(size_t size)
 	{
+		if (size == 0)
+			return;
 		_buf = new T[size];
 		_size = size;
 	}
