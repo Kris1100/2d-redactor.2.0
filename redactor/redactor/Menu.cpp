@@ -3,6 +3,7 @@ bidir_list<figure*> queue;
 bidir_list<elem>all;
 bool win= false;
 int window;
+
 void print_menu(int num, int col)
 {
 	int col2;
@@ -110,7 +111,7 @@ void print_menu(int num, int col)
 
 void print_point(int num)
 {
-	double x=0, y=0;
+	double x = 0, y = 0;
 	point p(x, y);
 	add_create(p);
 	all.get_tail()->info.obj->mymenu();
@@ -119,14 +120,14 @@ void print_point(int num)
 void print_line(int num)
 {
 	point p1, p2, p3;
-	line l1(p1,p2);
+	line l1(p1, p2);
 	add_create(l1);
 	all.get_tail()->info.obj->mymenu();
 }
 
 void print_polygon(int num)
 {
-	int n=3;
+	int n = 3;
 	polygon p(n);
 	add_create(p);
 	all.get_tail()->info.obj->mymenu();
@@ -134,19 +135,14 @@ void print_polygon(int num)
 
 void print_circle(int num)
 {
-	circle c;
-	cin >> c;
-	cout << c;// improve it! URGENT!!!!!!!!!
-	c.quarter();
-	c.intersection();
-	c.length();
-	queue.add_last(new circle(c));
-
+	circle c(0, 0, 1);
+	add_create(c);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void print_segment(int num)
 {
-	double x1=0, x2=0, y1=0, y2=0;
+	double x1 = 0, x2 = 0, y1 = 0, y2 = 0;
 	point p1(x1, y1);
 	point p2(x2, y2);
 	segment s(p1, p2);
@@ -163,37 +159,20 @@ void print_triangle(int num)
 
 void print_vector(int num)
 {
-	double x1=0, x2=0, y1=0, y2=0;
+	double x1 = 0, x2 = 0, y1 = 0, y2 = 0;
 	point p1(x1, y1);
 	point p2(x2, y2);
-	myvector v(p1, p2);	
+	myvector v(p1, p2);
 	add_create(v);
 	all.get_tail()->info.obj->mymenu();
 }
 
 void print_ray(int num)
 {
-	point p1, p2;
-	cout << "Введите координаты начала луча:" << endl;
-	cin >> p1;
-	cout << "Введите произвольную точку на луче:" << endl;
-	cin >> p2;
+	point p1(0, 0), p2(1, 1);
 	ray r(p1, p2);
-	//bool flag = false;
-	//while (!flag)
-	//{
-	//	try
-	//	{
-	//		cin >> r;
-	//		flag = true;
-	//	}
-	//	catch (...)
-	//	{
-	//		cout << "Недостаточно информации" << endl;
-	//	}
-	//}
-	//Рисование луча
-	queue.add_last(new ray(r));
+	add_create(r);
+	all.get_tail()->info.obj->mymenu();
 }
 
 void SetColor(int text, int Fon)
@@ -207,9 +186,11 @@ void main_pr()
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glutInitWindowSize(constants::width, constants::height);
-	if (win) glutDestroyWindow(window);
-	else win = true;
-	window=glutCreateWindow("Let's paint it!");
+	if (win) 
+		glutDestroyWindow(window);
+	else 
+		win = true;
+	window = glutCreateWindow("Let's paint it!");
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(KeyBoard);
@@ -281,12 +262,16 @@ void Display(void)
 	}
 	glFinish();
 }
-void KeyBoard(unsigned char key,int x,int y) {
-	if (key == 109) {
+
+void KeyBoard(unsigned char key, int x, int y)
+{
+	if (key == 109)
+	{
 		print_menu(0, 1);
 		invalid();
 	}
 }
+
 void Reshape(GLint w, GLint h)
 {
 	glViewport(0, 0, w, h);
@@ -299,7 +284,9 @@ void Reshape(GLint w, GLint h)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
-int invalid() {
+
+int invalid()
+{
 	int item = 0;
 	while (true)
 	{
@@ -333,16 +320,16 @@ int invalid() {
 		{
 			switch (key)
 			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			case 53: item = 5;  break;
-			case 54: item = 6;  break;
-			case 55: item = 7;  break;
+			case 72: item--; break;
+			case 80: item++; break;
+			case 48: item = 0; break;
+			case 49: item = 1; break;
+			case 50: item = 2; break;
+			case 51: item = 3; break;
+			case 52: item = 4; break;
+			case 53: item = 5; break;
+			case 54: item = 6; break;
+			case 55: item = 7; break;
 			case 56: item = 8; break;
 			case 57: item = 9; break;
 			case 58: item = 10; break;
