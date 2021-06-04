@@ -73,20 +73,42 @@ void line::print_param()
 {
 	double a, b, c;
 	coef(a, b, c);
+	double t_x, t_y;
 	myvector v = guide_vector();
+	if (b == 0) {
+		t_x = -c / a;
+		t_y =0;
+	}
+	else {
+		t_x = 0;
+		t_y = -c / b;
+	}
 	cout << "Параметрическое уравнение" << endl;
 
-	cout << 'x' << '=' << _p1.get_x();
+	cout << 'x' << '=';
+	if (t_x != 0)cout << t_x;
 	if (v.get_x() < 0)
-		cout << v.get_x() << 't' << endl;
-	else if (v.get_x() > 0)
-		cout << '+' << v.get_x() << endl;
-
-	cout << 'y' << '=' << _p1.get_y();
+		cout << v.get_x() << 't' ;
+	else if (v.get_x() > 0 && t_x!=0)
+		cout << '+' << v.get_x() << 't' ;
+	else if (v.get_x() > 0 && t_x == 0)
+		cout << v.get_x() << 't' ;
+	else {
+		if (t_x == 0)cout << '0';
+	}
+	cout << endl;
+	cout << 'y' << '=' ;
+	if (t_y != 0)cout << t_y;
 	if (v.get_y() < 0)
-		cout << v.get_y() << 't' << endl;
-	else if (v.get_y() > 0)
-		cout << '+' << v.get_y() << endl;
+		cout << v.get_y() << 't' ;
+	else if (v.get_y() > 0 && t_y!=0)
+		cout << '+' << v.get_y() << 't' ;
+	else if (v.get_y() > 0 && t_y==0)
+		cout << v.get_y() << 't' ;
+	else {
+		if (t_y == 0)cout << '0';
+	}
+	cout << endl;
 }
 
 myvector line::normal_vector()
