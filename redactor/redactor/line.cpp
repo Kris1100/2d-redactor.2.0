@@ -129,7 +129,8 @@ line line::parallel(const point& p)
 	double a1 = a;
 	double b1 = b;
 	double c1 = -(a * p.get_x() + b * p.get_y());
-	return line(a1, b1, c1);
+	line l(a1, b1, c1);
+	return l;
 }
 
 unsigned int line::is_increasing() const
