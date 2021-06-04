@@ -135,8 +135,12 @@ void print_polygon(int num)
 void print_circle(int num)
 {
 	circle c;
-	add_create(c);
-	all.get_tail()->info.obj->mymenu();
+	cin >> c;
+	cout << c;// improve it! URGENT!!!!!!!!!
+	c.quarter();
+	c.intersection();
+	c.length();
+	queue.add_last(new circle(c));
 
 }
 
@@ -285,7 +289,7 @@ void KeyBoard(unsigned char key,int x,int y) {
 }
 void Reshape(GLint w, GLint h)
 {
-	glutReshapeWindow(constants::width, constants::height);
+	glViewport(0, 0, w, h);
 
 	/* ортографическая проекция */
 	glMatrixMode(GL_PROJECTION);

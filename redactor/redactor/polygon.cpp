@@ -56,6 +56,7 @@ void polygon::set_num(size_t num_vert)
 //Основные функции класса
 double polygon::perimetr() const
 {
+	if (not is_correct()) return 0;
 	double p = 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
@@ -72,6 +73,7 @@ double polygon::area() const
 {
 	//Используем формулу площади Гаусса https://cpp.mazurok.com/tag/%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0/#:~:text=%D0%94%D0%BB%D1%8F%20%D1%82%D0%BE%D0%B3%D0%BE%2C%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C%20%D0%B5%D0%B3%D0%BE,%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B4%D0%B5%D1%81%D1%8C.
 	double s1 = 0, s2 = 0, s = 0;
+	if (not is_correct()) return 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
 		s1 += vertex[i].get_x() * vertex[i + 1].get_y();
@@ -86,6 +88,13 @@ double polygon::area() const
 	return s;
 }
 
+bool polygon::is_correct() const {
+	for (int i=0;i<num_vert_;i++)
+		for (int j = i + 1; j < num_vert_; j++) {
+			if (vertex[i] == vertex[j]) return false;
+		}
+	return true;
+}
 void polygon::print() const
 {
 	for (int i = 0; i < num_vert_; i++)
@@ -101,6 +110,7 @@ bool polygon::is_convex() const
 	//стрелки поворот будет всегда налево, а при обходе по часовой - направо.
 	//Для поворота налево это(значение формулы в total) значение будет положительным,
 	//а для поворота направо - отрицательным.
+	if (not is_correct()) return false;
 	int sign = 0;
 	//Перебираем все тройки вершин, к которым можем циклически обратиться
 	for (int i = 0; i < num_vert_ - 2; i++)
@@ -139,9 +149,10 @@ bool polygon::is_regular(bool convexity) const
 {
 	//Проверка на выпуклость. Невыпуклый многоугольник не является правильным.
 	//Многоугольник является правильным, если все его стороны и углы равны
+	if (not is_correct()) return 0;
 	if (not convexity)
 		return false;
-	else
+	else 
 	{
 		double side = -1; double ang = -1;
 		//Пройдемся по всем сторонам, кроме последней
