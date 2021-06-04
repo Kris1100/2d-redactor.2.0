@@ -63,14 +63,14 @@ public:
 	//Опретатор ввода
 	friend std::istream& operator>>(std::istream& in, line& l);
 	//Оператор присваивания
-	figure& operator=(line& l);
+	figure& operator=(const line& l);
 
 
 private:
 	//Задать коэффициенты прямой
-	void set_a(double& a) { _a = a; }
-	void set_b(double& b) { _b = b; }
-	void set_c(double& c) { _c = c; }
+	void set_a(const double& a) { _a = a; }
+	void set_b(const double& b) { _b = b; }
+	void set_c(const double& c) { _c = c; }
 
 protected:
 	point _p1;

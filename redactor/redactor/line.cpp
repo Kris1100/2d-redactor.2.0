@@ -109,6 +109,16 @@ void line::coef(double& a, double& b, double& c)
 	a = _p2.get_y() - _p1.get_y();
 	b = _p1.get_x() - _p2.get_x();
 	c = _p1.get_y() * (_p2.get_x() - _p1.get_x()) + _p1.get_x() * (_p1.get_y() - _p2.get_y());
+	if (a == 0 && c == 0 && b != 0)
+		b = 1;
+	if (b == 0 && c == 0 && a != 0)
+		a = 1;
+	if (a == b && b == c)
+	{
+		a = 1;
+		b = 1;
+		c = 1;
+	}
 }
 
 line line::parallel(const point& p)
@@ -149,10 +159,11 @@ istream& operator>>(istream& in, line& l)
 	return in;
 }
 
-figure& line:: operator=(line& l)
+figure& line::operator=(const line& l)
 {
 	_p1 = l._p1;
 	_p2 = l._p2;
+	//is_drawn = l.is_drawn;//need it or not??similar funcs?
 	return *this;
 }
 
@@ -165,7 +176,7 @@ void line::draw()
 	w = constants::width;
 	h = constants::height;
 	int coef = max(w, h);
-	int increase = this->is_increasing();
+	int increase = is_increasing();
 	if (increase == 0 || k < 0) //decreases
 	{
 		if (_p1.get_x() > _p2.get_x())
@@ -271,11 +282,6 @@ void line::draw()
 		glEnd();
 		return;
 	}
-	//glColor3ub(255, 255, 255);
-	//glVertex2i(_p1.centerize().get_x() - 2 * a, _p1.centerize().get_y() - 2 * b);
-	//glColor3ub(205, 164, 222);
-	//glVertex2i(_p2.centerize().get_x() + 2 * a, _p2.centerize().get_y() + 2 * b);
-	//glEnd();
 }
 
 void line::mymenu()
@@ -325,7 +331,8 @@ void line::mymenu()
 				cout << "Работа завершена, перейдите в главное меню" << endl;
 				return;
 			}
-			case 1: {
+			case 1: 
+			{
 				bool flag = false;
 				while (!flag)
 				{
@@ -342,26 +349,26 @@ void line::mymenu()
 				roll_back_draw();
 				add_draw(*this);
 			}
-				  break;
+			break;
 			case 2:
 			{
-				(this)->print_v1();
+				print_v1();
 			}
 			break;
 			case 3:
 			{
-				this->print_param();
+				print_param();
 			}
 			break;
 			case 4:
 			{
-				myvector v1 = this->normal_vector();
+				myvector v1 = normal_vector();
 				cout << "Координаты вектора нормали: " << v1;
 			}
 			break;
 			case 5:
 			{
-				myvector v2 = this->guide_vector();
+				myvector v2 = guide_vector();
 				cout << "Координаты направляющего вектора: " << v2;
 			}
 			break;
@@ -369,31 +376,35 @@ void line::mymenu()
 			{
 				cout << "Введиите координаты точки, через которую нужно построить прямую, параллельную данной:" << endl;
 				cin >> p3;
-				line l2 = this->parallel(p3);
+				line l2 = parallel(p3);
 				cout << "Уравнение прямой, параллельной данной: ";
 				l2.print_v2();//не работает, как надо
 			}
 			break;
 			case 7:
 			{
-				if (not this->is_drawn) {
+				if (not this->is_drawn)
+				{
 					add_draw(*this);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else {
+				else 
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 8:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn) 
+				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else 
+					cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 9:
