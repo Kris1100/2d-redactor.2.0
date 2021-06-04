@@ -1,6 +1,7 @@
 ﻿#include "Menu.h"
-bidir_list<figure*> queue;//Пока просто это костыль, потом уберу
+bidir_list<figure*> queue;
 bidir_list<elem>all;
+bool window = false;
 void print_menu(int num, int col)
 {
 	int col2;
@@ -205,9 +206,13 @@ void main_pr()
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glutInitWindowSize(constants::width, constants::height);
-	glutCreateWindow("Let's paint it!");
+	if (not window) {
+		glutCreateWindow("Let's paint it!");
+		window = true;
+	}
 	glutDisplayFunc(Display);
 	glutReshapeFunc(Reshape);
+	glutKeyboardFunc(KeyBoard);
 	glutMainLoop();
 }
 
@@ -276,7 +281,12 @@ void Display(void)
 	}
 	glFinish();
 }
-
+void KeyBoard(unsigned char key,int x,int y) {
+	if (key == 109) {
+		print_menu(0, 1);
+		invalid();
+	}
+}
 void Reshape(GLint w, GLint h)
 {
 	glViewport(0, 0, w, h);
@@ -288,4 +298,60 @@ void Reshape(GLint w, GLint h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+int invalid() {
+	int item = 0;
+	while (true)
+	{
+		int key = _getch();
+
+		if (key == 13)
+		{
+			switch (item)
+			{
+			case 0: { queue.~bidir_list(); return 0; }
+			case 1: main_pr(); break;
+			case 2: print_point(0);  break;
+			case 3: print_line(0);  break;
+			case 4: print_circle(0); break;
+			case 5: print_triangle(0);  break;
+			case 6: print_polygon(0);  break;
+			case 7: print_segment(0);  break;
+			case 8: print_vector(0);  break;
+			case 9: print_ray(0); break;
+			case 10:
+			{
+				if (all.get_tail() != NULL) all.get_tail()->info.obj->mymenu();
+				else cout << "Вы еще ничего не делали";
+			}
+			break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch (key)
+			{
+			case 72: item--;  break;
+			case 80: item++;  break;
+			case 48: item = 0;  break;
+			case 49: item = 1;  break;
+			case 50: item = 2;  break;
+			case 51: item = 3;  break;
+			case 52: item = 4;  break;
+			case 53: item = 5;  break;
+			case 54: item = 6;  break;
+			case 55: item = 7;  break;
+			case 56: item = 8; break;
+			case 57: item = 9; break;
+			case 58: item = 10; break;
+			}
+			print_menu(item, 15);
+			if (item < 0)
+				item = 10;
+			if (item > 10)
+				item = 0;
+		}
+	}
 }

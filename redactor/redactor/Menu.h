@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include "glut-3.7.6-bin/glut.h"
+extern bool win;
 //Установить цвет
 void SetColor(int text, int Fon);
 //Печать меню
@@ -50,3 +51,7 @@ void paint_field();
 void Display(void);
 //Вызывается при изменении размера окна
 void Reshape(GLint w, GLint h);
+//Обработчик клавиатуры
+void KeyBoard(unsigned char key,int x,int y);
+//Функция обработки клавиш главного меню
+int invalid();

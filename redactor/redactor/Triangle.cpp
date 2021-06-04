@@ -219,8 +219,6 @@ void triangle::mymenu()
 			case 1:
 			{
 				cin >> *this;
-				roll_back_draw();
-				add_draw(*this);
 			}
 			break;
 			case 2:
