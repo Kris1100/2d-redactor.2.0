@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include"private_menu.h"
+#include "private_menu.h"
 #include "Figure.h"
 #include "math_const.h"
 #include "glut-3.7.6-bin/glut.h"

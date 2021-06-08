@@ -13,6 +13,7 @@ triangle::triangle(const point* vert)
 	vertex[0] = vert[0];
 	vertex[1] = vert[1];
 	vertex[2] = vert[2];
+	is_drawn = false;
 }
 
 void triangle::set_vertex(const point& a, const point& b, const point& c)
@@ -30,7 +31,7 @@ bool triangle::exists() const
 	double a, b, c;
 	l.coef(a, b, c);
 	double x = vertex[2].get_x(), y = vertex[2].get_y();
-	if (abs(a * x + b * y + c) <= 0.00000001)
+	if (abs(a * x + b * y + c) <= constants::eps)
 		return false;
 	return true;
 }
@@ -124,12 +125,16 @@ bool triangle::is_inside(const point& p) const
 
 segment triangle::middle_line(const segment& ab, const segment& bc) const
 {
+	if (!exists())
+		throw "error";
 	segment l(ab.middle(), bc.middle());
 	return l;
 }
 
 segment triangle::median(const point& a, const segment& bc) const
 {
+	if (!exists())
+		throw "error";
 	segment l(a, bc.middle());
 	return l;
 }
@@ -167,7 +172,7 @@ void triangle::draw()
 	x2 = vertex[2].centerize().get_x();
 	y2 = vertex[2].centerize().get_y();
 
-	glLineWidth(3);
+	glLineWidth(constants::line_width);
 	glBegin(GL_LINES);
 	glColor3ub(255, 255, 255);
 	glVertex2f(x0, y0);
@@ -306,6 +311,7 @@ void triangle::mymenu()
 			case 9:
 			{
 				point p;
+				cout << "Введите координаты точки:" << endl;
 				cin >> p;
 				if (is_inside(p))
 					cout << "Точка внутри треугольника" << endl;
@@ -314,6 +320,75 @@ void triangle::mymenu()
 			}
 			break;
 			case 10:
+			{
+				if (exists())
+				{
+					double a, b, c;
+					segment ab(vertex[0], vertex[1]);
+					segment bc(vertex[1], vertex[2]);
+					segment ac(vertex[0], vertex[2]);
+					cout << "К стороне " << vertex[0] << ' ' << vertex[1] << endl;
+					line l1(middle_line(ab, bc).get_start(), middle_line(ab, bc).get_end());
+					cout << l1.get_first() << endl;
+					cout << l1.get_second() << endl;
+					l1.coef(a, b, c);
+					l1.print_all(a, b, c);
+					cout << endl;
+					cout << "К стороне " << vertex[1] << ' ' << vertex[2] << endl;
+					line l2(middle_line(ab, ac).get_start(), middle_line(ab, ac).get_end());
+					cout << l2.get_first() << endl;
+					cout << l2.get_second() << endl;
+					l2.coef(a, b, c);
+					l2.print_all(a, b, c);
+					cout << endl;
+					cout << "К стороне " << vertex[0] << ' ' << vertex[2] << endl;
+					line l3(middle_line(ac, bc).get_start(), middle_line(ac, bc).get_end());
+					cout << l3.get_first() << endl;
+					cout << l3.get_second() << endl;
+					l3.coef(a, b, c);
+					l3.print_all(a, b, c);
+					cout << endl;
+				}
+				else
+					cout << "Определить среднюю линию невозможно" << endl;
+			}
+			break;
+			case 11:
+			{
+				if (exists())
+				{
+					double a_, b_, c_;
+					point a = vertex[0], b = vertex[1], c = vertex[2];
+					segment ab(a, b);
+					segment bc(b, c);
+					segment ac(a, c);
+					cout << "К стороне " << a << ' ' << b << endl;
+					line l1(median(c, ab).get_start(), median(c, ab).get_end());
+					cout << l1.get_first() << endl;
+					cout << l1.get_second() << endl;
+					l1.coef(a_, b_, c_);
+					l1.print_all(a_, b_, c_);
+					cout << endl;
+					cout << "К стороне " << b << ' ' << c << endl;
+					line l2(median(a, bc).get_start(), median(a, bc).get_end());
+					cout << l2.get_first() << endl;
+					cout << l2.get_second() << endl;
+					l2.coef(a_, b_, c_);
+					l2.print_all(a_, b_, c_);
+					cout << endl;
+					cout << "К стороне " << a << ' ' << c << endl;
+					line l3(median(b, ac).get_start(), median(b, ac).get_end());
+					cout << l3.get_first() << endl;
+					cout << l3.get_second() << endl;
+					l3.coef(a_, b_, c_);
+					l3.print_all(a_, b_, c_);
+					cout << endl;
+				}
+				else
+					cout << "Определить медиану невозможно" << endl;
+			}
+			break;
+			case 12:
 			{
 				if (not this->is_drawn)
 				{
@@ -327,7 +402,7 @@ void triangle::mymenu()
 				}
 			}
 			break;
-			case 11:
+			case 13:
 			{
 				if (this->is_drawn)
 				{
@@ -338,10 +413,10 @@ void triangle::mymenu()
 				else cout << "Вы еще не нарисовали объект";
 			}
 			break;
-			case 12:
+			case 14:
 			{
 				roll_back_create();
-				cout << "Объект успешно удален,перейдите в главное меню";
+				cout << "Объект успешно удален, перейдите в главное меню";
 				return;
 			}
 			break;
@@ -353,21 +428,23 @@ void triangle::mymenu()
 		{
 			switch (key)
 			{
-			case 72: item--;  break;
-			case 80: item++;  break;
-			case 48: item = 0;  break;
-			case 49: item = 1;  break;
-			case 50: item = 2;  break;
-			case 51: item = 3;  break;
-			case 52: item = 4;  break;
-			case 53: item = 5;  break;
-			case 54: item = 6;  break;
-			case 55: item = 7;  break;
+			case 72: item--; break;
+			case 80: item++; break;
+			case 48: item = 0; break;
+			case 49: item = 1; break;
+			case 50: item = 2; break;
+			case 51: item = 3; break;
+			case 52: item = 4; break;
+			case 53: item = 5; break;
+			case 54: item = 6; break;
+			case 55: item = 7; break;
 			case 56: item = 8; break;
 			case 57: item = 9; break;
 			case 58: item = 10; break;
 			case 59: item = 11; break;
 			case 60: item = 12; break;
+			case 61: item = 13; break;
+			case 62: item = 14; break;
 			}
 			print_inmenu(item, 15, commands);
 			if (item < 0)

@@ -1,10 +1,13 @@
 #pragma once
-#include "point.h"
 #include <cmath>
 #include <math.h>
 #include <cassert>
+#include "point.h"
 #include "Figure.h"
+#include "math_const.h"
+#include "glut-3.7.6-bin/glut.h"
 using namespace std;
+
 //Класс отрезок
 class segment : public figure
 {
@@ -16,7 +19,8 @@ public:
 	//Конструктор копирования
 	segment(const segment& s);
 	//Деструктор
-	~segment() {}
+	~segment();
+
 	//Получить ссылку на начальную точку (начальная - p1_, в классе точка нет разницы, какая будет начальной)
 	point get_start() const {  
 		return p1_;
@@ -40,6 +44,7 @@ public:
 	//Фрэнд функции
 	//Опретатор ввода
 	friend std::istream& operator>>(std::istream& in, segment& s);
+
 protected:
 	point p1_;
 	point p2_;

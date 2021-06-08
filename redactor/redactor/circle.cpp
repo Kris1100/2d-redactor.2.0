@@ -2,7 +2,9 @@
 
 circle::circle(double x, double y, double r)
 {
-	_p = point(x, y );
+	_p = point(x, y);
+	if (r <= 0)
+		r = 1;
 	set_r(r);
 }
 
@@ -10,6 +12,13 @@ circle::circle(const circle& c)
 {
 	_p = c.get_p();
 	_r = c.get_r();
+}
+
+circle::~circle()
+{
+	_p.~point();
+	_r = 0;
+	is_drawn = false;
 }
 
 ostream& operator<<(ostream& out, const circle& c)
@@ -24,13 +33,14 @@ istream& operator>>(istream& in, circle& c)
 	double x, y, r;
 	cout << "Введите координаты центра и радиус: ";
 	in >> x >> y >> r;
-	c._p = point(x , y );
+	if (r <= 0)
+		throw "error";
+	c._p = point(x, y);
 	c.set_r(r);
 	return in;
 }
 
-int circle::quarter() const //может, стоит переделать функцию так, чтобы она возвращала значение, а не печатала его
-							 //тогда она будет полезнее
+int circle::quarter() const
 {
 	if ((_p.get_x() - _r) > 0 && (_p.get_y() - _r) > 0) return 1;
 	else if ((_p.get_x() + _r) < 0 && (_p.get_y() - _r) > 0) return 2;
@@ -40,56 +50,52 @@ int circle::quarter() const //может, стоит переделать фун
 }
 
 void circle::intersection() const
-{    //не читабельный код - испрваить, также как в предыдущей
+{
 	bool fl = false;
-	if (_r * _r - (_p.get_x() * _p.get_x()) > 0) {
-		cout << "Точка пересечения с осью x:(0, " << _p.get_y() + sqrt(_r * _r - (_p.get_x() * _p.get_x())) << ")  " << endl;
-		cout << "Точка пересечения с осью x:(0, " << - _p.get_y() +sqrt(_r * _r - (_p.get_x() * _p.get_x())) << ")  " << endl;
+	if (_r * _r - (_p.get_x() * _p.get_x()) > 0)
+	{
+		cout << "Точка пересечения с осью x:(0, " << _p.get_y() +
+			sqrt(_r * _r - (_p.get_x() * _p.get_x())) << ")  " << endl;
+		cout << "Точка пересечения с осью x:(0, " << -_p.get_y() +
+			sqrt(_r * _r - (_p.get_x() * _p.get_x())) << ")  " << endl;
 
 		fl = true;
 	}
-	if (_r * _r - (_p.get_y() * _p.get_y()) > 0) {
-		cout << "Точка пересечения с осью y:(" << _p.get_x() + sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
-		cout << "Точка пересечения с осью y:(" << -_p.get_x() + sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
+	if (_r * _r - (_p.get_y() * _p.get_y()) > 0)
+	{
+		cout << "Точка пересечения с осью y:(" << _p.get_x() +
+			sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
+		cout << "Точка пересечения с осью y:(" << -_p.get_x() +
+			sqrt(_r * _r - (_p.get_y() * _p.get_y())) << " ,0) " << endl;
 
 		fl = true;
 	}
-	if(!fl) cout << "Нет пересечения с осями" << endl;
+	if (!fl) cout << "Нет пересечения с осями" << endl;
 }
 
 void circle::draw()
 {
-	/*glColor3ub(220, 195, 232);
-	int N = 300;
-	int xp = _p.centerize().get_x();
-	int yp = _p.centerize().get_y();
-	glBegin(GL_TRIANGLE_FAN);
-	for (int i = 1; i <= N + 2; i++)
-	{
-		glVertex2f(xp + _r * 40 * cos(2 * 3.14 / N * i),
-			yp + _r * 40 * sin(2 * 3.14 / N * i));
-	}
-	glEnd();*/
-	glLineWidth(5);
+	glColor3ub(220, 195, 232);
+	glLineWidth(constants::line_width);
 	int n = 300;
 	int xp = _p.centerize().get_x();
 	int yp = _p.centerize().get_y();
 	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < n ; i++) {
+	for (int i = 0; i < n; i++)
+	{
 		double angle = 2 * 3.14 * i / n;
-		glVertex2f(xp +_r * 40 * cos(angle) , yp +_r * 40 * sin(angle) );
+		glVertex2f(xp + _r * constants::scale * cos(angle), yp + _r * constants::scale * sin(angle));
 	}
 	glEnd();
 }
 
-line circle::tangent(point& p)  //входные данные меняются? если нет, то конст
+line circle::tangent(point& p)
 {
 	double a = -2 * _p.get_x() + p.get_x();
 	double b = -2 * _p.get_y() + p.get_y();
 	double c = pow(_p.get_x(), 2) + pow(_p.get_y(), 2) - pow(_r, 2);
 	return line(a, b, c);
 }
-
 
 void circle::mymenu()
 {
@@ -123,7 +129,6 @@ void circle::mymenu()
 		}
 		this->is_created = true;
 	}
-	point p3;
 	while (true)
 	{
 		int key = _getch();
@@ -159,21 +164,22 @@ void circle::mymenu()
 			case 2:
 			{
 				cout << "Длина окружности " << length();
-					}
+			}
 			break;
 			case 3:
 			{
 				int k = quarter();
-				if (k > 0) cout << "Окружность лежит в " << k << " четверти.";		
+				if (k > 0)
+					cout << "Окружность лежит в " << k << " четверти.";
+				else
+					cout << "" << endl;
 			}
 			break;
 			case 4:
 			{
 				intersection();
-
 			}
 			break;
-
 			case 5:
 			{
 				if (not this->is_drawn)

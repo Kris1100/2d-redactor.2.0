@@ -1,6 +1,6 @@
-#include "polygon.h"
+п»ї#include "polygon.h"
 
-//Конструкторы и деструкторы
+//РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Рё РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
 polygon::polygon(size_t num_vert)
 {
 	if (num_vert < 3)
@@ -12,38 +12,55 @@ polygon::polygon(size_t num_vert)
 
 polygon::polygon(const polygon& t) 
 {
-	num_vert_ = t.num_vert_;
-	vertex = new point[num_vert_];
-	for (int i = 0; i < num_vert_; i++) 
+	if (this == &t)
+		return;
+	if (t.num_vert_ == 0)
+		return;
+	point* vert = new point[t.num_vert_];
+	for (int i = 0; i < t.num_vert_; i++) 
 	{
-		vertex[i] = t.vertex[i];
+		try
+		{
+			vert[i] = t.vertex[i];
+		}
+		catch (...)
+		{
+			delete[] vert;
+			vert = nullptr;
+			throw;
+		}
 	}
+	if (vertex)
+		delete[] vertex;
+	vertex = vert;
+	num_vert_ = t.num_vert_;
 }
 
 polygon::~polygon()
 {
 	delete[] vertex;
 	vertex = nullptr;
+	is_drawn = false;
 }
 
-//Сеттеры
+//РЎРµС‚С‚РµСЂС‹
 void polygon::set_point_array(point* vert)
 {
-	//По умолчанию орпеделяем правильный n- угольник, однако он может не определяться как 
-	//правильный из-за пограшности измерений (при больших значениях num_vert_). 
-	//Этот баг я постараюсь минимизировать
+	//РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РѕСЂРїРµРґРµР»СЏРµРј РїСЂР°РІРёР»СЊРЅС‹Р№ n- СѓРіРѕР»СЊРЅРёРє, РѕРґРЅР°РєРѕ РѕРЅ РјРѕР¶РµС‚ РЅРµ РѕРїСЂРµРґРµР»СЏС‚СЊСЃСЏ РєР°Рє
+	//РїСЂР°РІРёР»СЊРЅС‹Р№ РёР·-Р·Р° РїРѕРіСЂР°С€РЅРѕСЃС‚Рё РёР·РјРµСЂРµРЅРёР№ (РїСЂРё Р±РѕР»СЊС€РёС… Р·РЅР°С‡РµРЅРёСЏС… num_vert_).
+	//Р­С‚РѕС‚ Р±Р°Рі СЏ РїРѕСЃС‚Р°СЂР°СЋСЃСЊ РјРёРЅРёРјРёР·РёСЂРѕРІР°С‚СЊ
 	vertex = vert;
-	//Установим единичную окружность
+	//РЈСЃС‚Р°РЅРѕРІРёРј РµРґРёРЅРёС‡РЅСѓСЋ РѕРєСЂСѓР¶РЅРѕСЃС‚СЊ
 	int R = 1;
-	//Начальный угол
+	//РќР°С‡Р°Р»СЊРЅС‹Р№ СѓРіРѕР»
 	double ang = 0;
 	for (int i = 0; i < num_vert_; i++)
 	{
-		//Посчитаем коррдинаты очередной точки - координаты вектора с началом в точке (0,0), 
-		//повернутого на угол ang против часовой стрелки
+		//РџРѕСЃС‡РёС‚Р°РµРј РєРѕСЂСЂРґРёРЅР°С‚С‹ РѕС‡РµСЂРµРґРЅРѕР№ С‚РѕС‡РєРё - РєРѕРѕСЂРґРёРЅР°С‚С‹ РІРµРєС‚РѕСЂР° СЃ РЅР°С‡Р°Р»РѕРј РІ С‚РѕС‡РєРµ (0,0),
+		//РїРѕРІРµСЂРЅСѓС‚РѕРіРѕ РЅР° СѓРіРѕР» ang РїСЂРѕС‚РёРІ С‡Р°СЃРѕРІРѕР№ СЃС‚СЂРµР»РєРё
 		vertex[i].set_x(R * round(cos(ang * constants::pi / 180) * constants::rd) / constants::rd);
 		vertex[i].set_y(R * round(sin(ang * constants::pi / 180) * constants::rd) / constants::rd);
-		//Поменяем угол
+		//РџРѕРјРµРЅСЏРµРј СѓРіРѕР»
 		ang += (360 / num_vert_);
 	}
 }
@@ -53,25 +70,24 @@ void polygon::set_num(size_t num_vert)
 	num_vert_ = num_vert;
 }
 
-//Основные функции класса
+//РћСЃРЅРѕРІРЅС‹Рµ С„СѓРЅРєС†РёРё РєР»Р°СЃСЃР°
 double polygon::perimetr() const
 {
 	if (not is_correct()) return 0;
 	double p = 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
-		segment s(vertex[i], vertex[i + 1]);
-		p += s.len();
+		segment s1(vertex[i], vertex[i + 1]);
+		p += s1.len();
 	}
 	segment s(vertex[num_vert_ - 1], vertex[0]);
 	p += s.len();
-	s.~segment();
 	return p;
 }
 
 double polygon::area() const
 {
-	//Используем формулу площади Гаусса https://cpp.mazurok.com/tag/%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0/#:~:text=%D0%94%D0%BB%D1%8F%20%D1%82%D0%BE%D0%B3%D0%BE%2C%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C%20%D0%B5%D0%B3%D0%BE,%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B4%D0%B5%D1%81%D1%8C.
+	//РСЃРїРѕР»СЊР·СѓРµРј С„РѕСЂРјСѓР»Сѓ РїР»РѕС‰Р°РґРё Р“Р°СѓСЃСЃР° https://cpp.mazurok.com/tag/%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C-%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0/#:~:text=%D0%94%D0%BB%D1%8F%20%D1%82%D0%BE%D0%B3%D0%BE%2C%20%D1%87%D1%82%D0%BE%D0%B1%D1%8B%20%D0%B2%D1%8B%D1%87%D0%B8%D1%81%D0%BB%D0%B8%D1%82%D1%8C%20%D0%B5%D0%B3%D0%BE,%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D1%81%D1%82%D1%8C%20%D0%B7%D0%B4%D0%B5%D1%81%D1%8C.
 	double s1 = 0, s2 = 0, s = 0;
 	if (not is_correct()) return 0;
 	for (int i = 0; i < num_vert_ - 1; i++)
@@ -87,33 +103,44 @@ double polygon::area() const
 	s = 0.5 * abs(s1 - s2);
 	return s;
 }
-double polygon::non_convex_area() {
+
+double polygon::non_convex_area()
+{
 	//http://opita.net/node/27
 	if (not is_correct()) return 0;
-	double s = 0,res=0;
-	for (int i = 0; i < num_vert_; i++) {
-		if (i == 0) {
-			s=vertex[i].get_x()* (vertex[num_vert_ - 1].get_y() - vertex[i + 1].get_y());
+	double s = 0, res = 0;
+	for (int i = 0; i < num_vert_; i++)
+	{
+		if (i == 0)
+		{
+			s = vertex[i].get_x() * (vertex[num_vert_ - 1].get_y() - vertex[i + 1].get_y());
 			res += s;
 		}
-		else if (i == num_vert_ - 1) {
-			s = vertex[i].get_x() * (vertex[i- 1].get_y() - vertex[0].get_y());
+		else if (i == num_vert_ - 1)
+		{
+			s = vertex[i].get_x() * (vertex[i - 1].get_y() - vertex[0].get_y());
 			res += s;
-			}
-		else {
+		}
+		else
+		{
 			s = vertex[i].get_x() * (vertex[i - 1].get_y() - vertex[i + 1].get_y());
 			res += s;
 		}
 	}
 	return abs(res / 2);
 }
-bool polygon::is_correct() const {
-	for (int i=0;i<num_vert_;i++)
-		for (int j = i + 1; j < num_vert_; j++) {
-			if (vertex[i] == vertex[j]) return false;
+
+bool polygon::is_correct() const
+{
+	for (int i = 0; i < num_vert_; i++)
+		for (int j = i + 1; j < num_vert_; j++)
+		{
+			if (vertex[i] == vertex[j])
+				return false;
 		}
 	return true;
 }
+
 void polygon::print() const
 {
 	for (int i = 0; i < num_vert_; i++)
@@ -124,22 +151,22 @@ void polygon::print() const
 
 bool polygon::is_convex() const
 {
-	//Многоугольник будет выпуклым если при его обходе в каждой тройке последовательных вершин 
-	//происходит поворот всегда в одну и ту же сторону. При обходе многоугольника против часовой
-	//стрелки поворот будет всегда налево, а при обходе по часовой - направо.
-	//Для поворота налево это(значение формулы в total) значение будет положительным,
-	//а для поворота направо - отрицательным.
+	//РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє Р±СѓРґРµС‚ РІС‹РїСѓРєР»С‹Рј РµСЃР»Рё РїСЂРё РµРіРѕ РѕР±С…РѕРґРµ РІ РєР°Р¶РґРѕР№ С‚СЂРѕР№РєРµ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅС‹С… РІРµСЂС€РёРЅ
+	//РїСЂРѕРёСЃС…РѕРґРёС‚ РїРѕРІРѕСЂРѕС‚ РІСЃРµРіРґР° РІ РѕРґРЅСѓ Рё С‚Сѓ Р¶Рµ СЃС‚РѕСЂРѕРЅСѓ. РџСЂРё РѕР±С…РѕРґРµ РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРєР° РїСЂРѕС‚РёРІ С‡Р°СЃРѕРІРѕР№
+	//СЃС‚СЂРµР»РєРё РїРѕРІРѕСЂРѕС‚ Р±СѓРґРµС‚ РІСЃРµРіРґР° РЅР°Р»РµРІРѕ, Р° РїСЂРё РѕР±С…РѕРґРµ РїРѕ С‡Р°СЃРѕРІРѕР№ - РЅР°РїСЂР°РІРѕ.
+	//Р”Р»СЏ РїРѕРІРѕСЂРѕС‚Р° РЅР°Р»РµРІРѕ СЌС‚Рѕ(Р·РЅР°С‡РµРЅРёРµ С„РѕСЂРјСѓР»С‹ РІ total) Р·РЅР°С‡РµРЅРёРµ Р±СѓРґРµС‚ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј,
+	//Р° РґР»СЏ РїРѕРІРѕСЂРѕС‚Р° РЅР°РїСЂР°РІРѕ - РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рј.
 	if (not is_correct()) return false;
 	int sign = 0;
-	//Перебираем все тройки вершин, к которым можем циклически обратиться
+	//РџРµСЂРµР±РёСЂР°РµРј РІСЃРµ С‚СЂРѕР№РєРё РІРµСЂС€РёРЅ, Рє РєРѕС‚РѕСЂС‹Рј РјРѕР¶РµРј С†РёРєР»РёС‡РµСЃРєРё РѕР±СЂР°С‚РёС‚СЊСЃСЏ
 	for (int i = 0; i < num_vert_ - 2; i++)
 	{
-		//Зададим два вектора через три вершины (одна вершина общая)
+		//Р—Р°РґР°РґРёРј РґРІР° РІРµРєС‚РѕСЂР° С‡РµСЂРµР· С‚СЂРё РІРµСЂС€РёРЅС‹ (РѕРґРЅР° РІРµСЂС€РёРЅР° РѕР±С‰Р°СЏ)
 		myvector v1(vertex[i], vertex[i + 1]);
 		myvector v2(vertex[i + 1], vertex[i + 2]);
-		//Вычисляем векторное произведение данных векторов
+		//Р’С‹С‡РёСЃР»СЏРµРј РІРµРєС‚РѕСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ РґР°РЅРЅС‹С… РІРµРєС‚РѕСЂРѕРІ
 		double total = v1.get_x() * v2.get_y() - v1.get_y() * v2.get_x();
-		//Проверяем, сохраняется ли знак
+		//РџСЂРѕРІРµСЂСЏРµРј, СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ Р»Рё Р·РЅР°Рє
 		if (sign == 0)
 		{
 			if (total < 0)
@@ -151,7 +178,7 @@ bool polygon::is_convex() const
 			if (total * sign < 0)
 				return false;
 	}
-	//Отдельно рассматриваем две последние тройки, делаем тоже самое
+	//РћС‚РґРµР»СЊРЅРѕ СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРј РґРІРµ РїРѕСЃР»РµРґРЅРёРµ С‚СЂРѕР№РєРё, РґРµР»Р°РµРј С‚РѕР¶Рµ СЃР°РјРѕРµ
 	myvector v1(vertex[num_vert_ - 1], vertex[0]);
 	myvector v2(vertex[0], vertex[1]);
 	myvector v3(vertex[num_vert_ - 2], vertex[num_vert_ - 1]);
@@ -166,29 +193,29 @@ bool polygon::is_convex() const
 
 bool polygon::is_regular(bool convexity) const
 {
-	//Проверка на выпуклость. Невыпуклый многоугольник не является правильным.
-	//Многоугольник является правильным, если все его стороны и углы равны
+	//РџСЂРѕРІРµСЂРєР° РЅР° РІС‹РїСѓРєР»РѕСЃС‚СЊ. РќРµРІС‹РїСѓРєР»С‹Р№ РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє РЅРµ СЏРІР»СЏРµС‚СЃСЏ РїСЂР°РІРёР»СЊРЅС‹Рј.
+	//РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє СЏРІР»СЏРµС‚СЃСЏ РїСЂР°РІРёР»СЊРЅС‹Рј, РµСЃР»Рё РІСЃРµ РµРіРѕ СЃС‚РѕСЂРѕРЅС‹ Рё СѓРіР»С‹ СЂР°РІРЅС‹
 	if (not is_correct()) return 0;
 	if (not convexity)
 		return false;
-	else 
+	else
 	{
 		double side = -1; double ang = -1;
-		//Пройдемся по всем сторонам, кроме последней
+		//РџСЂРѕР№РґРµРјСЃСЏ РїРѕ РІСЃРµРј СЃС‚РѕСЂРѕРЅР°Рј, РєСЂРѕРјРµ РїРѕСЃР»РµРґРЅРµР№
 		for (int i = 0; i < num_vert_ - 1; i++)
 		{
 			segment s(vertex[i], vertex[i + 1]);
-			//Если мы первый раз вычисляем длину стороны, то нам пока не с чем ее сранивать. Зададим сторону (шаблон)
+			//Р•СЃР»Рё РјС‹ РїРµСЂРІС‹Р№ СЂР°Р· РІС‹С‡РёСЃР»СЏРµРј РґР»РёРЅСѓ СЃС‚РѕСЂРѕРЅС‹, С‚Рѕ РЅР°Рј РїРѕРєР° РЅРµ СЃ С‡РµРј РµРµ СЃСЂР°РЅРёРІР°С‚СЊ. Р—Р°РґР°РґРёРј СЃС‚РѕСЂРѕРЅСѓ (С€Р°Р±Р»РѕРЅ)
 			if (side == -1)
 				side = s.len();
 			else
 			{
-				//Если очередная сторона не равна шаблону, то многоугольник неправильный
+				//Р•СЃР»Рё РѕС‡РµСЂРµРґРЅР°СЏ СЃС‚РѕСЂРѕРЅР° РЅРµ СЂР°РІРЅР° С€Р°Р±Р»РѕРЅСѓ, С‚Рѕ РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№
 				double d = abs(s.len() - side);
 				if (d > constants::eps)
 					return false;
 			}
-			//Создаем два вектора, между которыми будем определять угол
+			//РЎРѕР·РґР°РµРј РґРІР° РІРµРєС‚РѕСЂР°, РјРµР¶РґСѓ РєРѕС‚РѕСЂС‹РјРё Р±СѓРґРµРј РѕРїСЂРµРґРµР»СЏС‚СЊ СѓРіРѕР»
 			myvector v1(vertex[i + 1], vertex[i]);
 			point p;
 			if (i == num_vert_ - 2)
@@ -196,7 +223,7 @@ bool polygon::is_regular(bool convexity) const
 			else
 				p = vertex[i + 2];
 			myvector v2(vertex[i + 1], p);
-			//Далее логика аналогично проверке сторон
+			//Р”Р°Р»РµРµ Р»РѕРіРёРєР° Р°РЅР°Р»РѕРіРёС‡РЅРѕ РїСЂРѕРІРµСЂРєРµ СЃС‚РѕСЂРѕРЅ
 			if (ang == -1)
 				ang = angle(v1, v2);
 			else
@@ -206,11 +233,10 @@ bool polygon::is_regular(bool convexity) const
 					return false;
 			}
 		}
-		//Отдельная проверка для последней стороны, тк к ней трудно обратиться с помощью цикла
+		//РћС‚РґРµР»СЊРЅР°СЏ РїСЂРѕРІРµСЂРєР° РґР»СЏ РїРѕСЃР»РµРґРЅРµР№ СЃС‚РѕСЂРѕРЅС‹, С‚Рє Рє РЅРµР№ С‚СЂСѓРґРЅРѕ РѕР±СЂР°С‚РёС‚СЊСЃСЏ СЃ РїРѕРјРѕС‰СЊСЋ С†РёРєР»Р°
 		segment s(vertex[num_vert_ - 1], vertex[0]);
 		myvector v1(vertex[0], vertex[num_vert_ - 1]);
 		myvector v2(vertex[0], vertex[1]);
-
 		double d = abs(s.len() - side);
 		if (d > constants::eps)
 			return false;
@@ -221,18 +247,12 @@ bool polygon::is_regular(bool convexity) const
 	}
 }
 
-void polygon::draw() 
+void polygon::draw()
 {
-	glBegin(GL_POLYGON);
 	int R = 220, G = 208, B = 255;
-	for (int i = 0; i < num_vert_; i++) 
-	{
-		glColor3f(R, G, B);
-		glVertex2f(vertex[i].centerize().get_x(), vertex[i].centerize().get_y());
-	}
-	glEnd;
+	glLineWidth(3);
 	glBegin(GL_LINES);
-	glColor3ub(255, 255, 255);
+	glColor3ub(R, G, B);
 	for (int i = 0; i < num_vert_ - 1; i++)
 	{
 		glVertex2f(vertex[i].centerize().get_x(), vertex[i].centerize().get_y());
@@ -241,19 +261,19 @@ void polygon::draw()
 	glEnd();
 }
 
-//Friend функции
+//Friend functions
 std::istream& operator>>(istream& in, polygon& p)
 {
 	double x, y;
-	//Перевыделить память на список вершин
+	//РџРµСЂРµРІС‹РґРµР»РёС‚СЊ РїР°РјСЏС‚СЊ РЅР° СЃРїРёСЃРѕРє РІРµСЂС€РёРЅ
 	long long int n;
-	cout << "Введите количество вершин" << endl;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІРµСЂС€РёРЅ:" << endl;
 	cin >> n;
 	delete[] p.vertex;
 	p.set_num(n);
 	point* vert = new point[n];
 	p.set_point_array(vert);
-	cout << "Введите координаты " << p.num_vert_ << " вершин:" << endl;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ " << p.num_vert_ << " РІРµСЂС€РёРЅ:" << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
 		cin >> x >> y;
@@ -265,14 +285,16 @@ std::istream& operator>>(istream& in, polygon& p)
 
 std::ostream& operator<<(ostream& out, polygon& p)
 {
-	out << "Количество углов: " << p.num_vert_ << endl;
+	out << "РљРѕР»РёС‡РµСЃС‚РІРѕ СѓРіР»РѕРІ: " << p.num_vert_ << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
 		out << "x = " << p.vertex[i].get_x() << ", y = " << p.vertex[i].get_y() << endl;
 	}
 	return out;
 }
-void polygon::mymenu() {
+
+void polygon::mymenu() 
+{
 	ifstream in("polygon.txt");
 	vector<string> commands;
 	while (in)
@@ -286,7 +308,8 @@ void polygon::mymenu() {
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
+	if (not this->is_created) 
+	{
 		cin >> *this;
 		this->is_created = true;
 	}
@@ -301,75 +324,81 @@ void polygon::mymenu() {
 			case 0:
 			{
 				in.close();
-				cout << "Работа завершена, перейдите в главное меню" << endl;
+				cout << "Р Р°Р±РѕС‚Р° Р·Р°РІРµСЂС€РµРЅР°, РїРµСЂРµР№РґРёС‚Рµ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ" << endl;
 				return;
 			}
 			case 1: cin >> *this; break;
 			case 2:
 			{
-				double per = this->perimetr();
-				cout << "Периметр: " << per << endl;
+				double per = perimetr();
+				cout << "РџРµСЂРёРјРµС‚СЂ: " << per << endl;
 			}
 			break;
 			case 3:
 			{
 				double sq;
-				sq = this->area();
-				cout << "Площадь: " << sq << endl;
+				sq = area();
+				cout << "РџР»РѕС‰Р°РґСЊ: " << sq << endl;
 			}
 			break;
 			case 4:
 			{
-				bool f = this->is_convex();
+				bool f = is_convex();
 				if (f)
-					cout << "Многоугольник выпуклый" << endl;
+					cout << "РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє РІС‹РїСѓРєР»С‹Р№" << endl;
 				else
-					cout << "Многоугольник невыпуклый" << endl;;
+					cout << "РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє РЅРµРІС‹РїСѓРєР»С‹Р№" << endl;;
 			}
 			break;
 			case 5:
 			{
-				if (this->is_regular(this->is_convex()))
-					cout << "Многоугольник правильный" << endl;
+				if (is_regular(is_convex()))
+					cout << "РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє РїСЂР°РІРёР»СЊРЅС‹Р№" << endl;
 				else
-					cout << "Многоугольник не является правильным" << endl;
+					cout << "РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє РЅРµ СЏРІР»СЏРµС‚СЃСЏ РїСЂР°РІРёР»СЊРЅС‹Рј" << endl;
 			}
 			break;
 			case 6:
 			{
-				if (this->is_correct()) cout << "Многоугольник задан корректно" << endl;
-				else cout << "Многоугольник задан некорректно" << endl;
+				if (is_correct()) cout << "РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє Р·Р°РґР°РЅ РєРѕСЂСЂРµРєС‚РЅРѕ" << endl;
+				else cout << "РњРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРє Р·Р°РґР°РЅ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ" << endl;
 			}
 			break;
 			case 7:
 			{
-				if (not this->is_drawn) {
-					if (not this->is_correct()) cout << "Вы ввели некорректные данные, не можем нарисовать!";
-					else {
+				if (not this->is_drawn) 
+				{
+					if (not is_correct()) 
+						cout << "Р’С‹ РІРІРµР»Рё РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Рµ РґР°РЅРЅС‹Рµ, РЅРµ РјРѕР¶РµРј РЅР°СЂРёСЃРѕРІР°С‚СЊ!";
+					else 
+					{
 						add_draw(*this);
-						cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
+						cout << "РћР±СЉРµРєС‚ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ РІ РѕС‡РµСЂРµРґСЊ РЅР° РѕС‚СЂРёСЃРѕРІРєСѓ, РІС‹ СѓРІРёРґРёС‚Рµ РµРіРѕ, РєРѕРіРґР° Р·Р°РІРµСЂС€РёС‚Рµ СЂР°Р±РѕС‚Сѓ";
 						this->is_drawn = true;
 					}
 				}
-				else {
-					cout << "Объект уже в очереди на отрисовку";
+				else 
+				{
+					cout << "РћР±СЉРµРєС‚ СѓР¶Рµ РІ РѕС‡РµСЂРµРґРё РЅР° РѕС‚СЂРёСЃРѕРІРєСѓ";
 				}
 			}
 			break;
 			case 8:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn) 
+				{
 					roll_back_draw();
 					this->is_drawn = false;
-					cout << "Объект успешно удален из очерди на отрисовку";
+					cout << "Р±СЉРµРєС‚ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ РёР· РѕС‡РµСЂРґРё РЅР° РѕС‚СЂРёСЃРѕРІРєСѓ";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else 
+					cout << "Р’С‹ РµС‰Рµ РЅРµ РЅР°СЂРёСЃРѕРІР°Р»Рё РѕР±СЉРµРєС‚";
 			}
 			break;
 			case 9:
 			{
 				roll_back_create();
-				cout << "Объект успешно удален,перейдите в главное меню";
+				cout << "РћР±СЉРµРєС‚ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ,РїРµСЂРµР№РґРёС‚Рµ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ";
 				return;
 			}
 			break;

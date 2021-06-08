@@ -6,10 +6,13 @@
 #include "bidir_list.h"
 #include "Figure.h"
 using namespace std;
-struct elem {
+
+struct elem 
+{
 	figure* obj;
 	string comm = "";
 };
+
 //Указатель на переменную на отрисовку
 extern bidir_list<figure*> queue;
 //Общий двусвязный список с командами
@@ -19,14 +22,17 @@ void SetColor(int text, int Fon);
 void print_inmenu(int num, int col, vector<string>& commands);
 //Откатить рисование объекта
 void roll_back_draw();
+
 //Добваить объект в очередь рисования
 template<typename T>
-void add_draw(T& f) {
+void add_draw(T& f) 
+{
 	elem one;
 	Node<elem>* cur;
 	cur = all.get_tail();
 	bool t = false;
-	while (cur != NULL && not t) {
+	while (cur != NULL && not t) 
+	{
 		if (cur->info.comm == "CREATE") t = true;
 		else cur = cur->prev;
 	}
@@ -36,13 +42,16 @@ void add_draw(T& f) {
 	all.add_last(one);
 	all.get_tail()->info.obj->is_drawn = true;
 }
+
 //Добавить в список то, что объект создан
 template<typename T>
-void add_create(T& f) {
+void add_create(T& f) 
+{
 	elem one;
 	one.comm = "CREATE";
 	one.obj = new T(f);
 	all.add_last(one);
 }
+
 //Отменить создание объекта
 void roll_back_create();

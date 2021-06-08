@@ -3,8 +3,8 @@
 #include "point.h"
 #include "Figure.h"
 #include "line.h"
-#include "glut-3.7.6-bin/glut.h"
 #include "math_const.h"
+#include "glut-3.7.6-bin/glut.h"
 
 class ray : public figure
 {
@@ -14,7 +14,7 @@ public:
 	//Конструктор копирования
 	ray(const ray& r);
 	//Деструктор
-	~ray() { }
+	~ray();
 
 	//Получить точку начала луча и точку на луче
 	point get_begin() const { return _begin; }
@@ -22,9 +22,13 @@ public:
 	//Перегрузка операторов ввода и вывода
 	friend ifstream& operator>>(ifstream& in, ray& r);
 	friend ostream& operator<<(ostream& out, const ray& r);
+	//Принадлежит ли точка лучу
+	bool is_element(const point& t);
 
 	//Рисование 
 	void draw();
+	
+	void mymenu();
 
 private:
 	//Сеттеры начала луча и произвольной точки на луче

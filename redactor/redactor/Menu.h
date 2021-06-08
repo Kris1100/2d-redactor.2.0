@@ -22,8 +22,10 @@
 
 #include <stdlib.h>
 #include "glut-3.7.6-bin/glut.h"
+
 extern int window;
 extern bool win;
+
 //Установить цвет
 void SetColor(int text, int Fon);
 //Печать меню

@@ -60,7 +60,7 @@ void myvector::draw()
 		     end.get_y() + arrow_length * cos(angle + arrow_angle));
 	point p2(end.get_x() + arrow_length * sin(angle - arrow_angle), 
 		     end.get_y() + arrow_length * cos(angle - arrow_angle));
-	glLineWidth(3);
+	glLineWidth(constants::line_width);
 	glBegin(GL_LINES);
 	glColor3ub(255, 255, 255);
 	glVertex2f(p.get_x(), p.get_y());
@@ -82,7 +82,9 @@ void myvector::draw()
 	}
 	glEnd();
 }
-void myvector::mymenu() {
+
+void myvector::mymenu()
+{
 	ifstream in("myvector.txt");
 	vector<string> commands;
 	while (in)
@@ -96,7 +98,8 @@ void myvector::mymenu() {
 	SetColor(1, 15);
 	int item = 0;
 	print_inmenu(0, 1, commands);
-	if (not this->is_created) {
+	if (not this->is_created)
+	{
 		cin >> *this;
 		this->is_created = true;
 	}
@@ -115,27 +118,31 @@ void myvector::mymenu() {
 				return;
 			}
 			case 1: cin >> *this; break;
-			case 2:	cout << "Длина вектора: " << this->len() << endl; break;
+			case 2:	cout << "Длина вектора: " << len() << endl; break;
 			case 3:
 			{
-				if (not this->is_drawn) {
+				if (not this->is_drawn)
+				{
 					add_draw(*this);
 					cout << "Объект успешно добавлен в очередь на отрисовку, вы увидите его, когда завершите работу";
 					this->is_drawn = true;
 				}
-				else {
+				else
+				{
 					cout << "Объект уже в очереди на отрисовку";
 				}
 			}
 			break;
 			case 4:
 			{
-				if (this->is_drawn) {
+				if (this->is_drawn)
+				{
 					roll_back_draw();
 					this->is_drawn = false;
 					cout << "Объект успешно удален из очерди на отрисовку";
 				}
-				else cout << "Вы еще не нарисовали объект";
+				else
+					cout << "Вы еще не нарисовали объект";
 			}
 			break;
 			case 5:
@@ -169,5 +176,4 @@ void myvector::mymenu() {
 				item = 0;
 		}
 	}
-	in.close();
 }

@@ -1,14 +1,14 @@
 #pragma once
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "point.h"
 #include "polygon.h"
 #include "segment.h"
 #include "line.h"
 #include "math_const.h"
-#include "glut-3.7.6-bin/glut.h"
 #include "private_menu.h"
-#include <fstream>
-#include <string>
+#include "glut-3.7.6-bin/glut.h"
 using namespace std;
 
 class triangle : public polygon
