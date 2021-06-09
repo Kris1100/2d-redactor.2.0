@@ -81,7 +81,18 @@ bool operator!=(const point& p1, const point& p2)
 
 istream& operator>>(istream& in, point& p)
 {
-	cin >> p._x >> p._y;
+
+	char x1[256];
+	char y1[256];
+
+	double x, y;
+
+	in >> x1 >> y1;
+	x = atof(x1);
+	y = atof(y1);
+
+	p._x = x;
+	p._y = y;
 	return in;
 }
 

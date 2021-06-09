@@ -2,6 +2,7 @@
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 #include <cmath>
 #include <math.h>
 #include "point.h"

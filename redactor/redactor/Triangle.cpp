@@ -154,7 +154,15 @@ std::istream& operator>>(istream& in, triangle& t)
 	cout << "Введите координаты " << 3 << " вершин:" << endl;
 	for (int i = 0; i < 3; i++)
 	{
-		cin >> x >> y;
+
+		char x1[256];
+		char y1[256];
+
+
+		in >> x1 >> y1 ;
+		x = atof(x1);
+		y = atof(y1);
+
 		t.vertex[i].set_x(x);
 		t.vertex[i].set_y(y);
 	}

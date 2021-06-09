@@ -9,6 +9,7 @@ my_round::my_round(double x, double y, double r)
 
 ostream& operator<<(ostream& out, const my_round& c)
 {
+
 	out << "Координаты центра (" << c._p.get_x() << ", "
 		<< c._p.get_y() << ")" << endl << "Радиус: " << c._r << endl;
 	return out;
@@ -16,9 +17,19 @@ ostream& operator<<(ostream& out, const my_round& c)
 
 istream& operator>>(istream& in, my_round& c)
 {
+
+	char x1[256];
+	char y1[256];
+	char r1[256];
+
 	double x, y, r;
+
 	cout << "Введите координаты центра и радиус: ";
-	in >> x >> y >> r;
+	in >> x1 >> y1 >> r1;
+	x = atof(x1);
+	y = atof(y1);
+	r = atof(r1);
+
 	c._p =  point(x, y);
 	c.set_r(r);
 	return in;

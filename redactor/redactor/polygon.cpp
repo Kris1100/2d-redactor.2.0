@@ -268,7 +268,9 @@ std::istream& operator>>(istream& in, polygon& p)
 	//Перевыделить память на список вершин
 	long long int n;
 	cout << "Введите количество вершин:" << endl;
-	cin >> n;
+	char n1[256];
+	in >> n1;
+	n = atoi(n1);
 	delete[] p.vertex;
 	p.set_num(n);
 	point* vert = new point[n];
@@ -276,7 +278,14 @@ std::istream& operator>>(istream& in, polygon& p)
 	cout << "Введите координаты " << p.num_vert_ << " вершин:" << endl;
 	for (int i = 0; i < p.num_vert_; i++)
 	{
-		cin >> x >> y;
+		char x1[256];
+		char y1[256];
+
+		double x, y;
+
+		in >> x1 >> y1;
+		x = atof(x1);
+		y = atof(y1);
 		p.vertex[i].set_x(x);
 		p.vertex[i].set_y(y);
 	}
