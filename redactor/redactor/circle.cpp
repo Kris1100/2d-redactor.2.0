@@ -30,9 +30,18 @@ ostream& operator<<(ostream& out, const circle& c)
 
 istream& operator>>(istream& in, circle& c)
 {
+	char x1[256];
+	char y1[256];
+	char r1[256];
+
 	double x, y, r;
+	
 	cout << "Введите координаты центра и радиус: ";
-	in >> x >> y >> r;
+	in >> x1 >> y1 >> r1;
+	x = atof(x1);
+	y = atof(y1);
+	r = atof(r1);
+
 	if (r <= 0)
 		throw "error";
 	c._p = point(x, y);
