@@ -158,8 +158,6 @@ void ray::mymenu()
 						cout << "Недостаточно информации" << endl;
 					}
 				}
-				roll_back_draw();
-				add_draw(*this);
 			}
 			break;
 			case 2:

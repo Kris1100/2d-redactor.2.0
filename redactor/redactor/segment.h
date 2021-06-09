@@ -36,6 +36,7 @@ public:
 	//Координаты середины отрезка
 	point middle() const;
 	void is_correct();
+	bool point_lay(const point& p) const;
 
 	//Нарисовать отрезок
 	void draw();

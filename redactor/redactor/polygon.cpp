@@ -138,6 +138,24 @@ bool polygon::is_correct() const
 			if (vertex[i] == vertex[j])
 				return false;
 		}
+	for (int i = 0; i < num_vert_-2; i++) {
+		line l(vertex[i], vertex[i + 1]);
+		segment ab(vertex[i], vertex[i + 1]);
+		for (int j = i + 2; j < num_vert_ - 1; j++) {
+			line l1(vertex[j], vertex[j + 1]);
+			if (not l.is_parallel(l1)) {
+				point p = l.intersection(l1);
+				if (ab.point_lay(p)) return false;
+			}
+		}
+		if (i != 0) {
+			line l1(vertex[num_vert_ - 1], vertex[0]);
+			if (not l.is_parallel(l1)) {
+				point p = l.intersection(l1);
+				if (ab.point_lay(p)) return false;
+			}
+		}
+	}
 	return true;
 }
 

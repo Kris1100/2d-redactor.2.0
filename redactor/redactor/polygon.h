@@ -4,6 +4,7 @@
 #include "point.h"
 #include "vector.h"
 #include "math_const.h"
+#include "line.h"
 #include "glut-3.7.6-bin/glut.h"
 using namespace std;
 

@@ -67,6 +67,13 @@ void segment::draw()
 	glVertex2f(p2_.centerize().get_x(), p2_.centerize().get_y());
 	glEnd();
 }
+ 
+bool segment::point_lay(const point& p) const {
+	segment ap(p1_, p);
+	segment pb(p, p2_);
+	if (ap.len() + pb.len() == len()) return true;
+	else return false;
+}
 
 istream& operator>>(istream& in, segment& s)
 {

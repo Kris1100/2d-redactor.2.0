@@ -4,6 +4,7 @@ line::line(const point& p1, const point& p2)
 {
 	_p1 = point(p1.get_x(), p1.get_y());
 	_p2 = point(p2.get_x(), p2.get_y());
+	set_coef();
 }
 
 line::line(double a, double b, double c)
@@ -42,6 +43,24 @@ line::line(double a, double b, double c)
 	}
 	_p1 = point(x1, y1);
 	_p2 = point(x2, y2);
+}
+
+void line::set_coef() {
+	_a = _p2.get_y() - _p1.get_y();
+	_b = _p1.get_x() - _p2.get_x();
+	_c = _p1.get_y() * (_p2.get_x() - _p1.get_x()) + _p1.get_x() * (_p1.get_y() - _p2.get_y());
+	if (_a == 0 && _c == 0 && _b != 0)
+		_b = 1;
+	if (_b == 0 && _c == 0 && _a != 0)
+		_a = 1;
+	if (_a == _b && _b == _c)
+	{
+		_a = 1;
+		_b = 1;
+		_c = 1;
+	}
+	if (_a == 0 && _b == 0 && _c != 0)
+		throw "error";
 }
 
 line::line(const line& l)
@@ -150,7 +169,6 @@ myvector line::normal_vector()
 	coef(a, b, c);
 	return myvector(a, b);
 }
-
 myvector line::guide_vector()
 {
 	double a, b, c;
@@ -158,24 +176,24 @@ myvector line::guide_vector()
 	point p1(0, 0), p2(b, -a);
 	return myvector(p1, p2);
 }
+point line::intersection(const line& l)const {
+	double denom = (_a * l.get_b() - (_b * l.get_a()));
+	point res;
+	res.set_x(-(_c * l.get_b() - (l.get_c() * _b)) / denom);
+	res.set_y(-(_a * l.get_c() - (l.get_a() * _c))/denom);
+	return res;
+}
 
+bool line::is_parallel(const line& l) const {
+	double denom = (_a * l.get_b() - (_b * l.get_a()));
+	if (denom == 0) return true;
+	else return false;
+}
 void line::coef(double& a, double& b, double& c)
 {
-	a = _p2.get_y() - _p1.get_y();
-	b = _p1.get_x() - _p2.get_x();
-	c = _p1.get_y() * (_p2.get_x() - _p1.get_x()) + _p1.get_x() * (_p1.get_y() - _p2.get_y());
-	if (a == 0 && c == 0 && b != 0)
-		b = 1;
-	if (b == 0 && c == 0 && a != 0)
-		a = 1;
-	if (a == b && b == c)
-	{
-		a = 1;
-		b = 1;
-		c = 1;
-	}
-	if (a == 0 && b == 0 && c != 0)
-		throw "error";
+	a = get_a();
+	b = get_b();
+	c = get_c();
 }
 
 line line::parallel(const point& p)
@@ -397,8 +415,6 @@ void line::mymenu()
 						cout << "Недостаточно информации" << endl;
 					}
 				}
-				roll_back_draw();
-				add_draw(*this);
 			}
 			break;
 			case 2:

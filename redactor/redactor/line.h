@@ -38,6 +38,7 @@ public:
 	myvector normal_vector();
 	//Возвращает направляющий вектор
 	myvector guide_vector();
+	point intersection(const line&l) const;
 
 	//Считает коэфициенты в уравнении прямой ax+by+c=0
 	void coef(double& a, double& b, double& c);
@@ -46,6 +47,7 @@ public:
 	line parallel(const point& p);
 	//Проверка возрастания прямой. 1-возрастает, 0-убывает, 2-x постоянна, 3-y постоянна
 	unsigned int is_increasing() const;
+	bool is_parallel(const line& l) const;
 
 	//Вывод уравнениия прямой в виде ax+by+c=0
 	void print_all(double& a, double& b, double& c);
@@ -76,4 +78,5 @@ protected:
 	point _p1;
 	point _p2;
 	double _a = 0, _b = 0, _c = 0;
+	void set_coef();
 };
